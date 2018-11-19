@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Shop Homepage - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core css -->
+ <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <!-- Custom css -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css" rel="stylesheet"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link th:href="@{/css/label.css}" href="../static/css/label.css" rel="stylesheet" media="screen"/>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="fragments/header :: header">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/shop">Home Page</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+</div>
+<!-- Page Content -->
+<div class="container">
+
+    <form class="form-horizontal" action="/newsForm" method="post" th:action="@{/newsForm}" th:object="${news}">
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Title">Title:</label>
+            <div class="col-sm-10">
+                <p th:errors="*{title}"></p>
+                <input class="form-control" type="text" th:field="*{title}" id="Title" placeholder="Enter title:" required="required"/>
+            </div>
+</div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Description">Description:</label>
+                <div class="col-sm-10">
+                    <p th:errors="*{description}"></p>
+                    <textarea class="form-control" id="Description" placeholder="Enter description:"  th:field="*{description}" required="required"></textarea>
+                </div>
+            </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="link">Link:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{link}" class="form-control" id="link" placeholder="Enter link:"/>
+            </div>
+</div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Tag">Tag:</label>
+                <div class="col-sm-10">
+                    <input type="text" th:field="*{tag}" class="form-control" id="Tag" placeholder="Enter tag:" required="required"/>
+                </div>
+
+            </div>
+
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+
+                <input  type="submit" class="btn btn-success"  value="ADD NEWS"/>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+<!-- /.container -->
+
+<div class="container">
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
+</div>
+
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="https://blackrockdigital.github.io/startbootstrap-shop-homepage/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

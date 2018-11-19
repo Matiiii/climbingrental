@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Shop Homepage - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core css -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../static/css/bootstrap.min.css" />
+
+    <!-- Custom css -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css" rel="stylesheet"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link th:href="@{/css/label.css}" href="../static/css/label.css" rel="stylesheet" media="screen"/>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="fragments/header :: header">
+    <!-- ============================================================================ -->
+    <!-- This content is only used for static prototyping purposes (natural templates)-->
+    <!-- and is therefore entirely optional, as this markup fragment will be included -->
+    <!-- from "fragments/header.html" at runtime.                                     -->
+    <!-- ============================================================================ -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Toggle navigation - static</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</div>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="container">
+
+        <div class="starter-template">
+            <h1>Wypożyczalnia sprzętu górskiego</h1>
+            <p class="lead">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus eleifend rutrum. Sed non interdum orci.Phasellus pretium, magna finibus euismod mollis, tortor sem hendrerit ligula, in pretium orci lectus porttitor magna. Aenean iaculisest neque, at imperdiet mauris feugiat at. Nam at maximus lorem. Ut at aliquam enim. Phasellus viverra metus vitae consequat feugiat.Morbi at neque eu ex aliquam convallis.
+               <br/>
+                Fusce elementum, lectus sit amet varius eleifend, magna libero accumsan orci, sollicitudin pellentesque ex turpis quis est.In eleifend felis ut risus congue iaculis. Ut sem turpis, rhoncus suscipit ante iaculis, malesuada posuere ipsum.Praesent imperdiet faucibus massa non tempor. Sed a tincidunt nisi. Vestibulum porttitor sapien dui, eget efficitur libero facilisis at.Nulla placerat, est placerat pharetra commodo, velit nunc congue mi, eu volutpat augue ligula quis sapien. Aenean tempor enim id tristique rutrum.
+            </p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3523.19760948188!2d86.92283741515014!3d27.987849982676625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e854a215bd9ebd%3A0x576dcf806abbab2!2sMount+Everest!5e0!3m2!1spl!2spl!4v1490639142979" width="600" height="450" frameborder="0" style="border:0" type="allowfullscreen"></iframe>
+        </div>
+        <h3>adress: ul. HIMALAJEEEEEEEE 88-480</h3>
+
+    </div>
+
+
+
+
+</div>
+<!-- /.container -->
+
+<div class="container">
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="https://blackrockdigital.github.io/startbootstrap-shop-homepage/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

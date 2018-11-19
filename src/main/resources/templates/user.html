@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Wypożyczalnia sprzętu wspinaczkowego</title>
+
+    <!-- Bootstrap Core css -->
+    <!-- Latest compiled and minified css -->
+ <link rel="stylesheet" href="../static/css/bootstrap.min.css"  />
+
+    <!--UI css-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+
+
+    <!-- Custom css -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
+          rel="stylesheet"/>
+
+    <!-- jQuery -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="fragments/header :: header">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Wypożyczalnia sprzętu górskiego</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" th:each="link : ${navigationLinks}">
+                    <li>
+                        <a href="#" th:href="${link.link}" th:text="${link.name}">Linki</a>
+                    </li>
+                    <li>
+                        <a href="#" th:href="${link.link}" th:text="${link.name}">Linki</a>
+                    </li>
+                    <li>
+                        <a href="#" th:href="${link.link}" th:text="${link.name}">Linki</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Zarejestruj się</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Wyloguj się</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</div>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4" th:each="user : ${users}">
+            <h2 class="h2" th:text="'Witaj,' + ${user.firstName} "> </h2>
+            <h3 class="h2" th:unless="${user.admin}" th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName} "></h3>
+            <h3 class="h2" th:if="${user.admin}"
+                th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName}+'(admin) ' "></h3>
+        </div>
+        <!--pobieranie imienia i nazwiska użytkownika-->
+        <div class="col-md-4">
+
+                <p class="lead">Dane użytkownika</p>
+                <ul class="list-group">
+                    <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
+                    <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
+                    <li class="list-group-item"
+                        th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
+                        Adres:
+                    </li>
+                    <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
+                    <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
+                </ul>
+        </div>
+
+
+        <div class="col-md-8">
+
+
+            <div class="container">
+                <div class="navigation">
+                    <ul class="nav nav-pills head-menu">
+                        <li class="active"><a href="#twoje-zamowienia" data-toggle="pill">Twoje zamówienia</a></li>
+                        <li>
+                            <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
+                        </li>
+                        <li>
+                            <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="twoje-zamowienia">
+                            <div class="col-md-8">
+                                <div class="list-group">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Produkt</th>
+                                            <th>Opis produktu</th>
+                                            <th>Zamówione od</th>
+                                            <th>Zamówione do</th>
+                                            <th>Cena</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="order : ${orders}">
+                                            <td><img th:src="${order.productId.smallImage}"
+                                                     src="../static/images/LINA_DUZA.jpg" class="img-responsive"
+                                                     alt=""/></td>
+                                            <td th:text="${order.productId.description}">Jakiś opis</td>
+                                            <td th:text="${order.orderStart}">2017-02-03</td>
+                                            <td th:text="${order.orderEnd}">2017-04-03</td>
+                                            <td th:text="${order.combinedPrice}">Jakas cena</td>
+                                        </tr>
+                                        <!--<p th:text="${prices}"></p>-->
+                                        </tbody>
+                                        <tfoot>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td th:text="${combinedPrice}"></td>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="twoje-rachunki">
+                            <div class="col-md-8">
+                                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                                    massa metus id nunc. </p>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="trzecia-zakladka">
+                            <div class="col-md-8">
+                                <p>trzy </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-8">
+
+    </div>
+
+
+    <!-- /.container -->
+
+    <div class="container">
+        <!-- Footer -->
+        <footer>
+            <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+        </footer>
+    </div>
+
+</div>
+
+<!-- /.container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="../static/js/jquery.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+
+</html>
