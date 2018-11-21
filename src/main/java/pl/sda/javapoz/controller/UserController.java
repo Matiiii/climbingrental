@@ -3,7 +3,7 @@ package pl.sda.javapoz.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.ProductOrder;
 import pl.sda.javapoz.model.User;
@@ -15,32 +15,27 @@ import pl.sda.javapoz.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * Created by pablo on 22.03.17.
- */
 @Controller
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
+    private UserRepository userRepository;
+    private UserService userService;
     private NavbarLinkService navbarLinkService;
-
-    @Autowired
-    ProductOrderService productOrdersService;
-
-    @Autowired
+    private ProductOrderService productOrdersService;
     private SessionService sessionService;
 
+    @Autowired
+    public UserController(UserRepository userRepository, UserService userService, NavbarLinkService navbarLinkService, ProductOrderService productOrdersService, SessionService sessionService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.navbarLinkService = navbarLinkService;
+        this.productOrdersService = productOrdersService;
+        this.sessionService = sessionService;
+    }
 
-    @RequestMapping("/user")
+    @GetMapping("/user")
     public ModelAndView getUserPage(Authentication authentication, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView("user");
