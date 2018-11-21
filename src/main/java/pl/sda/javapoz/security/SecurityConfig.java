@@ -3,24 +3,19 @@ package pl.sda.javapoz.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import pl.sda.javapoz.service.CustomUserDetailsService;
 import pl.sda.javapoz.service.FacebookConnectionSignup;
 import pl.sda.javapoz.service.UserService;
 
-/**
- * Created by pablo on 23.03.17.
- */
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -28,13 +23,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private ConnectionFactoryLocator connectionFactoryLocator;
 
     @Autowired
+
     private UsersConnectionRepository usersConnectionRepository;
 
     @Autowired
-    private FacebookConnectionSignup facebookConnectionSignup;;
+    private FacebookConnectionSignup facebookConnectionSignup;
 
     @Autowired
     private UserService userService;
+
+/*
+    @Autowired
+    public SecurityConfig(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, FacebookConnectionSignup facebookConnectionSignup, UserService userService) {
+        this.connectionFactoryLocator = connectionFactoryLocator;
+        this.usersConnectionRepository = usersConnectionRepository;
+        this.facebookConnectionSignup = facebookConnectionSignup;
+        this.userService = userService;
+    }
+*/
 
     @Bean
     public CustomLogoutHandler customLogoutHandler() {
@@ -43,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public UserDetailsService customUserDetailsService() {
+    public CustomUserDetailsService customUserDetailsService() {
         return new CustomUserDetailsService();
     }
 
@@ -68,8 +74,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .addLogoutHandler(customLogoutHandler())
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-
-
     }
 
 
@@ -79,8 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**");
-
-
     }
 
     @Bean

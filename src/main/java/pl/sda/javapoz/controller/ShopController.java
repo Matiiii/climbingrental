@@ -28,11 +28,6 @@ public class ShopController {
         this.productService = productService;
     }
 
-    @GetMapping("/")
-    public String homePage() {
-        return "redirect:shop";
-    }
-
     @GetMapping(value = "/")
     public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
         ModelAndView modelAndView = new ModelAndView("shop");

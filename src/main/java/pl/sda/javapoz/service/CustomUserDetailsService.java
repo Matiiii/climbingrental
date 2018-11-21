@@ -1,4 +1,4 @@
-package pl.sda.javapoz.security;
+package pl.sda.javapoz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,14 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.sda.javapoz.model.User;
 import pl.sda.javapoz.model.UserRole;
 import pl.sda.javapoz.repository.UserRepository;
-import pl.sda.javapoz.service.NavbarLinkService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by pablo on 23.03.17.
- */
+
 public class CustomUserDetailsService implements UserDetailsService {
 
 
@@ -24,10 +21,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     private NavbarLinkService navbarLinkService;
 
     @Autowired
-    public void setNavbarLinkService(NavbarLinkService navbarLinkService) {
+    public CustomUserDetailsService(UserRepository userRepository, NavbarLinkService navbarLinkService) {
+        this.userRepository = userRepository;
         this.navbarLinkService = navbarLinkService;
     }
 
+    public CustomUserDetailsService() {
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         org.springframework.security.core.userdetails.User userDetails =
@@ -52,7 +52,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Set<GrantedAuthority> convertAuthorities(Set<UserRole> userRoles) {
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for(UserRole ur: userRoles) {
+        for (UserRole ur : userRoles) {
             authorities.add(new SimpleGrantedAuthority(ur.getRole()));
         }
         return authorities;

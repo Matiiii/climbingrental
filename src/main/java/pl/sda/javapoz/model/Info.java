@@ -2,7 +2,6 @@ package pl.sda.javapoz.model;
 
 import javax.persistence.Entity;
 
-@Entity
 public class Info {
     private String message;
     private Boolean status;

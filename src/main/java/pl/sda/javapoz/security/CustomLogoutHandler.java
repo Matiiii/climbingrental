@@ -8,9 +8,6 @@ import pl.sda.javapoz.service.NavbarLinkService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by pablo on 28.03.17.
- */
 public class CustomLogoutHandler implements LogoutHandler {
 
     @Autowired
