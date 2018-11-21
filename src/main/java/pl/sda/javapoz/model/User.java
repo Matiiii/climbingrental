@@ -5,9 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by pablo on 22.03.17.
- */
+
 @Entity
 public class User implements Serializable {
 

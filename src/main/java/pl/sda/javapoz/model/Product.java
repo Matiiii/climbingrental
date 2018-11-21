@@ -2,9 +2,7 @@ package pl.sda.javapoz.model;
 
 import javax.persistence.*;
 
-/**
- * Created by RENT on 2017-03-22.
- */
+
 @Entity
 public class Product {
 
@@ -18,7 +16,6 @@ public class Product {
 
     @Column(length = 20000)
     private String description;
-
 
     private String smallImage;
 

@@ -2,9 +2,6 @@ package pl.sda.javapoz.model;
 
 import javax.persistence.*;
 
-/**
- * Created by pablo on 22.03.17.
- */
 @Entity
 public class Address {
 

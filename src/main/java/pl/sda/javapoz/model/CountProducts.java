@@ -1,8 +1,8 @@
 package pl.sda.javapoz.model;
 
-/**
- * Created by RENT on 2017-03-28.
- */
+import javax.persistence.Entity;
+
+@Entity
 public class CountProducts {
 
     private Product product;
