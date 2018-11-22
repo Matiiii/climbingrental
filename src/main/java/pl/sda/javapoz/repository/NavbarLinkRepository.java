@@ -6,5 +6,5 @@ import pl.sda.javapoz.model.NavbarLink;
 
 @Repository
 public interface NavbarLinkRepository extends CrudRepository<NavbarLink, Long> {
-    public NavbarLink findByName(String name);
+    NavbarLink findByName(String name);
 }

@@ -16,7 +16,6 @@ import java.util.Set;
 
 public class CustomUserDetailsService implements UserDetailsService {
 
-
     private UserRepository userRepository;
     private NavbarLinkService navbarLinkService;
 
@@ -28,12 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public CustomUserDetailsService() {
     }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -14,22 +14,20 @@ import java.util.List;
 import java.util.Set;
 
 
-/**
- * Created by pablo on 22.03.17.
- */
 @Service
 public class UserService {
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
 
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
     UserRoleRepository userRoleRepository;
 
+    @Autowired
+    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+        this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
+    }
     public List<User> findAllUsers() {
-
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(x -> users.add(x));
         return users;
@@ -40,16 +38,9 @@ public class UserService {
     }
 
     public User findUserById(Long id) {
-        User user = userRepository.findOne(id);
-        return user;
+        return userRepository.findOne(id);
     }
 
-    /**
-     * simple method using to create mock user
-     *
-     * @param isAdmin
-     * @return
-     */
     public List<User> createMockUser(Boolean isAdmin) {
         List<User> mockUsers = new ArrayList<>();
 
@@ -109,7 +100,6 @@ public class UserService {
         userRoleRepository.save(userRole);
         user.getRoles().add(userRole);
         userRepository.save(user);
-
     }
 
     public User getUserByNameAndLastName(String name, String lastName) {

@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import pl.sda.javapoz.model.*;
+import pl.sda.javapoz.model.NavbarLink;
+import pl.sda.javapoz.model.News;
+import pl.sda.javapoz.model.Product;
+import pl.sda.javapoz.model.User;
 import pl.sda.javapoz.repository.*;
 import pl.sda.javapoz.service.UserService;
 
@@ -15,44 +18,43 @@ import java.util.List;
 @SpringBootApplication
 public class Application {
 
+    @Autowired
+    UserService userService;
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    private NavbarLinkRepository navbarLinkRepository;
 
-	@Autowired
-	private NavbarLinkRepository navbarLinkRepository;
+    @Autowired
+    NewsRepository newsRepository;
 
-	@Autowired
-	NewsRepository newsRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private ProductOrderRepository productOrderRepository;
 
-	@Autowired
-	private ProductOrderRepository productOrderRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-	@Autowired
-	private ProductRepository productRepository;
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
-		SpringApplication.run(Application.class, args);
-	}
+    @PostConstruct
+    public void initDatabase() {
 
-	@PostConstruct
-	public void initDatabase() {
-
-		List<User> mockUsers = userService.createMockUser(true);
-		userRepository.save(mockUsers);
-		productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
-		productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
-		productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
-		productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
+        List<User> mockUsers = userService.createMockUser(true);
+        userRepository.save(mockUsers);
+        productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
+        productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
+        productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
+        productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
 
 
-		productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek, asekuracja, wspinaczka"));
-		productRepository.save(new Product("GRIVEL Karabinek HMS", 3.00, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "karabinek, asekuracja, wspinaczka"));
-		productRepository.save(new Product("GRIVEL Karabinek HMS", 3.00, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "karabinek, asekuracja, wspinaczka"));
+        productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek, asekuracja, wspinaczka"));
+        productRepository.save(new Product("GRIVEL Karabinek HMS", 3.00, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "karabinek, asekuracja, wspinaczka"));
+        productRepository.save(new Product("GRIVEL Karabinek HMS", 3.00, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/daeb6338912044e56a353df198e8b321.jpg", "karabinek, asekuracja, wspinaczka"));
         productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek, asekuracja, wspinaczka"));
         productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek, asekuracja, wspinaczka"));
         productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek, asekuracja, wspinaczka"));
@@ -89,7 +91,7 @@ public class Application {
         productRepository.save(new Product("EKSPRES LIME DYNEEMA 12CM ", 2.00, "Lime Dyneema to lekki, doskonale wykonany ekspres wspinaczkowy Climbing Technology, który spełni wymagania nawet najbardziej doświadczonych poskramiaczy pionu. Ultralekka i wytrzymała tasiemka łączy dwa bezząbkowe, kute na gorąco karabinki Lime. Bez względu więc na to czy decydujesz się na szybkie, sportowe wejścia czy walkę z ogromną ścianą zapewnisz sobie pożądany komfort manipulacji sprzętowej. Ergonomiczny kształt karabinków Lime sprawia, że znakomicie leżą w dłoni. Ponadto dolny karabinek z giętym zamkiem wzbogacony jest o gumowy string stabilizujący jego pozycję podczas wpinania liny.", "https://www.skalnik.pl/files/sc_images/product/full_img_34922.jpg", "https://www.skalnik.pl/files/sc_images/product/full_img_34922.jpg", "karabinek, express, wspinaczka"));
 
         productRepository.save(new Product("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "karabinek, asekuracja, wspinaczka"));
-               productRepository.save(new Product("PETZL ASCENSION P B17WRA", 3.00, "Ergonomiczny przyrząd zaciskowy do wychodzenia po linie. Parametry ASCENSION zostały zmodyfikowane - zwiększając  komfort, skuteczność i łatwość użytkowania.\n" +
+        productRepository.save(new Product("PETZL ASCENSION P B17WRA", 3.00, "Ergonomiczny przyrząd zaciskowy do wychodzenia po linie. Parametry ASCENSION zostały zmodyfikowane - zwiększając  komfort, skuteczność i łatwość użytkowania.\n" +
                 "\n" +
                 "Ergonomiczna i szeroka rączka pokryta elastomerem zapewnia jednocześnie wygodny i mocny uchwyt. Powierzchnia uchwytu rozszerza się na dole by zmniejszyć ucisk na mały palec przy obciążaniu przyrządu. Ulepszono ergonomię na wysokości kciuka by ułatwić przesuwanie ASCENSION po linie.\n" +
                 "\n" +
@@ -155,52 +157,49 @@ public class Application {
                 "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://alpintech.pl/product_picture/fit_in_474x632/1e94e09f8f243156e27d3af8b080de6c.jpg", "http://alpintech.pl/product_picture/fit_in_474x632/1e94e09f8f243156e27d3af8b080de6c.jpg", "lina, asekuracja, wspinaczka"));
 
 
-		navbarLinkRepository.save(new NavbarLink("HomePage", "/",true));
-		navbarLinkRepository.save(new NavbarLink("Shop", "/shop", true));
-		navbarLinkRepository.save(new NavbarLink("Contact", "/contact", true));
-		navbarLinkRepository.save(new NavbarLink("Login", "/login", true));
-		navbarLinkRepository.save(new NavbarLink("Register", "/register", true));
-		navbarLinkRepository.save(new NavbarLink("Admin","/admin-page",true));
-		navbarLinkRepository.save(new NavbarLink("News Form", "/newsForm", true));
+        navbarLinkRepository.save(new NavbarLink("HomePage", "/", true));
+        navbarLinkRepository.save(new NavbarLink("Shop", "/shop", true));
+        navbarLinkRepository.save(new NavbarLink("Contact", "/contact", true));
+        navbarLinkRepository.save(new NavbarLink("Login", "/login", true));
+        navbarLinkRepository.save(new NavbarLink("Register", "/register", true));
+        navbarLinkRepository.save(new NavbarLink("Admin", "/admin-page", true));
+        navbarLinkRepository.save(new NavbarLink("News Form", "/newsForm", true));
 
-		News news = new News();
-		news.setTitle("Test");
-		news.setDescription("Sprawdzenie czy dodałem newsa");
-		news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-		news.setTag("lala");
+        News news = new News();
+        news.setTitle("Test");
+        news.setDescription("Sprawdzenie czy dodałem newsa");
+        news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news.setTag("lala");
 
-		News news2 = new News();
-		news2.setTitle("Test2");
-		news2.setDescription("Sprawdzenie czy dodałem newsa2");
-		news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-		news2.setTag("looooooo");
+        News news2 = new News();
+        news2.setTitle("Test2");
+        news2.setDescription("Sprawdzenie czy dodałem newsa2");
+        news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news2.setTag("looooooo");
+
+        News news3 = new News();
+        news3.setTitle("Test");
+        news3.setDescription("Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3");
+        news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news3.setTag("looooooo");
 
 
-		News news3 = new News();
-		news3.setTitle("Test");
-		news3.setDescription("Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3");
-		news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-		news3.setTag("looooooo");
+        newsRepository.save(news);
+        newsRepository.save(news2);
+        newsRepository.save(news3);
+    }
 
-
-		newsRepository.save(news);
-		newsRepository.save(news2);
-		newsRepository.save(news3);
-	}
-
-	@Bean
-	org.h2.tools.Server h2Server() {
-		Server server = new Server();
-		try {
-			server.runTool("-tcp");
-			server.runTool("-tcpAllowOthers");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return server;
-
-	}
-
+    @Bean
+    org.h2.tools.Server h2Server() {
+        Server server = new Server();
+        try {
+            server.runTool("-tcp");
+            server.runTool("-tcpAllowOthers");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return server;
+    }
 }
 
 

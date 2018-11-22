@@ -19,20 +19,11 @@ import pl.sda.javapoz.service.UserService;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private ConnectionFactoryLocator connectionFactoryLocator;
-
-    @Autowired
-
     private UsersConnectionRepository usersConnectionRepository;
-
-    @Autowired
     private FacebookConnectionSignup facebookConnectionSignup;
-
-    @Autowired
     private UserService userService;
 
-/*
     @Autowired
     public SecurityConfig(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, FacebookConnectionSignup facebookConnectionSignup, UserService userService) {
         this.connectionFactoryLocator = connectionFactoryLocator;
@@ -40,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.facebookConnectionSignup = facebookConnectionSignup;
         this.userService = userService;
     }
-*/
 
     @Bean
     public CustomLogoutHandler customLogoutHandler() {
