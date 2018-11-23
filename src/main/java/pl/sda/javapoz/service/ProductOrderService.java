@@ -2,34 +2,28 @@ package pl.sda.javapoz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import pl.sda.javapoz.model.Product;
 import pl.sda.javapoz.model.ProductOrder;
-
-
 import pl.sda.javapoz.model.User;
 import pl.sda.javapoz.repository.ProductOrderRepository;
-import pl.sda.javapoz.repository.UserRepository;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-/**
- * Created by RENT on 2017-03-22.
- */
 @Service
-
 public class ProductOrderService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private ProductOrderRepository productOrderRepository;
 
-    public ProductOrder findProductOrderById(Long id){
+    @Autowired
+    public ProductOrderService(ProductOrderRepository productOrderRepository) {
+        this.productOrderRepository = productOrderRepository;
+    }
 
+    public ProductOrder findProductOrderById(Long id) {
         return productOrderRepository.findOne(id);
     }
 
@@ -37,16 +31,15 @@ public class ProductOrderService {
         productOrderRepository.save(new ProductOrder(userId, productId, orderStart, orderEnd));
     }
 
-    public List<ProductOrder> findProductByUserId(Long id){
-       List<ProductOrder> productOrders = productOrderRepository.findByUserIdId(id);
-        return productOrders;
+    public List<ProductOrder> findProductByUserId(Long id) {
+        return productOrderRepository.findByUserIdId(id);
     }
 
-    public ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder){
+    public ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder) {
         Double price = productOrder.getProductId().getPrice();
         Date productOrderStart = productOrder.getOrderStart();
         Date productOrderEnd = productOrder.getOrderEnd();
-        Double lengthOfOrder = Double.valueOf(productOrderEnd.getTime() - productOrderStart.getTime()) / (1000*60*60*24);
+        Double lengthOfOrder = Double.valueOf(productOrderEnd.getTime() - productOrderStart.getTime()) / (1000 * 60 * 60 * 24);
         productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
@@ -60,31 +53,31 @@ public class ProductOrderService {
         return sum;
     }
 
-        public List<ProductOrder> findProductOrderByProductId(Long productId) {
+    public List<ProductOrder> findProductOrderByProductId(Long productId) {
         return productOrderRepository.findByProductIdId(productId);
     }
 
-    public boolean isProductAvailableToOrder(Long id,Date productOrderStart,Date productOrderEnd){
+    public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrder> orders = findProductOrderByProductId(id);
         boolean availableToOrder = true;
-        for (ProductOrder order:orders) {
+        for (ProductOrder order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
-            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart) ) {
+            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
                 availableToOrder = false;
             }
         }
         return availableToOrder;
     }
 
-    public List<String> getListOfDatesWhenProductIsReserved(Long id){
+    public List<String> getListOfDatesWhenProductIsReserved(Long id) {
         List<String> dates = new ArrayList<>();
         List<ProductOrder> orders = findProductOrderByProductId(id);
 
         String pattern = "MM/dd/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        for (ProductOrder order:orders) {
+        for (ProductOrder order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
             dates.add(simpleDateFormat.format(orderStart));
@@ -98,8 +91,7 @@ public class ProductOrderService {
         return dates;
     }
 
-    public List<ProductOrder> findAllProductOrders(){
-
+    public List<ProductOrder> findAllProductOrders() {
         List<ProductOrder> productOrders = new ArrayList<>();
         Iterable<ProductOrder> productOrderIterable = productOrderRepository.findAll();
         productOrderIterable.forEach(productOrders::add);
@@ -107,11 +99,7 @@ public class ProductOrderService {
         return productOrders;
     }
 
-    public void removeProductOrderByAdmin(Long id){
-
+    public void removeProductOrderByAdmin(Long id) {
         productOrderRepository.delete(id);
     }
-
-
-
 }

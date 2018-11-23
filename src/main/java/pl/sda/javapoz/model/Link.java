@@ -2,12 +2,11 @@ package pl.sda.javapoz.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-/**
- * Created by RENT on 2017-03-25.
- */
+
 public class Link {
 
     @Id

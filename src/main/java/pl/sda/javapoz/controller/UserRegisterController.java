@@ -14,46 +14,42 @@ import pl.sda.javapoz.service.UserService;
 
 import javax.validation.Valid;
 
-/**
- * Created by RENT on 2017-03-22.
- */
 @Controller
 public class UserRegisterController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private NavbarLinkService navbarLinkService;
 
-    @GetMapping("register")
+    @Autowired
+    public UserRegisterController(UserService userService, NavbarLinkService navbarLinkService) {
+        this.userService = userService;
+        this.navbarLinkService = navbarLinkService;
+    }
+
+    @GetMapping("/register")
     public ModelAndView modelAndView() {
         ModelAndView modelAndView = new ModelAndView("register");
-        modelAndView.addObject("navbarLinks",navbarLinkService.fetchLinks());
+        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-
-    @PostMapping("register")
+    @PostMapping("/register")
     public String addUser(@ModelAttribute @Valid User user,
                           BindingResult bindResult) {
         UserRole role = new UserRole();
-        if(bindResult.hasErrors())
+        if (bindResult.hasErrors())
             return "register";
         else {
-            if(user.getFirstName().equals("Andrzej")){
+            if (user.getFirstName().equals("Andrzej")) {
                 role.setRole("ROLE_ADMIN");
                 user.setAdmin(true);
-            }
-            else{
+            } else {
                 role.setRole("ROLE_USER");
                 user.setAdmin(false);
             }
-            userService.addUserWitRole(user,role);
+            userService.addUserWitRole(user, role);
             return "redirect:/login";
         }
     }
-
-
 }

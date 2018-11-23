@@ -4,9 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
-/**
- * Created by RENT on 2017-03-22.
- */
 @Entity
 public class News {
 

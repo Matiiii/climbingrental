@@ -2,13 +2,11 @@ package pl.sda.javapoz.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by RENT on 2017-03-22.
- */
+
 @Entity
 public class ProductOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -71,9 +69,13 @@ public class ProductOrder {
         this.orderEnd = orderEnd;
     }
 
-    public Double getCombinedPrice() { return combinedPrice;   }
+    public Double getCombinedPrice() {
+        return combinedPrice;
+    }
 
-    public void setCombinedPrice(Double combinedPrice) {   this.combinedPrice = combinedPrice;  }
+    public void setCombinedPrice(Double combinedPrice) {
+        this.combinedPrice = combinedPrice;
+    }
 
     public ProductOrder() {
     }

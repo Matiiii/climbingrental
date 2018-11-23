@@ -2,7 +2,6 @@ package pl.sda.javapoz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Service;
@@ -12,20 +11,15 @@ import pl.sda.javapoz.model.UserRole;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-/**
- * Created by pablo on 24.03.17.
- */
 @Service
 public class FacebookConnectionSignup implements ConnectionSignUp {
 
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private Facebook facebook;
-
-    @Autowired
-    private ConnectionRepository connectionRepository;
+    public FacebookConnectionSignup(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(Connection<?> connection) {

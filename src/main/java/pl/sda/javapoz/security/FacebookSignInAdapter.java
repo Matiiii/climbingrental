@@ -17,18 +17,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by pablo on 24.03.17.
- */
+
 @Service
 public class FacebookSignInAdapter implements SignInAdapter {
 
+    private UserService userService;
+
+    @Autowired
     public FacebookSignInAdapter(UserService userService) {
         this.userService = userService;
     }
-
-    @Autowired
-    private UserService userService;
 
     @Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {

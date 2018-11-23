@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.service.NavbarLinkService;
 
-/**
- * Created by RENT on 2017-03-27.
- */
 @Controller
 public class ContactController {
 
@@ -20,8 +17,8 @@ public class ContactController {
     }
 
     @GetMapping("/contact")
-    public ModelAndView showContact(ModelAndView modelAndView){
-        modelAndView.addObject("navbarLinks",navbarLinkService.fetchLinks());
+    public ModelAndView showContact(ModelAndView modelAndView) {
+        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.setViewName("/contact");
         return modelAndView;
     }

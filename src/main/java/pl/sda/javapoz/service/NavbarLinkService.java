@@ -9,28 +9,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NavbarLinkService  {
-    @Autowired
+public class NavbarLinkService {
+
     private NavbarLinkRepository navbarLinkRepository;
 
-    public List<NavbarLink> fetchLinks(){ 
-        List<NavbarLink> navbarsLinks= new ArrayList<NavbarLink>();
-        Iterable <NavbarLink> iterable = navbarLinkRepository.findAll();
+    @Autowired
+    public NavbarLinkService(NavbarLinkRepository navbarLinkRepository) {
+        this.navbarLinkRepository = navbarLinkRepository;
+    }
+
+    public List<NavbarLink> fetchLinks() {
+        List<NavbarLink> navbarsLinks = new ArrayList<NavbarLink>();
+        Iterable<NavbarLink> iterable = navbarLinkRepository.findAll();
         iterable.forEach(navbarsLinks::add);
         return navbarsLinks;
     }
-    public void save(NavbarLink navbarLink){
-    	navbarLinkRepository.save(navbarLink);
+
+    public void save(NavbarLink navbarLink) {
+        navbarLinkRepository.save(navbarLink);
     }
 
-    public void afterLogin(){
+    public void afterLogin() {
 
         NavbarLink loginLink = navbarLinkRepository.findByName("Login");
         NavbarLink registerLink = navbarLinkRepository.findByName("Register");
-        boolean isLoginLinkActive=loginLink.isActive();
-        boolean isRegisterLinkActive=registerLink.isActive();
+        boolean isLoginLinkActive = loginLink.isActive();
+        boolean isRegisterLinkActive = registerLink.isActive();
 
-        if(isLoginLinkActive||isRegisterLinkActive){
+        if (isLoginLinkActive || isRegisterLinkActive) {
             loginLink.setActive(false);
             registerLink.setActive(false);
         }
@@ -39,7 +45,7 @@ public class NavbarLinkService  {
 
     }
 
-    public void afterLogout(){
+    public void afterLogout() {
         NavbarLink loginLink = navbarLinkRepository.findByName("Login");
         NavbarLink registerLink = navbarLinkRepository.findByName("Register");
         loginLink.setActive(true);

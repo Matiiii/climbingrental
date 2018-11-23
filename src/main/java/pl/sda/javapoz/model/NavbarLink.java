@@ -9,11 +9,11 @@ import javax.persistence.Id;
 public class NavbarLink {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String link;
-    private  boolean active;
+    private boolean active;
 
     public Long getId() {
         return id;
@@ -53,5 +53,8 @@ public class NavbarLink {
         this.active = isactive;
     }
 
-    public NavbarLink(){};
+    public NavbarLink() {
+    }
+
+    ;
 }

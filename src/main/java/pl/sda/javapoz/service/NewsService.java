@@ -6,28 +6,31 @@ import org.springframework.util.StringUtils;
 import pl.sda.javapoz.model.Link;
 import pl.sda.javapoz.model.News;
 import pl.sda.javapoz.model.Pagination;
-import pl.sda.javapoz.model.Product;
 import pl.sda.javapoz.repository.NewsRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Created by RENT on 2017-03-22.
- */
+
 @Service
 public class NewsService {
 
-    @Autowired
     private NewsRepository newsRepository;
 
-    public List<News> findAllNews(){
+    @Autowired
+    public NewsService(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
+    }
+
+    public List<News> findAllNews() {
         List<News> newsList = new ArrayList<>();
-        newsRepository.findAll().forEach(x->newsList.add(x));
+        newsRepository.findAll().forEach(news -> newsList.add(news));
         return newsList;
     }
 
-    public News findNewsById(Long id){
+    public News findNewsById(Long id) {
         News news = newsRepository.findOne(id);
         return news;
     }
@@ -38,16 +41,15 @@ public class NewsService {
     }
 
     public Pagination getPaginationForPage(Integer page) {
-       long pages= ((newsRepository.count()-1)/5)+1;
-        Pagination pagination=new Pagination();
-        pagination.setNextPage(page<pages);
-        pagination.setPreviousPage(page!=1);
+        long pages = ((newsRepository.count() - 1) / 5) + 1;
+        Pagination pagination = new Pagination();
+        pagination.setNextPage(page < pages);
+        pagination.setPreviousPage(page != 1);
         pagination.setPage(page);
         return pagination;
     }
 
-    public Set<Link> findAllTag(){
-
+    public Set<Link> findAllTag() {
         List<News> newses = findAllNews();
         Set<Link> collect = newses.stream()
                 .map(e -> e.getTag())
@@ -57,16 +59,10 @@ public class NewsService {
         return collect;
     }
 
-    public List<News> findNewsByTag(String tag){
-
+    public List<News> findNewsByTag(String tag) {
         List<News> newsByTag = newsRepository.findNewsByTag(tag);
-
-
         return newsByTag;
-
-
     }
-
 
 
 }

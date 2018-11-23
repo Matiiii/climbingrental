@@ -1,19 +1,12 @@
 package pl.sda.javapoz.model;
 
+import javax.persistence.Entity;
 import java.util.Date;
-
-/**
- * Created by RENT on 2017-03-22.
- */
 
 public class FilterProducts {
 
-
     private Date orderStart;
-
-
     private Date orderEnd;
-
 
     public Date getOrderStart() {
         return orderStart;

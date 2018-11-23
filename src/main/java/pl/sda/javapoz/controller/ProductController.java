@@ -2,40 +2,38 @@ package pl.sda.javapoz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.Info;
 import pl.sda.javapoz.model.Product;
 import pl.sda.javapoz.model.ProductOrder;
 import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.service.*;
+import pl.sda.javapoz.service.NavbarLinkService;
+import pl.sda.javapoz.service.ProductOrderService;
+import pl.sda.javapoz.service.ProductService;
+import pl.sda.javapoz.service.SessionService;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Created by RENT on 2017-03-22.
- */
 
 @Controller
 public class ProductController {
 
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private ProductOrderService productOrderService;
-
-    @Autowired
     private NavbarLinkService navbarLinkService;
-
-    @Autowired
     private SessionService sessionService;
 
-    @RequestMapping("/product/{id}")
+    @Autowired
+    public ProductController(ProductService productService, ProductOrderService productOrderService, NavbarLinkService navbarLinkService, SessionService sessionService) {
+        this.productService = productService;
+        this.productOrderService = productOrderService;
+        this.navbarLinkService = navbarLinkService;
+        this.sessionService = sessionService;
+    }
+
+    @GetMapping("/product/{id}")
     public ModelAndView showProduct(@PathVariable Long id) {
 
         ModelAndView modelAndView = new ModelAndView("product");
@@ -59,12 +57,12 @@ public class ProductController {
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         User loggedUser = sessionService.getCurrentUser();
 
-        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id,productOrderStart,productOrderEnd);
-        if (availableToOrder){
-            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie",true));
+        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, productOrderStart, productOrderEnd);
+        if (availableToOrder) {
+            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
             productOrderService.saveOrder(loggedUser, productById, productOrderStart, productOrderEnd);
         } else {
-            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie",false));
+            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
         }
 
         return modelAndView;
