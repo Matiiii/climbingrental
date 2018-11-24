@@ -11,6 +11,12 @@
     <name>wypozyczalnia</name>
     <description>Wypozyczalnia</description>
     <repositories>
+    
+    <repository>
+      <id>forplay-legacy</id>
+      <url>http://forplay.googlecode.com/svn/mavenrepo</url>
+    </repository>
+  
         <repository>
             <id>alfresco-public</id>
 
