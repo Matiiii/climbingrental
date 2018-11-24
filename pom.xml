@@ -12,11 +12,6 @@
     <description>Wypozyczalnia</description>
     <repositories>
     
-    <repository>
-      <id>forplay-legacy</id>
-      <url>http://forplay.googlecode.com/svn/mavenrepo</url>
-    </repository>
-  
         <repository>
             <id>alfresco-public</id>
 
@@ -111,6 +106,19 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+                <!-- CircleCI build workaround -->
+                <argLine>${surefireArgLine} -Xms1024m -Xmx2048m</argLine>
+                <reuseForks>true</reuseForks>
+                <useSystemClassLoader>false</useSystemClassLoader>
+            </configuration>
+            <version>2.20.1</version><!--$NO-MVN-MAN-VER$-->
+        </plugin>
+        
         </plugins>
 
     </build>
