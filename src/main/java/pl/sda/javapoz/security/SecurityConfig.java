@@ -11,6 +11,7 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
+
 import pl.sda.javapoz.service.CustomUserDetailsService;
 import pl.sda.javapoz.service.FacebookConnectionSignup;
 import pl.sda.javapoz.service.UserService;
