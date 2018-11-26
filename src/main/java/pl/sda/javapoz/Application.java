@@ -35,6 +35,7 @@ public class Application {
     private ProductRepository productRepository;
 
     public static void main(String[] args) {
+        System.setProperty("spring.profiles.active", "mysql");
 
         SpringApplication.run(Application.class, args);
     }
