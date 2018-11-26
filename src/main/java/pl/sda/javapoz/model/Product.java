@@ -14,7 +14,7 @@ public class Product {
 
     private Double price;
 
-    @Column(length = 20000)
+    @Column(length = 10000)
     private String description;
 
     private String smallImage;
