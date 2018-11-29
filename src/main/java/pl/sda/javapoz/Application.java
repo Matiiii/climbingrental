@@ -17,17 +17,14 @@ import java.util.List;
 public class Application {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private NavbarLinkRepository navbarLinkRepository;
 
     @Autowired
     NewsRepository newsRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    
     @Autowired
     private ProductOrderRepository productOrderRepository;
 
@@ -44,7 +41,7 @@ public class Application {
     public void initDatabase() {
 
         List<User> mockUsers = userService.createMockUser(true);
-        userRepository.save(mockUsers);
+        userService.saveUsers(mockUsers);
         productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
         productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));
         productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "http://www.outdoorzy.pl/11486-70115-large/climbing-technology-kask-venus.jpg", "http://8a.pl/product_picture/fit_in_900x1224/kask-wspinaczkowy-climbing-technology-venus-white_3.jpg", "kask, asekuracja, wspinaczka"));

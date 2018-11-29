@@ -1,6 +1,7 @@
 package pl.sda.javapoz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sda.javapoz.model.Address;
 import pl.sda.javapoz.model.User;
@@ -19,22 +20,31 @@ public class UserService {
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
 
-    UserRepository userRepository;
-    UserRoleRepository userRoleRepository;
+    private UserRepository userRepository;
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
     }
+
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(x -> users.add(x));
         return users;
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void saveUsers(List<User> users){
+        users.forEach(this::saveUser);
     }
 
     public User findUserById(Long id) {
@@ -82,10 +92,11 @@ public class UserService {
         u2.setPassword("haslo");
         u2.setPhoneNumber("123 456 789");
 
+        Set<UserRole> roles2 = new HashSet<>();
         UserRole role2 = new UserRole();
         role2.setRole("ROLE_USER");
-        roles.add(role2);
-        u2.setRoles(roles);
+        roles2.add(role2);
+        u2.setRoles(roles2);
 
         u2.setAdmin(false);
         mockUsers.add(u2);
@@ -97,7 +108,7 @@ public class UserService {
     }
 
     public void addUserWitRole(User user, UserRole userRole) {
-    	
+
         userRoleRepository.save(userRole);
         user.getRoles().add(userRole);
         userRepository.save(user);
@@ -105,5 +116,10 @@ public class UserService {
 
     public User getUserByNameAndLastName(String name, String lastName) {
         return userRepository.findUserByFirstNameAndLastName(name, lastName);
+    }
+
+
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }

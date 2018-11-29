@@ -11,44 +11,32 @@
 
     <title>Shop Homepage - Start Bootstrap Template</title>
 
-    <!-- Bootstrap Core css -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css"  />
 
-    <!-- Custom css -->
     <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
           rel="stylesheet"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <link th:href="@{/css/label.css}" href="../static/css/label.css" rel="stylesheet" media="screen"/>
 
 </head>
 
 <body>
-<!-- Navigation -->
 
 <div class="container">
 	<div th:replace="fragments/header :: header">
 	</div>
 </div>
 
-<!-- Page Content -->
 <div class="container">
-
-    <form class="form-horizontal" method="post" th:action="@{/login}">
-
-
+    <form class="form-horizontal" method="post" th:action="@{/login}" th:object="${user}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">email:</label>
             <div class="col-sm-10">
-                <input name="username" type="text" class="form-control" id="email" placeholder="Wpisz email:"/>
+                <input name="username" type="text" class="form-control" id="email" placeholder="Wpisz email:" />
             </div>
-
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="password">Password:</label>
@@ -56,26 +44,20 @@
                 <input name="password" type="password" class="form-control" id="password"
                        placeholder="Wpisz hasło:"/>
             </div>
-
         </div>
-
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-success">LOGIN</button>
             </div>
         </div>
-
     </form>
 
-    <form th:action="@{/signin/facebook}" method="POST">
+   <form th:action="@{/signin/facebook}" method="POST">
         <input type="hidden" name="scope" value="public_profile, email"/>
         <input type="submit" value="Login using Facebook"/>
     </form>
-
-
 </div>
-<!-- /.container -->
+
 
 <div class="container">
     <!-- Footer -->
