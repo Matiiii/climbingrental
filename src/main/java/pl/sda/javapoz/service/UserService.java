@@ -97,12 +97,13 @@ public class UserService {
     }
 
     public void addUserWitRole(User user, UserRole userRole) {
+    	
         userRoleRepository.save(userRole);
         user.getRoles().add(userRole);
         userRepository.save(user);
     }
 
     public User getUserByNameAndLastName(String name, String lastName) {
-        return userRepository.findByFirstNameAndLastName(name, lastName);
+        return userRepository.findUserByFirstNameAndLastName(name, lastName);
     }
 }

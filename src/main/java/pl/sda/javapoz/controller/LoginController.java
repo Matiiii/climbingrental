@@ -19,9 +19,9 @@ public class LoginController {
         }
 
         @GetMapping("/login")
-        public ModelAndView showContact(ModelAndView modelAndView) {
+        public String showContact(ModelAndView modelAndView) {
             modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
             modelAndView.setViewName("/login");
-            return modelAndView;
+            return "login";
     }
 }
