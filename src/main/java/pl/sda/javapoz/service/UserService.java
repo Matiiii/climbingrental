@@ -1,6 +1,7 @@
 package pl.sda.javapoz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sda.javapoz.model.Address;
 import pl.sda.javapoz.model.User;
@@ -19,14 +20,18 @@ public class UserService {
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
 
-    UserRepository userRepository;
-    UserRoleRepository userRoleRepository;
+    private UserRepository userRepository;
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
     }
+
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(x -> users.add(x));
@@ -56,7 +61,7 @@ public class UserService {
         u1.setLastName("Kowalski");
         u1.setAdmin(isAdmin);
         u1.setEmail("email");
-        u1.setPassword("haslo");
+        u1.setPassword(passwordEncoder.encode("haslo"));
         u1.setPhoneNumber("666 746 666");
 
         Set<UserRole> roles = new HashSet<>();
@@ -79,7 +84,7 @@ public class UserService {
         u2.setFirstName("Janina");
         u2.setLastName("Nowak");
         u2.setEmail("janina@gmail.com");
-        u2.setPassword("haslo");
+        u2.setPassword(passwordEncoder.encode("haslo"));
         u2.setPhoneNumber("123 456 789");
 
         UserRole role2 = new UserRole();
@@ -97,7 +102,7 @@ public class UserService {
     }
 
     public void addUserWitRole(User user, UserRole userRole) {
-    	
+
         userRoleRepository.save(userRole);
         user.getRoles().add(userRole);
         userRepository.save(user);
@@ -105,5 +110,9 @@ public class UserService {
 
     public User getUserByNameAndLastName(String name, String lastName) {
         return userRepository.findUserByFirstNameAndLastName(name, lastName);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }
