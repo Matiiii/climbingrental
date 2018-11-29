@@ -38,8 +38,13 @@ public class UserService {
         return users;
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void saveUsers(List<User> users){
+        users.forEach(this::saveUser);
     }
 
     public User findUserById(Long id) {
@@ -61,7 +66,7 @@ public class UserService {
         u1.setLastName("Kowalski");
         u1.setAdmin(isAdmin);
         u1.setEmail("email");
-        u1.setPassword(passwordEncoder.encode("haslo"));
+        u1.setPassword("haslo");
         u1.setPhoneNumber("666 746 666");
 
         Set<UserRole> roles = new HashSet<>();
@@ -84,13 +89,14 @@ public class UserService {
         u2.setFirstName("Janina");
         u2.setLastName("Nowak");
         u2.setEmail("janina@gmail.com");
-        u2.setPassword(passwordEncoder.encode("haslo"));
+        u2.setPassword("haslo");
         u2.setPhoneNumber("123 456 789");
 
+        Set<UserRole> roles2 = new HashSet<>();
         UserRole role2 = new UserRole();
         role2.setRole("ROLE_USER");
-        roles.add(role2);
-        u2.setRoles(roles);
+        roles2.add(role2);
+        u2.setRoles(roles2);
 
         u2.setAdmin(false);
         mockUsers.add(u2);
@@ -111,6 +117,7 @@ public class UserService {
     public User getUserByNameAndLastName(String name, String lastName) {
         return userRepository.findUserByFirstNameAndLastName(name, lastName);
     }
+
 
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
