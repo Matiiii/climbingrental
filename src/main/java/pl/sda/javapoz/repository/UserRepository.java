@@ -7,9 +7,9 @@ import pl.sda.javapoz.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    User findByEmail(String email);
+    User findUserByEmail(String email);
 
-    User findByFirstNameAndLastName(String firstName, String lastName);
+    User findUserByFirstNameAndLastName(String firstName, String lastName);
 
 
 }
