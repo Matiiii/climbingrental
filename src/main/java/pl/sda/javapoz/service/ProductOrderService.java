@@ -23,10 +23,6 @@ public class ProductOrderService {
         this.productOrderRepository = productOrderRepository;
     }
 
-    public ProductOrder findProductOrderById(Long id) {
-        return productOrderRepository.findOne(id);
-    }
-
     public void saveOrder(User userId, Product productId, Date orderStart, Date orderEnd) {
         productOrderRepository.save(new ProductOrder(userId, productId, orderStart, orderEnd));
     }
@@ -37,17 +33,16 @@ public class ProductOrderService {
 
     public ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder) {
         Double price = productOrder.getProductId().getPrice();
-        Date productOrderStart = productOrder.getOrderStart();
-        Date productOrderEnd = productOrder.getOrderEnd();
-        Double lengthOfOrder = Double.valueOf(productOrderEnd.getTime() - productOrderStart.getTime()) / (1000 * 60 * 60 * 24);
+        Long productOrderStartTime = productOrder.getOrderStart().getTime();
+        Long productOrderEndTime = productOrder.getOrderEnd().getTime();
+        Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime) / (1000 * 60 * 60 * 24);
         productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
 
     public Double getPriceOfOrderedProducts(List<ProductOrder> productOrders) {
         Double sum = 0.0;
-        for (ProductOrder productOrder :
-                productOrders) {
+        for (ProductOrder productOrder : productOrders) {
             sum += getPriceOfOrderedProduct(productOrder).getCombinedPrice();
         }
         return sum;

@@ -24,7 +24,7 @@ public class Application {
 
     @Autowired
     NewsRepository newsRepository;
-    
+
     @Autowired
     private ProductOrderRepository productOrderRepository;
 

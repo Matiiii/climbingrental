@@ -8,7 +8,7 @@ import pl.sda.javapoz.model.News;
 import pl.sda.javapoz.model.Pagination;
 import pl.sda.javapoz.repository.NewsRepository;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,19 +25,17 @@ public class NewsService {
     }
 
     public List<News> findAllNews() {
-        List<News> newsList = new ArrayList<>();
-        newsRepository.findAll().forEach(news -> newsList.add(news));
+        List<News> newsList = new LinkedList<>();
+        newsRepository.findAll().forEach(newsList::add);
         return newsList;
     }
 
     public News findNewsById(Long id) {
-        News news = newsRepository.findOne(id);
-        return news;
+        return newsRepository.findOne(id);
     }
 
     public List<News> findFiveNews(Integer page) {
-        List<News> listOfFiveNews = newsRepository.findByNews(page);
-        return listOfFiveNews;
+        return newsRepository.findByNews(page);
     }
 
     public Pagination getPaginationForPage(Integer page) {
@@ -50,19 +48,15 @@ public class NewsService {
     }
 
     public Set<Link> findAllTag() {
-        List<News> newses = findAllNews();
-        Set<Link> collect = newses.stream()
-                .map(e -> e.getTag())
-                .map(e -> new Link(StringUtils.capitalize(e), "/?tag=" + e))
-                .collect(Collectors.toSet());
+        List<News> news = findAllNews();
 
-        return collect;
+        return news.stream()
+                .map(News::getTag)
+                .map(n -> new Link(StringUtils.capitalize(n), "/?tag=" + n))
+                .collect(Collectors.toSet());
     }
 
     public List<News> findNewsByTag(String tag) {
-        List<News> newsByTag = newsRepository.findNewsByTag(tag);
-        return newsByTag;
+        return newsRepository.findNewsByTag(tag);
     }
-
-
 }
