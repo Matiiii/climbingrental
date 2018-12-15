@@ -86,10 +86,10 @@ public class ProductService {
 
     private List<CountProducts> addProductsWithTimeToList(Set<Product> set, Date start, Date end) {
         List<CountProducts> list = new LinkedList<>();
-        set.forEach(product -> list.add(new CountProducts(product, countProductsByNameAndTime(product.getProductName(), start, end)));
+        set.forEach(product -> list.add(new CountProducts(product, countProductsByNameAndTime(product.getProductName(), start, end))));
         return list;
     }
-    
+
     public Set<Link> findRelatedProducts(Product product) {
         List<String> tagsInProduct = Arrays.asList(product.getTags().split(";"));
 
