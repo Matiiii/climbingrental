@@ -52,14 +52,14 @@ public class ShopController {
         modelAndView.addObject("filterProducts", new FilterProducts());
 
         if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllProductsByName());
+            modelAndView.addObject("countProducts", productService.countAllProductsByName());
         } else if (!"".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllProductsByNameFiltered(prodName));
+            modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
         } else if ("".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllAvailableProductsByName(formatter.parse(orderStart),
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(formatter.parse(orderStart),
                     formatter.parse(orderEnd)));
         } else if (!"".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
                     formatter.parse(orderEnd), prodName));
         }
 

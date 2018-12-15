@@ -28,74 +28,15 @@ public class ProductService {
         return productRepository.findOne(id);
     }
 
-    public List<Product> fetchProducts() {
-        List<Product> products = new ArrayList<Product>();
-        Iterable<Product> iterable = productRepository.findAll();
-        iterable.forEach(products::add);
-
-        return products;
-    }
-
-
     public List<Product> findAllProducts() {
-        List<Product> products = new ArrayList<>();
-        Iterable<Product> iterable = productRepository.findAll();
-        iterable.forEach(products::add);
+        List<Product> products = new LinkedList<>();
+        productRepository.findAll().forEach(products::add);
 
         return products;
-    }
-
-    public Set<Product> findAllUniqueProducts() {
-        Set<Product> products = new HashSet<>();
-        Iterable<Product> iterable = productRepository.findAll();
-        iterable.forEach(products::add);
-
-        return products;
-    }
-
-    public Set<Link> findAllTags() {
-        List<Product> products = findAllProducts();
-        Set<Link> collect = products.stream()
-                .map(e -> e.getTags())
-                .map(e -> new Link(StringUtils.capitalize(e), "/shop?category=" + e))
-                .collect(Collectors.toSet());
-
-        return collect;
-    }
-
-    public Set<Link> findProductByTags(String tag) {
-        List<Product> products = findAllProducts();
-        Set<Link> collect =
-                products.stream()
-                        .filter(e -> {
-                            List<String> tags = Arrays.asList(e.getTags().split(";"));
-                            return tags.contains(tag);
-                        })
-                        .map(e -> new Link(StringUtils.capitalize(e.getProductName()), "/shop?category=" + e))
-                        .collect(Collectors.toSet());
-
-        return collect;
     }
 
     public Set<Product> findProductByName() {
-
-        List<Product> list = findAllProducts();
-        Set<Product> products = new HashSet<>(list);
-
-        return products;
-    }
-
-    public List<Product> findAllProductByName(Product prod) {
-        return productRepository.findByProductName(prod.getProductName());
-
-    }
-
-    public List<Product> findAllProductByTags(Product prod) {
-        return productRepository.findByTags(prod.getTags());
-    }
-
-    public List<Product> findAllProductByProductNamesAndTags(Product prod) {
-        return productRepository.findByProductNameAndTags(prod.getProductName(), prod.getTags());
+        return new HashSet<>(findAllProducts());
     }
 
     public Set<Product> findAllProductsByProductNameOrTags(String productNameOrTag) {
@@ -103,9 +44,7 @@ public class ProductService {
     }
 
     public Integer countProductsByName(String name) {
-
-        List<Product> list = productRepository.findByProductName(name);
-        return list.size();
+        return productRepository.findByProductName(name).size();
     }
 
     public Integer countProductsByNameAndTime(String name, Date start, Date end) {
@@ -119,50 +58,38 @@ public class ProductService {
         return cnt;
     }
 
-    public List<CountProducts> contAllProductsByName() {
+    public List<CountProducts> countAllProductsByName() {
         Set<Product> set = findProductByName();
-        List<CountProducts> list = new ArrayList<>();
-        for (Product product : set) {
-            String name = product.getProductName();
-            Integer count = countProductsByName(name);
-            list.add(new CountProducts(product, count));
-        }
-        return list;
+        return addProductsToList(set);
     }
 
-    public List<CountProducts> contAllProductsByNameFiltered(String name) {
+    public List<CountProducts> countAllProductsByNameFiltered(String name) {
         Set<Product> set = findAllProductsByProductNameOrTags(name);
-        List<CountProducts> list = new ArrayList<>();
-        for (Product product : set) {
-            String nameUnique = product.getProductName();
-            Integer count = countProductsByName(nameUnique);
-            list.add(new CountProducts(product, count));
-        }
+        return addProductsToList(set);
+    }
+
+    private List<CountProducts> addProductsToList(Set<Product> set) {
+        List<CountProducts> list = new LinkedList<>();
+        set.forEach(product -> list.add(new CountProducts(product, countProductsByName(product.getProductName()))));
         return list;
     }
 
-    public List<CountProducts> contAllAvailableProductsByName(Date start, Date end) {
+    public List<CountProducts> countAllAvailableProductsByName(Date start, Date end) {
         Set<Product> set = findProductByName();
-        List<CountProducts> list = new ArrayList<>();
-        for (Product product : set) {
-            String name = product.getProductName();
-            Integer count = countProductsByNameAndTime(name, start, end);
-            list.add(new CountProducts(product, count));
-        }
-        return list;
+        return addProductsWithTimeToList(set, start, end);
     }
 
-    public List<CountProducts> contAllAvailableProductsByNameFiltered(Date start, Date end, String name) {
+    public List<CountProducts> countAllAvailableProductsByNameFiltered(Date start, Date end, String name) {
         Set<Product> set = findAllProductsByProductNameOrTags(name);
-        List<CountProducts> list = new ArrayList<>();
-        for (Product product : set) {
-            String nameUnique = product.getProductName();
-            Integer count = countProductsByNameAndTime(nameUnique, start, end);
-            list.add(new CountProducts(product, count));
-        }
-        return list;
+        return addProductsWithTimeToList(set, start, end);
     }
 
+    private List<CountProducts> addProductsWithTimeToList(Set<Product> set, Date start, Date end) {
+        List<CountProducts> list = new LinkedList<>();
+        set.forEach(product -> list.add(new CountProducts(product, countProductsByNameAndTime(product.getProductName(), start, end)));
+        return list;
+    }
+    
     public Set<Link> findRelatedProducts(Product product) {
         List<String> tagsInProduct = Arrays.asList(product.getTags().split(";"));
 
