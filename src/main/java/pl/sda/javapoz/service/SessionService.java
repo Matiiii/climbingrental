@@ -9,8 +9,7 @@ import pl.sda.javapoz.repository.UserRepository;
 @Service
 public class SessionService {
 
-
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public SessionService(UserRepository userRepository) {

@@ -18,8 +18,6 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    private static final String DEFAULT_ROLE = "ROLE_USER";
-
     private UserRepository userRepository;
     private UserRoleRepository userRoleRepository;
 
@@ -32,12 +30,6 @@ public class UserService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    public List<User> findAllUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(x -> users.add(x));
-        return users;
-    }
-
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -47,68 +39,7 @@ public class UserService {
         users.forEach(this::saveUser);
     }
 
-    public User findUserById(Long id) {
-        return userRepository.findOne(id);
-    }
-
-    public List<User> createMockUser(Boolean isAdmin) {
-        List<User> mockUsers = new ArrayList<>();
-
-        User u1 = new User();
-        Address address1 = new Address();
-        address1.setCity("Poznan");
-        address1.setZipcode("61-142");
-        address1.setFlatNumber("15");
-        address1.setStreet("Maltanska");
-        u1.setAddress(address1);
-
-        u1.setFirstName("Andrzej");
-        u1.setLastName("Kowalski");
-        u1.setAdmin(isAdmin);
-        u1.setEmail("email");
-        u1.setPassword("haslo");
-        u1.setPhoneNumber("666 746 666");
-
-        Set<UserRole> roles = new HashSet<>();
-        UserRole role1 = new UserRole();
-        role1.setRole("ROLE_ADMIN");
-        roles.add(role1);
-        u1.setRoles(roles);
-
-        u1.setAdmin(true);
-        mockUsers.add(u1);
-
-        User u2 = new User();
-        Address address = new Address();
-        address.setCity("Poznan");
-        address.setZipcode("60-100");
-        address.setFlatNumber("8");
-        address.setStreet("Baraniaka");
-        u2.setAddress(address);
-
-        u2.setFirstName("Janina");
-        u2.setLastName("Nowak");
-        u2.setEmail("janina@gmail.com");
-        u2.setPassword("haslo");
-        u2.setPhoneNumber("123 456 789");
-
-        Set<UserRole> roles2 = new HashSet<>();
-        UserRole role2 = new UserRole();
-        role2.setRole("ROLE_USER");
-        roles2.add(role2);
-        u2.setRoles(roles2);
-
-        u2.setAdmin(false);
-        mockUsers.add(u2);
-        return mockUsers;
-    }
-
-    public User getMockUserFromDatabase() {
-        return userRepository.findOne(1l);
-    }
-
-    public void addUserWitRole(User user, UserRole userRole) {
-
+    public void addUserWithRole(User user, UserRole userRole) {
         userRoleRepository.save(userRole);
         user.getRoles().add(userRole);
         userRepository.save(user);
@@ -117,7 +48,6 @@ public class UserService {
     public User getUserByNameAndLastName(String name, String lastName) {
         return userRepository.findUserByFirstNameAndLastName(name, lastName);
     }
-
 
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);

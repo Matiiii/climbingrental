@@ -29,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MyUserDetailService myUserDetailService;
 
     @Autowired
-    public SecurityConfig(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, FacebookConnectionSignup facebookConnectionSignup, UserService userService, MyUserDetailService myUserDetailService) {
+    public SecurityConfig(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, UserService userService, MyUserDetailService myUserDetailService, FacebookConnectionSignup facebookConnectionSignup) {
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.usersConnectionRepository = usersConnectionRepository;
-        this.facebookConnectionSignup = facebookConnectionSignup;
         this.userService = userService;
         this.myUserDetailService = myUserDetailService;
+        this.facebookConnectionSignup = facebookConnectionSignup;
     }
 
     @Bean

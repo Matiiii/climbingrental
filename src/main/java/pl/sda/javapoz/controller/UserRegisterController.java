@@ -48,7 +48,7 @@ public class UserRegisterController {
                 role.setRole("ROLE_USER");
                 user.setAdmin(false);
             }
-            userService.addUserWitRole(user, role);
+            userService.addUserWithRole(user, role);
             return "redirect:/login";
         }
     }

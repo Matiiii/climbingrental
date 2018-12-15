@@ -36,7 +36,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp {
         user.setPhoneNumber("N/A");
         UserRole role = new UserRole();
         role.setRole("ROLE_USER");
-        userService.addUserWitRole(user, role);
+        userService.addUserWithRole(user, role);
         return user.getFirstName() + " " + user.getLastName();
     }
 }
