@@ -1,77 +1,17 @@
-
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: head">
+<head>
+<link th:include="fragments/header :: head" th:remove="tag" />
 
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
-    <title>Sprzęt wspinaczkowy</title>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
-
-
-
-    <!-- Custom css -->
-    
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css"  />
-    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
-          rel="stylesheet"/>
-
-    <!-- products css -->
-    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
 </head>
 
 <body>
 
 <!-- Navigation -->
-<div th:replace="fragments/header :: header">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse"
-                 id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" th:each="link : ${navbarLinks}">
-                    <li><a th:if="${link.active}" href=" #" th:href="${link.link}"
-                           th:text="${link.name}">About</a></li>
-                </ul>
-                <form sec:authorize="isAuthenticated()" th:action="@{/logout}"
-                      method="post">
-                    <input type="submit" value="Sign Out"/>
-                </form>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<div th:replace="fragments/header :: navbar">
+   
 </div>
 
 	<!-- Page Content -->
