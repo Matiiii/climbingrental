@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.ProductOrder;
 import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.repository.UserRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.SessionService;
-import pl.sda.javapoz.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
