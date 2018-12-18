@@ -1,60 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:replace="fragments/header :: head">
-
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
-    <title>admin page</title>
-
-    <!-- Bootstrap Core css -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../static/ss/bootstrap.min.css"/>
-
-    <!-- Custom css -->
-    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
-          rel="stylesheet"/>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <link th:href="@{/css/label.css}" href="../static/css/label.css" rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/linkForm.css}" href="../static/css/linkForm.css" rel="stylesheet" media="screen"/>
+<head>
+<link th:include="fragments/header :: head" th:remove="tag" />
+<link th:href="@{/css/linkForm.css}" href="../static/css/linkForm.css" rel="stylesheet" media="screen"/>
 
 </head>
 
 <body>
 
 <!-- Navigation -->
-<div th:replace="fragments/header :: header">
-    <!-- ============================================================================ -->
-    <!-- This content is only used for static prototyping purposes (natural templates)-->
-    <!-- and is therefore entirely optional, as this markup fragment will be included -->
-    <!-- from "fragments/header.html" at runtime.                                     -->
-    <!-- ============================================================================ -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Toggle navigation - static</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">About</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<div th:replace="fragments/header :: navbar">
 </div>
 
 <div class="container">

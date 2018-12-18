@@ -10,3 +10,10 @@
 .textarea {
     margin-bottom: 8px;
 }
+div ul li a {
+	margin-right: 5px;
+}
+
+.img-responsive {
+	max-width: 150px;
+}

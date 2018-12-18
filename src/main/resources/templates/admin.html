@@ -1,61 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-
-<head th:replace="fragments/header :: head">
-
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
-    <title>Wypożyczalnia sprzętu wspinaczkowego</title>
-
-    <!-- Bootstrap Core CSS -->
-    <!-- Latest compiled and minified CSS -->
-   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../static/css/bootstrap.min.css" />
-    <!--UI CSS-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 
-    <!-- Custom CSS -->
-    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
-          rel="stylesheet"/>
-    <link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
-
-    <!-- jQuery -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<head>
+<link th:include="fragments/header :: head" th:remove="tag" />
+<link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
 </head>
 
 <body>
 
+
 <!-- Navigation -->
-<div th:replace="fragments/header :: header">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Wypożyczalnia sprzętu górskiego</a>
-            </div>
-        </div>
-        <!-- /.container -->
-    </nav>
+<div th:replace="fragments/header :: navbar">
 </div>
+
 
 <!-- Page Content -->
 <div class="container">
@@ -71,19 +29,19 @@
 
             <div class="container">
                 <div class="navigation">
-                    <ul class="nav nav-pills head-menu">
-                        <li class="active"><a href="#newsy" data-toggle="pill">Newsy</a></li>
+                    <ul class="nav nav-tabs head-menu">
+                        <li class="active"><a href="#newsy" data-toggle="tab">Newsy</a></li> 
                         <li>
-                            <a href="#produkty" data-toggle="pill">Produkty</a>
+                            <a href="#produkty" data-toggle="tab">Produkty</a>
                         </li>
                         <li>
-                            <a href="#dodaj-produkt" data-toggle="pill">Dodaj produkt</a>
+                            <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
                         </li>
                         <li>
-                            <a href="#aktualne-zamowienia" data-toggle="pill">Aktualne zamówienia</a>
+                            <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
                         </li>
                         <li>
-                            <a href="#dodaj-link" data-toggle="pill">Dodaj link</a>
+                            <a href="#dodaj-link" data-toggle="tab">Dodaj link</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -106,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="produkty">
+                        <div class="tab-pane fade" id="produkty">
                             <div class="col-md-12">
                                 <div class="list-group">
                                     <table class="table table-hover">
@@ -151,7 +109,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="dodaj-produkt">
+                        <div class="tab-pane fade" id="dodaj-produkt">
                             <div class="col-md-12">
                                 <div class="container product">
 
@@ -219,7 +177,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="aktualne-zamowienia">
+                        <div class="tab-pane fade" id="aktualne-zamowienia">
                             <div class="col-md-12">
                                 <div class="list-group">
                                     <table class="table table-hover">
@@ -274,7 +232,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="dodaj-link">
+                        <div class="tab-pane fade" id="dodaj-link">
                             <div class="col-md-12">
                                 <div class="container">
                                     <div class="row">

@@ -6,3 +6,7 @@
     margin: 2px;
     min-width: 80px;
 }
+
+.right {
+	float: right;
+}
