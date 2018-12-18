@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.FilterProducts;
 import pl.sda.javapoz.model.Product;
-import pl.sda.javapoz.service.NavbarLinkService;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
 
@@ -17,13 +16,11 @@ import java.text.SimpleDateFormat;
 @Controller
 public class ShopController {
 
-    private NavbarLinkService navbarLinkService;
     private NewsService newsService;
     private ProductService productService;
 
     @Autowired
-    public ShopController(NavbarLinkService navbarLinkService, NewsService newsService, ProductService productService) {
-        this.navbarLinkService = navbarLinkService;
+    public ShopController(NewsService newsService, ProductService productService) {
         this.newsService = newsService;
         this.productService = productService;
     }
@@ -31,7 +28,6 @@ public class ShopController {
     @GetMapping(value = "/")
     public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
         ModelAndView modelAndView = new ModelAndView("shop");
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
@@ -48,18 +44,17 @@ public class ShopController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new Product());
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
         if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllProductsByName());
+            modelAndView.addObject("countProducts", productService.countAllProductsByName());
         } else if (!"".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllProductsByNameFiltered(prodName));
+            modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
         } else if ("".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllAvailableProductsByName(formatter.parse(orderStart),
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(formatter.parse(orderStart),
                     formatter.parse(orderEnd)));
         } else if (!"".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.contAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
                     formatter.parse(orderEnd), prodName));
         }
 

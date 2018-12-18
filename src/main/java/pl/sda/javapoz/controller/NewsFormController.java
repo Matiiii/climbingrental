@@ -8,23 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.News;
 import pl.sda.javapoz.repository.NewsRepository;
-import pl.sda.javapoz.service.NavbarLinkService;
 
 @Controller
 public class NewsFormController {
 
-    NewsRepository newsRepository;
-    NavbarLinkService navbarLinkService;
+    private NewsRepository newsRepository;
 
     @Autowired
-    public NewsFormController(NewsRepository newsRepository, NavbarLinkService navbarLinkService) {
+    public NewsFormController(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
-        this.navbarLinkService = navbarLinkService;
     }
 
     @GetMapping("/newsForm")
     public ModelAndView showNews(ModelAndView modelAndView) {
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("news", new News());
         return modelAndView;
     }

@@ -3,15 +3,15 @@ package pl.sda.javapoz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.sda.javapoz.model.NavbarLink;
-import pl.sda.javapoz.model.News;
-import pl.sda.javapoz.model.Product;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.*;
 import pl.sda.javapoz.repository.*;
 import pl.sda.javapoz.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 public class Application {
@@ -24,9 +24,6 @@ public class Application {
 
     @Autowired
     NewsRepository newsRepository;
-    
-    @Autowired
-    private ProductOrderRepository productOrderRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -40,7 +37,54 @@ public class Application {
     @PostConstruct
     public void initDatabase() {
 
-        List<User> mockUsers = userService.createMockUser(true);
+        List<User> mockUsers = new ArrayList<>();
+
+        User u1 = new User();
+        Address address1 = new Address();
+        address1.setCity("Poznan");
+        address1.setZipcode("61-142");
+        address1.setFlatNumber("15");
+        address1.setStreet("Maltanska");
+        u1.setAddress(address1);
+
+        u1.setFirstName("Andrzej");
+        u1.setLastName("Kowalski");
+        u1.setAdmin(true);
+        u1.setEmail("email");
+        u1.setPassword("haslo");
+        u1.setPhoneNumber("666 746 666");
+
+        Set<UserRole> roles = new HashSet<>();
+        UserRole role1 = new UserRole();
+        role1.setRole("ROLE_ADMIN");
+        roles.add(role1);
+        u1.setRoles(roles);
+
+        u1.setAdmin(true);
+        mockUsers.add(u1);
+
+        User u2 = new User();
+        Address address = new Address();
+        address.setCity("Poznan");
+        address.setZipcode("60-100");
+        address.setFlatNumber("8");
+        address.setStreet("Baraniaka");
+        u2.setAddress(address);
+
+        u2.setFirstName("Janina");
+        u2.setLastName("Nowak");
+        u2.setEmail("janina@gmail.com");
+        u2.setPassword("haslo");
+        u2.setPhoneNumber("123 456 789");
+
+        Set<UserRole> roles2 = new HashSet<>();
+        UserRole role2 = new UserRole();
+        role2.setRole("ROLE_USER");
+        roles2.add(role2);
+        u2.setRoles(roles2);
+
+        u2.setAdmin(false);
+        mockUsers.add(u2);
         userService.saveUsers(mockUsers);
         productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask, asekuracja, wspinaczka"));
         productRepository.save(new Product("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask, asekuracja, wspinaczka"));

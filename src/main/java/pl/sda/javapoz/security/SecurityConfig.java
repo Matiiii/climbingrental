@@ -11,35 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInController;
-import pl.sda.javapoz.service.FacebookConnectionSignup;
-import pl.sda.javapoz.service.UserService;
 
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private ConnectionFactoryLocator connectionFactoryLocator;
-    private UsersConnectionRepository usersConnectionRepository;
-    private FacebookConnectionSignup facebookConnectionSignup;
-    private UserService userService;
     private MyUserDetailService myUserDetailService;
 
     @Autowired
-    public SecurityConfig(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository, FacebookConnectionSignup facebookConnectionSignup, UserService userService, MyUserDetailService myUserDetailService) {
-        this.connectionFactoryLocator = connectionFactoryLocator;
-        this.usersConnectionRepository = usersConnectionRepository;
-        this.facebookConnectionSignup = facebookConnectionSignup;
-        this.userService = userService;
+    public SecurityConfig(MyUserDetailService myUserDetailService) {
         this.myUserDetailService = myUserDetailService;
-    }
-
-    @Bean
-    public CustomLogoutHandler customLogoutHandler() {
-        return new CustomLogoutHandler();
     }
 
     @Override
@@ -59,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login")
                 .and()
                 .logout()
-                .addLogoutHandler(customLogoutHandler())
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 
@@ -86,16 +66,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public ProviderSignInController providerSignInController() {
-        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
-                .setConnectionSignUp(facebookConnectionSignup);
-
-        return new ProviderSignInController(
-                connectionFactoryLocator,
-                usersConnectionRepository,
-                new FacebookSignInAdapter(userService));
     }
 }
