@@ -7,20 +7,17 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.NavbarLink;
 import pl.sda.javapoz.model.Product;
 import pl.sda.javapoz.model.ProductOrder;
-import pl.sda.javapoz.service.NavbarLinkService;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
 
 @Controller
 public class AdminController {
 
-    private NavbarLinkService navbarLinkService;
     private ProductOrderService productOrderService;
     private ProductService productService;
 
     @Autowired
-    public AdminController(NavbarLinkService navbarLinkService, ProductOrderService productOrderService, ProductService productService) {
-        this.navbarLinkService = navbarLinkService;
+    public AdminController(ProductOrderService productOrderService, ProductService productService) {
         this.productOrderService = productOrderService;
         this.productService = productService;
     }
@@ -30,7 +27,6 @@ public class AdminController {
 
         modelAndView.setViewName("admin");
         modelAndView.addObject("navbarLink", new NavbarLink());
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         modelAndView.addObject("productList", productService.findAllProducts());
         modelAndView.addObject("addProduct", new Product());
@@ -43,7 +39,6 @@ public class AdminController {
         modelAndView.setViewName("redirect:/shop");
         productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags());
         modelAndView.addObject("addProduct", product);
-        navbarLinkService.save(navbarLink);
         return modelAndView;
     }
 

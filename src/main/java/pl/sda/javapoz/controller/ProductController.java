@@ -2,14 +2,12 @@ package pl.sda.javapoz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.Info;
 import pl.sda.javapoz.model.Product;
 import pl.sda.javapoz.model.ProductOrder;
 import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.service.NavbarLinkService;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
 import pl.sda.javapoz.service.SessionService;
@@ -22,14 +20,12 @@ public class ProductController {
 
     private ProductService productService;
     private ProductOrderService productOrderService;
-    private NavbarLinkService navbarLinkService;
     private SessionService sessionService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductOrderService productOrderService, NavbarLinkService navbarLinkService, SessionService sessionService) {
+    public ProductController(ProductService productService, ProductOrderService productOrderService, SessionService sessionService) {
         this.productService = productService;
         this.productOrderService = productOrderService;
-        this.navbarLinkService = navbarLinkService;
         this.sessionService = sessionService;
     }
 
@@ -39,7 +35,6 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("product");
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrder());
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         return modelAndView;
     }
@@ -53,7 +48,6 @@ public class ProductController {
         Date productOrderEnd = productOrder.getOrderEnd();
         modelAndView.addObject("product", productById);
         modelAndView.addObject("productOrder", new ProductOrder());
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         User loggedUser = sessionService.getCurrentUser();
 

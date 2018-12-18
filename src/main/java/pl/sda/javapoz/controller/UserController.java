@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.ProductOrder;
 import pl.sda.javapoz.model.User;
 import pl.sda.javapoz.repository.UserRepository;
-import pl.sda.javapoz.service.NavbarLinkService;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.SessionService;
 import pl.sda.javapoz.service.UserService;
@@ -20,17 +19,11 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
 
-    private UserRepository userRepository;
-    private UserService userService;
-    private NavbarLinkService navbarLinkService;
     private ProductOrderService productOrdersService;
     private SessionService sessionService;
 
     @Autowired
-    public UserController(UserRepository userRepository, UserService userService, NavbarLinkService navbarLinkService, ProductOrderService productOrdersService, SessionService sessionService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.navbarLinkService = navbarLinkService;
+    public UserController(ProductOrderService productOrdersService, SessionService sessionService) {
         this.productOrdersService = productOrdersService;
         this.sessionService = sessionService;
     }
@@ -39,7 +32,6 @@ public class UserController {
     public ModelAndView getUserPage(Authentication authentication, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView("user");
-        modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
         User currentUser = sessionService.getCurrentUser();
         modelAndView.addObject("user", currentUser);
         List<ProductOrder> productByUserId = productOrdersService.findProductByUserId(currentUser.getId());

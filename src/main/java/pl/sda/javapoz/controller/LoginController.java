@@ -6,22 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.service.NavbarLinkService;
 
 
 @Controller
 public class LoginController {
-	
-        private NavbarLinkService navbarLinkService;
 
         @Autowired
-        public LoginController(NavbarLinkService navbarLinkService) {
-            this.navbarLinkService = navbarLinkService;
+        public LoginController() {
         }
 
         @GetMapping("/login")
         public String showContact(ModelAndView modelAndView) {
-            modelAndView.addObject("navbarLinks", navbarLinkService.fetchLinks());
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("/login");
             return "login";
