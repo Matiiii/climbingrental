@@ -35,7 +35,7 @@ public class ShopController {
         return modelAndView;
     }
 
-    
+
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "orderStart", defaultValue = "") String orderStart,

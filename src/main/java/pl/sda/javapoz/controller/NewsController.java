@@ -21,8 +21,8 @@ public class NewsController {
     }
 
     @GetMapping("/news/{id}")
-    public ModelAndView modelAndView(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("news");
+    public ModelAndView modelAndView(@PathVariable Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("news");
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         News news = newsService.findNewsById(id);
         modelAndView.addObject("news", news);

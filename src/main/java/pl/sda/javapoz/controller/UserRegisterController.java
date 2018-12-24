@@ -24,8 +24,8 @@ public class UserRegisterController {
     }
 
     @GetMapping("/register")
-    public ModelAndView modelAndView() {
-        ModelAndView modelAndView = new ModelAndView("register");
+    public ModelAndView registrationPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("register");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }

@@ -30,9 +30,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ModelAndView showProduct(@PathVariable Long id) {
-
-        ModelAndView modelAndView = new ModelAndView("product");
+    public ModelAndView showProduct(@PathVariable Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("product");
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrder());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
@@ -40,9 +39,8 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}")
-    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrder productOrder) {
-
-        ModelAndView modelAndView = new ModelAndView("product");
+    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrder productOrder, ModelAndView modelAndView) {
+        modelAndView.setViewName("product");
         Product productById = productService.findProductById(id);
         Date productOrderStart = productOrder.getOrderStart();
         Date productOrderEnd = productOrder.getOrderEnd();
@@ -65,8 +63,7 @@ public class ProductController {
     @GetMapping("/products-availability/{id}")
     @ResponseBody
     public List<String> getAvailabilitiesForProduct(@PathVariable Long id) {
-        List<String> dates = productOrderService.getListOfDatesWhenProductIsReserved(id);
-        return dates;
+        return productOrderService.getListOfDatesWhenProductIsReserved(id);
     }
 
 }
