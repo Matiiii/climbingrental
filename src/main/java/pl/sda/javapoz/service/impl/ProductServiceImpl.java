@@ -110,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
 
         return products.stream().filter(e -> CollectionUtils.containsAny(Arrays.asList(e.getTags().split(";")), tagsInProduct))
                 .map(e -> new Link(StringUtils.capitalize(e.getProductName()), "/product/" + e.getId()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Link::getName))));
     }
 
     @Override

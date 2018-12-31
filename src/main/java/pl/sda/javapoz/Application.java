@@ -131,7 +131,7 @@ public class Application {
                 "\n" +
                 "Ergonomiczna i szeroka rączka pokryta elastomerem zapewnia jednocześnie wygodny i mocny uchwyt. Powierzchnia uchwytu rozszerza się na dole by zmniejszyć ucisk na mały palec przy obciążaniu przyrządu. Ulepszono ergonomię na wysokości kciuka by ułatwić przesuwanie ASCENSION po linie.\n" +
                 "\n" +
-                "Język z zębami o większym niż dotychczas nachyleniu zapewnia działanie przyrządu w złych warunkach, zmniejszając tarcie w czasie przesuwania. Geometria uchwytu, zrobionego z jednego kawałka aluminium, eliminuje zjawisko niechcianej i utrudniającej przesuwanie dźwigni.", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "https://www.polarspof93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "malpa, petzl, asekuracja, wspinaczka"));
+                "Język z zębami o większym niż dotychczas nachyleniu zapewnia działanie przyrządu w złych warunkach, zmniejszając tarcie w czasie przesuwania. Geometria uchwytu, zrobionego z jednego kawałka aluminium, eliminuje zjawisko niechcianej i utrudniającej przesuwanie dźwigni.", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "malpa, petzl, asekuracja, wspinaczka"));
 
 
         productRepository.save(new Product("PETZL ASCENSION P B17WRA", 3.00, "Ergonomiczny przyrząd zaciskowy do wychodzenia po linie. Parametry ASCENSION zostały zmodyfikowane - zwiększając  komfort, skuteczność i łatwość użytkowania.\n" +

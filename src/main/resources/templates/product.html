@@ -16,38 +16,32 @@
 
 	<!-- Page Content -->
 	<div class="container">
-
 		<div class="row">
-
-			<div class="col-md-3">
+			<div class="d-none d-md-block col-md-3">
 				<p class="lead">Powiązane produkty:</p>
 				<div class="list-group">
 					<a th:each="tag : ${tags}" th:text="${tag.name}"
 						th:href="${tag.link}" class="list-group-item">Category</a>
 				</div>
 			</div>
-
-			<div class="col-md-9">
+			<div class="col-sm-12 col-md-9">
                 <div th:if="${info != null and info.status == true}"  th:utext="${info.message}"  class="alert alert-success">status produktu</div>
                 <div th:if="${info != null and info.status == false}"  th:utext="${info.message}"  class="alert alert-danger">status produktu</div>
-
-
-
-
+                
             <div class="thumbnail">
                 <br class="caption-full">
-                <div class="col-lg-6">
+                <div class="col">
                     <h4> <div align="pull-right"><a href="#" th:text="${product.productName}">LINY</a></div>
                     </h4></div>
-                <div class="col-lg-6">
+                <div class="col">
                 <h4 class="pull-right" th:text="|${product.price} zł / dzień|">2</h4></div>
                </br>
                 <div class="row">
-                    <div class="col-lg-3"><br/>
+                    <div class="col-sm-6 col-md-6 col-lg-4"><br/>
                         <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
                          th:alt="${product.bigImage}"/>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-sm-6 col-md-6 col-lg-7">
                       <br/><br/>
                     <div align="justify"><p th:text="${product.description}">Lorem ipsum dolor sit amet, mei augue
                         molestie
@@ -63,7 +57,6 @@
                 </div>
                 <hr/>
                 <div align="center">
-
                     <form id="orderForm" th:action="${postOrder}" th:object="${productOrder}" method="post">
                         <p>Wybierz okres, na który chcesz wypożyczyć sprzęt:</p>
                         <label for="from">od:</label>
@@ -75,16 +68,9 @@
                         <div class="form-group">
                             <button align="center" type="submit" class="btn btn-success">Wypożycz</button>
                         </div>
-
 						</form>
-
-
 					</div>
-
-
-
 				</div>
-
 			</div>
 
 			<!-- /.container -->
@@ -139,7 +125,7 @@
                         } catch (error) {
                             date = null;
                         }
-
+0,
                         return date;
                     }
                 });
