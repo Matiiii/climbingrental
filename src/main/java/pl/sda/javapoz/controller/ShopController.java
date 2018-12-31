@@ -26,15 +26,14 @@ public class ShopController {
     }
 
     @GetMapping(value = "/")
-    public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
-        ModelAndView modelAndView = new ModelAndView("shop");
+    public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex, ModelAndView modelAndView) {
+        modelAndView.setViewName("shop");
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         modelAndView.addObject("page", pageIndex);
         return modelAndView;
     }
-
 
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
