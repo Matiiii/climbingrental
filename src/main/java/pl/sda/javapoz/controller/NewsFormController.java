@@ -28,9 +28,9 @@ public class NewsFormController {
 
     @PostMapping("/newsForm")
     public ModelAndView newsForm(@ModelAttribute News news, ModelAndView modelAndView) {
+        modelAndView.setViewName("redirect:/");
         modelAndView.addObject("news", news);
         newsService.addNews(news);
-        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
