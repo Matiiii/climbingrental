@@ -1,7 +1,7 @@
 img {
-	max-width: 300px;
-	margin-top: 10px;
+	max-width: 200px;
+	max-height: 200px;
 }
-.product {
-	margin: 5px;
+.productImg {
+	height: 200px;
 }
