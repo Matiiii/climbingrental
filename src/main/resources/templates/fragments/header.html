@@ -66,6 +66,9 @@
 			    <li class="nav-item" >
 		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{#}" th:text="Koszyk">About</a>
             	</li>
+            	<li class="nav-item" >
+		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
+            	</li>
 		    	<li class="nav-item">
 		    		<form class="form-inline " th:action="@{/logout}"  method="post" id="logout"></form>
 					<a class="nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
