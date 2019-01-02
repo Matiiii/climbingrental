@@ -19,4 +19,6 @@ public interface NewsService {
     Set<Link> findAllTag();
 
     List<News> findNewsByTag(String tag);
+
+    void addNews(News news);
 }
