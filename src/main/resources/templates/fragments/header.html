@@ -38,30 +38,39 @@
 	  </button>
 	  
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		   <div class="nav navbar-nav">
-		    	<a class="nav-item nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
-		    	<a class="nav-item nav-link"  href=" #" th:href="@{/}" th:text="Informacje">About</a>
-		    	<a class="nav-item nav-link"  href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
-		    	<a class="nav-item nav-link"  href=" #" th:href="@{#}" th:text="Regulamin">About</a>
-		    	<a class="nav-item nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
-		    	<a class="nav-item nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
-		    	<a class="nav-item nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}" th:text="Admin">About</a>
-		    	<form th:action="@{/logout}"  method="post" id="logout"></form>
-				<a class="nav-item nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
-		   </div>
-		   <div class="right">
-               		<div sec:authorize="isAuthenticated()">
-               		<p class="hello"> Witaj  
-               			<b sec:authentication="name"></b>!
-               			</p>
-               		
-               			
-               			<b class="hello" sec:authentication="principal.authorities">User</b>
-               			 
-                	</div>
-                 
-
-           </div>
+		   <ul class="nav navbar-nav">
+			   	<li class="nav-item mr-auto mt-2 mt-lg-0">
+			    	<a class="nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
+			   	</li>
+			   	<li class="nav-item">
+			    	<a class="nav-link"  href=" #" th:href="@{/}" th:text="Informacje">About</a>
+			    </li>
+			    <li class="nav-item">
+			    	<a class="nav-link"  href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
+			   	</li>
+			   	<li class="nav-item">
+			   		<a class="nav-link"  href=" #" th:href="@{#}" th:text="Regulamin">About</a>
+			   	</li>
+		    	<li class="nav-item">
+		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
+		    	</li>
+				<li class="nav-item" >
+			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
+			    </li>
+			    <li class="nav-item">
+			    	<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}" th:text="Admin">About</a>
+			    </li>
+		    </ul>
+		    
+		    	<form class="form-inline ml-auto my-lg-0" th:action="@{/logout}"  method="post" id="logout">
+					<a class="nav-item nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+		   		</form>
+		   		
+		   		
+		   	<span class="navbar-text" sec:authorize="isAuthenticated()">
+               		 Witaj <b sec:authentication="name"></b>!
+               	<b class="hello" sec:authentication="principal.authorities">User</b>
+            </span>
 	  </div>
 	</nav>
 </div>
