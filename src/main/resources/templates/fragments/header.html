@@ -36,7 +36,7 @@
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	  
+
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		   <div class="nav navbar-nav">
 		    	<a class="nav-item nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
@@ -51,15 +51,14 @@
 		   </div>
 		   <div class="right">
                		<div sec:authorize="isAuthenticated()">
-               		<p class="hello"> Witaj  
+               		<p class="hello"> Witaj
                			<b sec:authentication="name"></b>!
-               			</p>
-               		
-               			
-               			<b class="hello" sec:authentication="principal.authorities">User</b>
-               			 
+                    </p>
+
+                        <b class="hello" sec:authentication="principal.authorities">User</b>
+
                 	</div>
-                 
+
 
            </div>
 	  </div>

@@ -20,9 +20,6 @@ public class Application {
     private UserService userService;
 
     @Autowired
-    private NavbarLinkRepository navbarLinkRepository;
-
-    @Autowired
     NewsRepository newsRepository;
 
     @Autowired
@@ -191,15 +188,6 @@ public class Application {
         productRepository.save(new Product("Lina 80m Tendon 9,8 (ż/cz)", 20.00, "Lina sportowa o klasycznej konstrukcji dla wszystkich, którzy chcą być lepsi. Mimo swej małej średnicy lina zaskakuje długą żywotnością i odpornością na otarcia. Niska waga, wyższa ilość odpadnięć i znakomita manipulacja to parametry, dzięki którym zaczniesz przekraczać swoje limity.", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "lina, asekuracja, wspinaczka"));
         productRepository.save(new Product("Lina 60m Tendon 10,0 (cze/nie)", 20.00, "Klasyk w nowej odsłonie: Prezentowany na zdjęciu oplot jest nowym wzorem oplotu zastrzeżonym na terenie Polski. Od 2014 roku tylko liny z tym wzorem oplotu będą objęte gwarancją polskiego importera.\n" +
                 "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina, asekuracja, wspinaczka"));
-
-
-        navbarLinkRepository.save(new NavbarLink("HomePage", "/", true));
-        navbarLinkRepository.save(new NavbarLink("Shop", "/shop", true));
-        navbarLinkRepository.save(new NavbarLink("Contact", "/contact", true));
-        navbarLinkRepository.save(new NavbarLink("Login", "/login", true));
-        navbarLinkRepository.save(new NavbarLink("Register", "/register", true));
-        navbarLinkRepository.save(new NavbarLink("Admin", "/admin-page", true));
-        navbarLinkRepository.save(new NavbarLink("News Form", "/newsForm", true));
 
         News news = new News();
         news.setTitle("Test");
