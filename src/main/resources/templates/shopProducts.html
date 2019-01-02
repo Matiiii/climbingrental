@@ -14,23 +14,23 @@
 </div>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container content">
 
     <div class="row">
 
-        <div class="col-xs-12 col-ms-12 col-md-3">
-            <p class="lead">Shop Name</p>
+        <div class="col-xs-12 col-ms-12 col-md-3 form">
+           
 
             <form id="orderForm" method="get" th:action="@{/shop}" th:object="${filterProducts}" >
                 <table>
-                    <tr><td><label for="from">Wpisz nazwę produktu</label></td></tr>
-                    <tr><td><input type="text" name="productName"  id="usr" /></td></tr>
-                    <tr><td><p>Wybierz okres, na który chcesz wypożyczyć sprzęt:</p></td></tr>
-                    <tr><td><label for="from">Od:</label></td></tr>
-                    <tr><td><input type="text" id="from" name="orderStart" th:field="*{orderStart}" /></td></tr>
-                    <tr><td><label for="to">do:</label></td></tr>
-                    <tr><td><input type="text" id="to" name="orderEnd" th:field="*{orderEnd}" /></td></tr>
-                    <tr><td><button align="center" type="submit" class="btn btn-success">Sprawdz dostepnosc</button></td></tr>
+                    <tr><td class="order"><label for="from">Wpisz nazwę produktu</label></td></tr>
+                    <tr><td class="order"><input type="text" name="productName"  id="usr" /></td></tr>
+                    <tr><td class="order"><p>Wybierz okres, na który chcesz wypożyczyć sprzęt:</p></td></tr>
+                    <tr><td class="order"><label for="from">Od:</label></td></tr>
+                    <tr><td class="order"><input type="text" id="from" name="orderStart" th:field="*{orderStart}" /></td></tr>
+                    <tr><td class="order"><label for="to">do:</label></td></tr>
+                    <tr><td class="order"><input type="text" id="to" name="orderEnd" th:field="*{orderEnd}" /></td></tr>
+                    <tr><td class="order"><button type="submit" class="btn btn-success">Sprawdz dostepnosc</button></td></tr>
                 </table>
 
 
@@ -53,7 +53,7 @@
                         
                         <div class="caption">
 
-                            <a href="shop.html" th:href="'/product/'+${countProduct.product.id}"> <h2 class="pull-right" th:text="${countProduct.product.productName}">Name</h2></a>
+                            <a href="shop.html" th:href="'/product/'+${countProduct.product.id}"> <h3 class="pull-right" th:text="${countProduct.product.productName}">Name</h3></a>
                             <p class="pull-right" th:text="'Cena za dzien: '+${countProduct.product.price}+'zl'">$24.99</p>
                             <br/>
                             <p class="pull-right" th:text="'Na magazynie dostepnych: '+${countProduct.count}">0</p>

@@ -7,10 +7,10 @@
 
 <body>
 
-<div class="container">
-	<div th:replace="fragments/header :: navbar">
-	</div>
-</div>S
+<!-- Navigation -->
+<div th:replace="fragments/header :: navbar">
+  
+</div>
 
 <div class="container">
     <form class="form-horizontal" method="post" th:action="@{/login}" th:object="${user}">
@@ -33,13 +33,7 @@
             </div>
         </div>
     </form>
-
-   <form th:action="@{/signin/facebook}" method="POST">
-        <input type="hidden" name="scope" value="public_profile, email"/>
-        <input type="submit" value="Login using Facebook"/>
-    </form>
 </div>
-
 
 <div class="container">
     <!-- Footer -->
