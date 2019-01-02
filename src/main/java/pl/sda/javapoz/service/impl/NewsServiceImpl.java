@@ -66,4 +66,9 @@ public class NewsServiceImpl implements NewsService {
     public List<News> findNewsByTag(String tag) {
         return newsRepository.findNewsByTag(tag);
     }
+
+    @Override
+    public void addNews(News news) {
+        newsRepository.save(news);
+    }
 }

@@ -1,5 +1,7 @@
 package pl.sda.javapoz.service;
 
+import pl.sda.javapoz.model.User;
+
 public interface SessionService {
-    pl.sda.javapoz.model.User getCurrentUser();
+    User getCurrentUser();
 }

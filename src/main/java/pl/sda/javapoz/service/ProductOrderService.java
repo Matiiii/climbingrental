@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductOrderService {
     void saveOrder(User userId, Product productId, Date orderStart, Date orderEnd);
 
-    List<ProductOrder> findProductByUserId(Long id);
+    List<ProductOrder> findProductsByUserId(Long id);
 
     ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder);
 

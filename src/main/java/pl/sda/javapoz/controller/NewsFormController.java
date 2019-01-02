@@ -7,29 +7,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.News;
-import pl.sda.javapoz.repository.NewsRepository;
+import pl.sda.javapoz.service.NewsService;
 
 @Controller
 public class NewsFormController {
 
-    private NewsRepository newsRepository;
+    private NewsService newsService;
 
     @Autowired
-    public NewsFormController(NewsRepository newsRepository) {
-        this.newsRepository = newsRepository;
+    public NewsFormController(NewsService newsService) {
+        this.newsService = newsService;
     }
 
     @GetMapping("/newsForm")
     public ModelAndView showNews(ModelAndView modelAndView) {
+        modelAndView.setViewName("newsForm");
         modelAndView.addObject("news", new News());
         return modelAndView;
     }
 
     @PostMapping("/newsForm")
     public ModelAndView newsForm(@ModelAttribute News news, ModelAndView modelAndView) {
-        modelAndView.addObject("news", news);
-        newsRepository.save(news);
         modelAndView.setViewName("redirect:/");
+        modelAndView.addObject("news", news);
+        newsService.addNews(news);
         return modelAndView;
     }
 

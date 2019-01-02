@@ -24,8 +24,8 @@ public class UserRegisterController {
     }
 
     @GetMapping("/register")
-    public ModelAndView modelAndView() {
-        ModelAndView modelAndView = new ModelAndView("register");
+    public ModelAndView registrationPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("register");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
@@ -33,18 +33,11 @@ public class UserRegisterController {
     @PostMapping("/register")
     public String addUser(@ModelAttribute @Valid User user,
                           BindingResult bindResult) {
-        UserRole role = new UserRole();
-        if (bindResult.hasErrors())
+        if (bindResult.hasErrors()){
             return "register";
+        }
         else {
-            if (user.getFirstName().equals("Andrzej")) {
-                role.setRole("ROLE_ADMIN");
-                user.setAdmin(true);
-            } else {
-                role.setRole("ROLE_USER");
-                user.setAdmin(false);
-            }
-            userService.addUserWithRole(user, role);
+            userService.saveUser(user);
             return "redirect:/login";
         }
     }
