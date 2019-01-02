@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.model.NavbarLink;
-import pl.sda.javapoz.model.Product;
+import pl.sda.javapoz.model.ProductEntity;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
 
@@ -24,15 +23,14 @@ public class AdminController {
     @GetMapping("/admin-page")
     public ModelAndView showNavbarForm(ModelAndView modelAndView) {
         modelAndView.setViewName("admin");
-        modelAndView.addObject("navbarLink", new NavbarLink());
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         modelAndView.addObject("productList", productService.findAllProducts());
-        modelAndView.addObject("addProduct", new Product());
+        modelAndView.addObject("addProduct", new ProductEntity());
         return modelAndView;
     }
 
     @PostMapping("/admin-page")
-    public ModelAndView postNavbarForm(@ModelAttribute NavbarLink navbarLink, @ModelAttribute Product product, ModelAndView modelAndView) {
+    public ModelAndView postNavbarForm(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/shop");
         productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags());
         modelAndView.addObject("addProduct", product);

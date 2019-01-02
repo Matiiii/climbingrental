@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="head">
 
     <title>Sklep wspinaczkowy</title>
@@ -36,9 +36,10 @@
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	  
+
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		   <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
+
+ <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
 			   	<li class="nav-item">
 			    	<a class="nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
 			   	</li>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.FilterProducts;
-import pl.sda.javapoz.model.Product;
+import pl.sda.javapoz.model.ProductEntity;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
 
@@ -42,7 +42,7 @@ public class ShopController {
                                       ModelAndView modelAndView) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         modelAndView.setViewName("shopProducts");
-        modelAndView.addObject("product", new Product());
+        modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
         if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {

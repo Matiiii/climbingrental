@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.Info;
-import pl.sda.javapoz.model.Product;
-import pl.sda.javapoz.model.ProductOrder;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.ProductOrderEntity;
+import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
 import pl.sda.javapoz.service.SessionService;
@@ -33,21 +33,21 @@ public class ProductController {
     public ModelAndView showProduct(@PathVariable Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         modelAndView.addObject("product", productService.findProductById(id));
-        modelAndView.addObject("productOrder", new ProductOrder());
+        modelAndView.addObject("productOrder", new ProductOrderEntity());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         return modelAndView;
     }
 
     @PostMapping("/product/{id}")
-    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrder productOrder, ModelAndView modelAndView) {
+    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrderEntity productOrder, ModelAndView modelAndView) {
         modelAndView.setViewName("product");
-        Product productById = productService.findProductById(id);
+        ProductEntity productById = productService.findProductById(id);
         Date productOrderStart = productOrder.getOrderStart();
         Date productOrderEnd = productOrder.getOrderEnd();
         modelAndView.addObject("product", productById);
-        modelAndView.addObject("productOrder", new ProductOrder());
+        modelAndView.addObject("productOrder", new ProductOrderEntity());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
-        User loggedUser = sessionService.getCurrentUser();
+        UserEntity loggedUser = sessionService.getCurrentUser();
 
         boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, productOrderStart, productOrderEnd);
         if (availableToOrder) {

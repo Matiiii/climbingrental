@@ -1,28 +1,28 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.Product;
-import pl.sda.javapoz.model.ProductOrder;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.ProductOrderEntity;
+import pl.sda.javapoz.model.UserEntity;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ProductOrderService {
-    void saveOrder(User userId, Product productId, Date orderStart, Date orderEnd);
+    void saveOrder(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd);
 
-    List<ProductOrder> findProductsByUserId(Long id);
+    List<ProductOrderEntity> findProductsByUserId(Long id);
 
-    ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder);
+    ProductOrderEntity getPriceOfOrderedProduct(ProductOrderEntity productOrder);
 
-    Double getPriceOfOrderedProducts(List<ProductOrder> productOrders);
+    Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders);
 
-    List<ProductOrder> findProductOrderByProductId(Long productId);
+    List<ProductOrderEntity> findProductOrderByProductId(Long productId);
 
     boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd);
 
     List<String> getListOfDatesWhenProductIsReserved(Long id);
 
-    List<ProductOrder> findAllProductOrders();
+    List<ProductOrderEntity> findAllProductOrders();
 
     void removeProductOrderByAdmin(Long id);
 }

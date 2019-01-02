@@ -4,26 +4,20 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-@Entity
-public class ProductOrder {
+@Entity(name = "product_order")
+public class ProductOrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private UserEntity userId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    //@Column(name = "USER_ID")
-    private User userId;
+    private ProductEntity productId;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    //@Column(name = "PRODUCT_ID")
-    private Product productId;
-
-    //@Column(name = "order_start")
     private Date orderStart;
-
-    //@Column(name = "order_end")
     private Date orderEnd;
 
     @Transient
@@ -37,19 +31,19 @@ public class ProductOrder {
         this.id = id;
     }
 
-    public User getUserId() {
+    public UserEntity getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(UserEntity userId) {
         this.userId = userId;
     }
 
-    public Product getProductId() {
+    public ProductEntity getProductId() {
         return productId;
     }
 
-    public void setProductId(Product productId) {
+    public void setProductId(ProductEntity productId) {
         this.productId = productId;
     }
 
@@ -77,10 +71,10 @@ public class ProductOrder {
         this.combinedPrice = combinedPrice;
     }
 
-    public ProductOrder() {
+    public ProductOrderEntity() {
     }
 
-    public ProductOrder(User userId, Product productId, Date orderStart, Date orderEnd) {
+    public ProductOrderEntity(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd) {
         this.userId = userId;
         this.productId = productId;
         this.orderStart = orderStart;

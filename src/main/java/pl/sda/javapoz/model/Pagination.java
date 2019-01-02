@@ -1,8 +1,5 @@
 package pl.sda.javapoz.model;
 
-import javax.persistence.Entity;
-
-
 public class Pagination {
 
     private Integer page;

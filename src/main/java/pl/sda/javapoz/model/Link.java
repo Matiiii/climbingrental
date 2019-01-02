@@ -1,28 +1,9 @@
 package pl.sda.javapoz.model;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-
 public class Link {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     private String name;
     private String link;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -57,7 +38,6 @@ public class Link {
 
         if (name != null ? !name.equals(link1.name) : link1.name != null) return false;
         return link != null ? link.equals(link1.link) : link1.link == null;
-
     }
 
     @Override

@@ -2,20 +2,20 @@ package pl.sda.javapoz.service;
 
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.Product;
+import pl.sda.javapoz.model.ProductEntity;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 public interface ProductService {
-    Product findProductById(Long id);
+    ProductEntity findProductById(Long id);
 
-    List<Product> findAllProducts();
+    List<ProductEntity> findAllProducts();
 
-    Set<Product> findProductByName();
+    Set<ProductEntity> findProductByName();
 
-    Set<Product> findAllProductsByProductNameOrTags(String productNameOrTag);
+    Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag);
 
     Integer countProductsByName(String name);
 
@@ -29,7 +29,7 @@ public interface ProductService {
 
     List<CountProducts> countAllAvailableProductsByNameFiltered(Date start, Date end, String name);
 
-    Set<Link> findRelatedProducts(Product product);
+    Set<Link> findRelatedProducts(ProductEntity product);
 
     void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags);
 
