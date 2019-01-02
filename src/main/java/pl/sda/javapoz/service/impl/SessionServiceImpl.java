@@ -1,8 +1,12 @@
 package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.sda.javapoz.model.User;
 import pl.sda.javapoz.repository.UserRepository;
 import pl.sda.javapoz.service.SessionService;
 
@@ -20,7 +24,7 @@ public class SessionServiceImpl implements SessionService {
     public pl.sda.javapoz.model.User getCurrentUser() {
         if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            pl.sda.javapoz.model.User user = userRepository.findUserByEmail(email);
+            User user = userRepository.findUserByEmail(email);
             return user;
         }
 

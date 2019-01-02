@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="head">
 
     <title>Sklep wspinaczkowy</title>
@@ -54,9 +54,7 @@
                		<p class="hello"> Witaj
                			<b sec:authentication="name"></b>!
                     </p>
-
-                        <b class="hello" sec:authentication="principal.authorities">User</b>
-
+                        <b class="hello" sec:authentication="authorities">User</b>
                 	</div>
 
 

@@ -1,10 +1,15 @@
 package pl.sda.javapoz.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.UserRole;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class MyUserPrincipal implements UserDetails {
 
@@ -16,7 +21,13 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new LinkedList<>();
+        Set<UserRole> userRoles = user.getRoles();
+        for(UserRole role: userRoles){
+            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+        }
+
+        return authorities;
     }
 
     @Override
