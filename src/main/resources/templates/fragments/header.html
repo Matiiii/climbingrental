@@ -38,8 +38,8 @@
 	  </button>
 	  
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		   <ul class="nav navbar-nav">
-			   	<li class="nav-item mr-auto mt-2 mt-lg-0">
+		   <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
+			   	<li class="nav-item">
 			    	<a class="nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
 			   	</li>
 			   	<li class="nav-item">
@@ -51,26 +51,34 @@
 			   	<li class="nav-item">
 			   		<a class="nav-link"  href=" #" th:href="@{#}" th:text="Regulamin">About</a>
 			   	</li>
-		    	<li class="nav-item">
-		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
-		    	</li>
-				<li class="nav-item" >
-			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
-			    </li>
 			    <li class="nav-item">
 			    	<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}" th:text="Admin">About</a>
 			    </li>
 		    </ul>
 		    
-		    	<form class="form-inline ml-auto my-lg-0" th:action="@{/logout}"  method="post" id="logout">
-					<a class="nav-item nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
-		   		</form>
+		    <ul class="navbar-nav ml-auto my-sm-0">
+		    	<li class="nav-item">
+		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
+		    	</li>
+		    	<li class="nav-item" >
+			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
+			    </li>
+			    <li class="nav-item" >
+		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{#}" th:text="Koszyk">About</a>
+            	</li>
+		    	<li class="nav-item">
+		    		<form class="form-inline " th:action="@{/logout}"  method="post" id="logout"></form>
+					<a class="nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+				</li>
+			
 		   		
-		   		
-		   	<span class="navbar-text" sec:authorize="isAuthenticated()">
-               		 Witaj <b sec:authentication="name"></b>!
-               	<b class="hello" sec:authentication="principal.authorities">User</b>
-            </span>
+		   		<li>
+		   			<span class="navbar-text" sec:authorize="isAuthenticated()">
+               			 Witaj <b sec:authentication="name"></b>!
+               			<b class="hello" sec:authentication="principal.authorities">User</b>
+            		</span>
+            	</li>
+            </ul>
 	  </div>
 	</nav>
 </div>
