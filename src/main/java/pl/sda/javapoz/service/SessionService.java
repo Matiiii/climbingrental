@@ -1,7 +1,7 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.UserEntity;
 
 public interface SessionService {
-    User getCurrentUser();
+    UserEntity getCurrentUser();
 }

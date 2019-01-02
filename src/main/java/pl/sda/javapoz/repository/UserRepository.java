@@ -2,14 +2,14 @@ package pl.sda.javapoz.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.UserEntity;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    User findUserByEmail(String email);
+    UserEntity findUserByEmail(String email);
 
-    User findUserByFirstNameAndLastName(String firstName, String lastName);
+    UserEntity findUserByFirstNameAndLastName(String firstName, String lastName);
 
 
 }

@@ -1,13 +1,13 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.UserEntity;
 
 import java.util.List;
 
 public interface UserService {
-    void saveUser(User user);
+    void saveUser(UserEntity user);
 
-    void saveUsers(List<User> users);
+    void saveUsers(List<UserEntity> users);
 
-    User getUserByEmail(String email);
+    UserEntity getUserByEmail(String email);
 }

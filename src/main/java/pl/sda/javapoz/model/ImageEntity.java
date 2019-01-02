@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-public class Image {
+@Entity(name = "image")
+public class ImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,10 +15,10 @@ public class Image {
     private String altText;
     private String path;
 
-    public Image() {
+    public ImageEntity() {
     }
 
-    public Image(String link, String altText, String path) {
+    public ImageEntity(String link, String altText, String path) {
         this.link = link;
         this.altText = altText;
         this.path = path;

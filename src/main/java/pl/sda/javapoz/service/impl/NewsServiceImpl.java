@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.News;
+import pl.sda.javapoz.model.NewsEntity;
 import pl.sda.javapoz.model.Pagination;
 import pl.sda.javapoz.repository.NewsRepository;
 import pl.sda.javapoz.service.NewsService;
@@ -26,19 +26,19 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<News> findAllNews() {
-        List<News> newsList = new LinkedList<>();
+    public List<NewsEntity> findAllNews() {
+        List<NewsEntity> newsList = new LinkedList<>();
         newsRepository.findAll().forEach(newsList::add);
         return newsList;
     }
 
     @Override
-    public News findNewsById(Long id) {
+    public NewsEntity findNewsById(Long id) {
         return newsRepository.findOne(id);
     }
 
     @Override
-    public List<News> findFiveNews(Integer page) {
+    public List<NewsEntity> findFiveNews(Integer page) {
         return newsRepository.findByNews(page);
     }
 
@@ -54,21 +54,21 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Set<Link> findAllTag() {
-        List<News> news = findAllNews();
+        List<NewsEntity> news = findAllNews();
 
         return news.stream()
-                .map(News::getTag)
+                .map(NewsEntity::getTag)
                 .map(n -> new Link(StringUtils.capitalize(n), "/?tag=" + n))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public List<News> findNewsByTag(String tag) {
+    public List<NewsEntity> findNewsByTag(String tag) {
         return newsRepository.findNewsByTag(tag);
     }
 
     @Override
-    public void addNews(News news) {
+    public void addNews(NewsEntity news) {
         newsRepository.save(news);
     }
 }

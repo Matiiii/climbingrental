@@ -2,10 +2,13 @@ package pl.sda.javapoz.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Entity
-public class News {
+@Entity(name = "news")
+public class NewsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,10 +21,10 @@ public class News {
     private String link;
     private String tag;
 
-    public News() {
+    public NewsEntity() {
     }
 
-    public News(String title, String description, String link, String tag) {
+    public NewsEntity(String title, String description, String link, String tag) {
         this.title = title;
         this.description = description;
         this.link = link;

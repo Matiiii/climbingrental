@@ -3,8 +3,8 @@ package pl.sda.javapoz.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.model.UserRole;
+import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.UserRoleEntity;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,17 +13,17 @@ import java.util.Set;
 
 public class MyUserPrincipal implements UserDetails {
 
-    private User user;
+    private UserEntity user;
 
-    public MyUserPrincipal(User user) {
+    public MyUserPrincipal(UserEntity user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new LinkedList<>();
-        Set<UserRole> userRoles = user.getRoles();
-        for(UserRole role: userRoles){
+        Set<UserRoleEntity> userRoles = user.getRoles();
+        for(UserRoleEntity role: userRoles){
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
 

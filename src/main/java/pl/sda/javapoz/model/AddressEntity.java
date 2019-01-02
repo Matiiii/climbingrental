@@ -2,23 +2,21 @@ package pl.sda.javapoz.model;
 
 import javax.persistence.*;
 
-@Entity
-public class Address {
+@Entity(name = "address")
+public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "adress_id")
     private Long id;
-
     private String city;
     private String street;
     private String flatNumber;
     private String zipcode;
 
-    public Address() {
+    public AddressEntity() {
     }
 
-    public Address(String city, String street, String flatNumber, String zipcode) {
+    public AddressEntity(String city, String street, String flatNumber, String zipcode) {
         this.city = city;
         this.street = street;
         this.flatNumber = flatNumber;
@@ -67,7 +65,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
+        return "AddressEntity{" +
                 "id=" + id +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +

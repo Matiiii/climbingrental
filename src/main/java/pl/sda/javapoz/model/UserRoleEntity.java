@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-public class UserRole {
+@Entity(name = "user_role")
+public class UserRoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class UserRole {
 
     @Override
     public String toString() {
-        return "UserRole{" +
+        return "UserRoleEntity{" +
                 "id=" + id +
                 ", role='" + role + '\'' +
                 '}';

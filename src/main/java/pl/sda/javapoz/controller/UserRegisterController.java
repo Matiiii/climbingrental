@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.model.User;
-import pl.sda.javapoz.model.UserRole;
+import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.service.UserService;
 
 import javax.validation.Valid;
@@ -26,12 +25,12 @@ public class UserRegisterController {
     @GetMapping("/register")
     public ModelAndView registrationPage(ModelAndView modelAndView) {
         modelAndView.setViewName("register");
-        modelAndView.addObject("user", new User());
+        modelAndView.addObject("user", new UserEntity());
         return modelAndView;
     }
 
     @PostMapping("/register")
-    public String addUser(@ModelAttribute @Valid User user,
+    public String addUser(@ModelAttribute @Valid UserEntity user,
                           BindingResult bindResult) {
         if (bindResult.hasErrors()){
             return "register";

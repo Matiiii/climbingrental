@@ -2,15 +2,15 @@ package pl.sda.javapoz.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.sda.javapoz.model.ProductOrder;
+import pl.sda.javapoz.model.ProductOrderEntity;
 
 import java.util.List;
 
 @Repository
-public interface ProductOrderRepository extends CrudRepository<ProductOrder, Long> {
+public interface ProductOrderRepository extends CrudRepository<ProductOrderEntity, Long> {
 
-    List<ProductOrder> findByUserIdId(Long id);
+    List<ProductOrderEntity> findByUserIdId(Long id);
 
-    List<ProductOrder> findByProductIdId(Long id);
+    List<ProductOrderEntity> findByProductIdId(Long id);
 
 }

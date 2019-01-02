@@ -2,9 +2,9 @@ package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sda.javapoz.model.Product;
-import pl.sda.javapoz.model.ProductOrder;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.ProductOrderEntity;
+import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
@@ -25,17 +25,17 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void saveOrder(User userId, Product productId, Date orderStart, Date orderEnd) {
-        productOrderRepository.save(new ProductOrder(userId, productId, orderStart, orderEnd));
+    public void saveOrder(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd) {
+        productOrderRepository.save(new ProductOrderEntity(userId, productId, orderStart, orderEnd));
     }
 
     @Override
-    public List<ProductOrder> findProductsByUserId(Long id) {
+    public List<ProductOrderEntity> findProductsByUserId(Long id) {
         return productOrderRepository.findByUserIdId(id);
     }
 
     @Override
-    public ProductOrder getPriceOfOrderedProduct(ProductOrder productOrder) {
+    public ProductOrderEntity getPriceOfOrderedProduct(ProductOrderEntity productOrder) {
         Double price = productOrder.getProductId().getPrice();
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
@@ -45,24 +45,24 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public Double getPriceOfOrderedProducts(List<ProductOrder> productOrders) {
+    public Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders) {
         Double sum = 0.0;
-        for (ProductOrder productOrder : productOrders) {
+        for (ProductOrderEntity productOrder : productOrders) {
             sum += getPriceOfOrderedProduct(productOrder).getCombinedPrice();
         }
         return sum;
     }
 
     @Override
-    public List<ProductOrder> findProductOrderByProductId(Long productId) {
+    public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
         return productOrderRepository.findByProductIdId(productId);
     }
 
     @Override
     public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
-        List<ProductOrder> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
         boolean availableToOrder = true;
-        for (ProductOrder order : orders) {
+        for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
             if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
@@ -75,12 +75,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public List<String> getListOfDatesWhenProductIsReserved(Long id) {
         List<String> dates = new ArrayList<>();
-        List<ProductOrder> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
 
         String pattern = "MM/dd/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        for (ProductOrder order : orders) {
+        for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
             dates.add(simpleDateFormat.format(orderStart));
@@ -95,9 +95,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public List<ProductOrder> findAllProductOrders() {
-        List<ProductOrder> productOrders = new ArrayList<>();
-        Iterable<ProductOrder> productOrderIterable = productOrderRepository.findAll();
+    public List<ProductOrderEntity> findAllProductOrders() {
+        List<ProductOrderEntity> productOrders = new ArrayList<>();
+        Iterable<ProductOrderEntity> productOrderIterable = productOrderRepository.findAll();
         productOrderIterable.forEach(productOrders::add);
 
         return productOrders;

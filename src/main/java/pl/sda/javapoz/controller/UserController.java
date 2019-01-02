@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.model.ProductOrder;
-import pl.sda.javapoz.model.User;
+import pl.sda.javapoz.model.ProductOrderEntity;
+import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.SessionService;
 
@@ -27,9 +27,9 @@ public class UserController {
     @GetMapping("/user")
     public ModelAndView getUserPage(ModelAndView modelAndView) {
         modelAndView.setViewName("user");
-        User currentUser = sessionService.getCurrentUser();
+        UserEntity currentUser = sessionService.getCurrentUser();
         modelAndView.addObject("user", currentUser);
-        List<ProductOrder> productsByUserId = productOrdersService.findProductsByUserId(currentUser.getId());
+        List<ProductOrderEntity> productsByUserId = productOrdersService.findProductsByUserId(currentUser.getId());
         productsByUserId = productsByUserId.stream()
                 .map(e -> productOrdersService.getPriceOfOrderedProduct(e))
                 .collect(Collectors.toList());
