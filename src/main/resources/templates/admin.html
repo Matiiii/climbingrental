@@ -40,9 +40,6 @@
                         <li>
                             <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
                         </li>
-                        <li>
-                            <a href="#dodaj-link" data-toggle="tab">Dodaj link</a>
-                        </li>
                     </ul>
                     <div class="tab-content">
 
@@ -232,87 +229,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="dodaj-link">
-                            <div class="col-md-12">
-                                <div class="container">
-                                    <div class="row">
-                                        <h4 class="panel-heading">Dodaj link:</h4>
-                                    </div>
-                                    <div class="row">
-                                        <form action="#" th:action="@{/admin-page}" th:object="${navbarLink}"
-                                              method="post"
-                                              class="form-inline">
-                                            <div class="form-group">
-                                                <label for="exampleInputName2">Link name:</label>
-                                                <input type="text" th:field="*{name}" class="form-control"
-                                                       id="exampleInputName1" placeholder="link name"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputName2">Link url:</label>
-                                                <input type="text" th:field="*{link}" class="form-control"
-                                                       id="exampleInputName2" placeholder="link url"/>
-                                            </div>
-                                            <div class="form-group" id="id1">
-                                                <label class="hidden" for="exampleInputName2">ID:</label>
-                                                <input type="hidden" th:field="*{id}" class="form-control"
-                                                       id="exampleInputName3" placeholder="link id"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputName2">Active:</label>
-                                                <input type="checkbox" th:field="*{active}" class="form-control"
-                                                       id="exampleInputName4"/>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
-
-                                    </div>
-
-
-                                    <h4 class="bg-primary link-list" style="padding: 4px;">Lista linków navbarowych</h4>
-
-
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Active</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <div class="row" th:each="link: ${navbarLinks}">
-                                            <tr data-id="${link.id}" id="link-row">
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${link.name}"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${link.link}"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${link.active}"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <button type="submit" class="btn btn-default">
-                                                            Edytuj
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 
