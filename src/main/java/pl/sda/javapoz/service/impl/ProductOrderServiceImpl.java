@@ -42,7 +42,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
         Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
         productOrder.setCombinedPrice(price * lengthOfOrder);
-        
         return productOrder;
     }
 

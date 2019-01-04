@@ -21,7 +21,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin-page")
-    public ModelAndView showNavbarForm(ModelAndView modelAndView) {
+    public ModelAndView adminPage(ModelAndView modelAndView) {
         modelAndView.setViewName("admin");
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         modelAndView.addObject("productList", productService.findAllProducts());
@@ -30,15 +30,15 @@ public class AdminController {
     }
 
     @PostMapping("/admin-page")
-    public ModelAndView postNavbarForm(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
+    public ModelAndView addProduct(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/shop");
         productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags());
         modelAndView.addObject("addProduct", product);
         return modelAndView;
     }
 
-    @RequestMapping("/admin-page-orders")
-    public ModelAndView orderList(ModelAndView modelAndView) {
+    @GetMapping("/admin-page-orders")
+    public ModelAndView listOfOrders(ModelAndView modelAndView) {
         modelAndView.setViewName("adminsOrderList");
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         return modelAndView;
