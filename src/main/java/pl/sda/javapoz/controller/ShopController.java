@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.FilterProducts;
+import pl.sda.javapoz.model.Info;
 import pl.sda.javapoz.model.ProductEntity;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
@@ -45,16 +46,28 @@ public class ShopController {
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
+//        if(!prodName.isEmpty()){ 
+//        	modelAndView.addObject("productName", prodName);
+//        	modelAndView.addObject("info", new Info("Produkty ", true));}
+//        if(!orderStart.isEmpty()&& !orderEnd.isEmpty()){ 
+//        	modelAndView.addObject("orderStart", orderStart);
+//        	modelAndView.addObject("orderEnd", orderEnd);
+        	
+        	
         if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
+            modelAndView.addObject("info", new Info("Nie podano zadnej wartości", false));
         } else if (!"".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
+            modelAndView.addObject("info", new Info("Produkty zawierające frazę: " + prodName, true));
         } else if ("".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(formatter.parse(orderStart),
                     formatter.parse(orderEnd)));
+            modelAndView.addObject("info", new Info("Produkty dostępne od " +  orderStart + " do " + orderEnd, true));
         } else if (!"".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
                     formatter.parse(orderEnd), prodName));
+            modelAndView.addObject("info", new Info("Produkty zawierające frazę: " + prodName + " dostępne od " +  orderStart + " do " + orderEnd, true));
         }
 
         return modelAndView;
