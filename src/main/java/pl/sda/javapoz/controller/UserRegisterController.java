@@ -2,6 +2,7 @@ package pl.sda.javapoz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,17 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.service.UserService;
+import pl.sda.javapoz.validator.RegisterValidator;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserRegisterController {
 
     private UserService userService;
+    private RegisterValidator registerValidator;
 
     @Autowired
-    public UserRegisterController(UserService userService) {
+    public UserRegisterController(UserService userService, RegisterValidator registerValidator) {
         this.userService = userService;
+        this.registerValidator = registerValidator;
     }
 
     @GetMapping("/register")
@@ -30,14 +36,20 @@ public class UserRegisterController {
     }
 
     @PostMapping("/register")
-    public String addUser(@ModelAttribute @Valid UserEntity user,
-                          BindingResult bindResult) {
-        if (bindResult.hasErrors()){
-            return "register";
-        }
-        else {
+    public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
+                          BindingResult bindResult, ModelAndView modelAndView) {
+        if (bindResult.hasErrors()) {
+            modelAndView.setViewName("register");
+        } else if (registerValidator.isEmailTaken(user)) {
+            modelAndView.addObject("emailIsTaken", "Użytkownik o podanym emailu juz istnieje!");
+            modelAndView.addObject("emailIsTakenInfo", "Wprowadź inny mail lub zaloguj się na istniejące konto!");
+
+            return registrationPage(modelAndView);
+        } else {
             userService.saveUser(user);
-            return "redirect:/login";
+            modelAndView.setViewName("redirect:/login");
         }
+
+        return modelAndView;
     }
 }

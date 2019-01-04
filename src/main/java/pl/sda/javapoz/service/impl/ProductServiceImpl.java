@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findAllProducts() {
         List<ProductEntity> products = new LinkedList<>();
         productRepository.findAll().forEach(products::add);
-
         return products;
     }
 

@@ -1,5 +1,6 @@
 package pl.sda.javapoz.service.impl;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import pl.sda.javapoz.repository.UserRepository;
 import pl.sda.javapoz.repository.UserRoleRepository;
 import pl.sda.javapoz.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,4 +43,14 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+    @Override
+    public List<UserEntity> findAllUsers() {
+        Iterable<UserEntity> allUsersIterable = userRepository.findAll();
+        List<UserEntity> allUsers = new ArrayList<>();
+        allUsersIterable.forEach(allUsers::add);
+        return allUsers;
+    }
+
+
 }
