@@ -37,24 +37,15 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/admin-page-orders")
-    public ModelAndView listOfOrders(ModelAndView modelAndView) {
-        modelAndView.setViewName("adminsOrderList");
-        modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
-        return modelAndView;
+    @DeleteMapping(path = "/product-order/{id}")
+    @ResponseBody
+    public void removeProductOrder(@PathVariable Long id) {
+        productOrderService.removeProductOrder(id);
     }
 
-    @RequestMapping(path = "/product-order/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/product/{id}")
     @ResponseBody
-    public String removeProductOrder(@PathVariable Long id) {
-        productOrderService.removeProductOrderByAdmin(id);
-        return "order removed";
-    }
-
-    @RequestMapping(path = "/product/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String removeProduct(@PathVariable Long id) {
+    public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);
-        return "product removed";
     }
 }

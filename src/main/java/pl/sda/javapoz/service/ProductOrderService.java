@@ -24,5 +24,5 @@ public interface ProductOrderService {
 
     List<ProductOrderEntity> findAllProductOrders();
 
-    void removeProductOrderByAdmin(Long id);
+    void removeProductOrder(Long id);
 }

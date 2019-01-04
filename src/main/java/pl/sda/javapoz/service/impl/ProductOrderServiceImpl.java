@@ -104,7 +104,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void removeProductOrderByAdmin(Long id) {
+    public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
 }
