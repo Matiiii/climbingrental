@@ -31,6 +31,10 @@
 
 
 <div class="container" th:fragment="navbar">
+<span class="navbar-text" sec:authorize="isAuthenticated()">
+               			 Witaj <b sec:authentication="name"></b>!
+               			<b class="hello" sec:authentication="principal.authorities">User</b>
+            		</span>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <a class="navbar-brand" href="#">On-Sight</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,10 +81,7 @@
 			
 		   		
 		   		<li>
-		   			<span class="navbar-text" sec:authorize="isAuthenticated()">
-               			 Witaj <b sec:authentication="name"></b>!
-               			<b class="hello" sec:authentication="principal.authorities">User</b>
-            		</span>
+		   			
             	</li>
             </ul>
 	  </div>
