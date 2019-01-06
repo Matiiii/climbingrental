@@ -10,9 +10,9 @@ import pl.sda.javapoz.model.UserEntity;
 public class LoginController {
 
     @GetMapping("/login")
-    public ModelAndView showContact(ModelAndView modelAndView) {
-        modelAndView.addObject("user", new UserEntity());
+    public ModelAndView loginPage(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
+        modelAndView.addObject("user", new UserEntity());
         return modelAndView;
     }
 }

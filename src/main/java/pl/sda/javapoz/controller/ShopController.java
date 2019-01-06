@@ -42,21 +42,27 @@ public class ShopController {
                                       @RequestParam(value = "orderEnd", defaultValue = "") String orderEnd,
                                       @RequestParam(value = "datefilter", defaultValue = "") String datefilter,
                                       ModelAndView modelAndView) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
+        
+        boolean hasNoParameters = "".equals(prodName) && "".equals(datefilter);
+        boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
+        boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
+        boolean hasAllParameters = !"".equals(prodName) && !"".equals(datefilter);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 
-        if ("".equals(prodName) && "".equals(datefilter)) {
+        if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
-        } else if (!"".equals(prodName) && "".equals(datefilter)) {
+        } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
-        } else if ("".equals(prodName) && !"".equals(datefilter)) {
+        } else if (hasOnlyDates) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(datefilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + datefilter + "</b>", true));
-        } else if (!"".equals(prodName) && !"".equals(datefilter)) {
+        } else if (hasAllParameters) {
             modelAndView.addObject("countProducts" , productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + datefilter + "</b>", true));
         }
