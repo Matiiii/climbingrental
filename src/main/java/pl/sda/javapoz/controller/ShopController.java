@@ -40,19 +40,25 @@ public class ShopController {
                                       @RequestParam(value = "orderStart", defaultValue = "") String orderStart,
                                       @RequestParam(value = "orderEnd", defaultValue = "") String orderEnd,
                                       ModelAndView modelAndView) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
+        
+        boolean hasNoParameters = prodName.isEmpty() && orderStart.isEmpty() && orderEnd.isEmpty();
+        boolean hasOnlyProductName = !prodName.isEmpty() && orderStart.isEmpty() && orderEnd.isEmpty();
+        boolean hasOnlyDates = prodName.isEmpty() && !orderStart.isEmpty() && !orderEnd.isEmpty();
+        boolean hasAllParameters = !prodName.isEmpty() && !orderStart.isEmpty() && !orderEnd.isEmpty();
 
-        if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+        if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
-        } else if (!"".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
+        } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
-        } else if ("".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
+        } else if (hasOnlyDates) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(formatter.parse(orderStart),
                     formatter.parse(orderEnd)));
-        } else if (!"".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
+        } else if (hasAllParameters) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
                     formatter.parse(orderEnd), prodName));
         }

@@ -21,7 +21,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin-page")
-    public ModelAndView showNavbarForm(ModelAndView modelAndView) {
+    public ModelAndView adminPage(ModelAndView modelAndView) {
         modelAndView.setViewName("admin");
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         modelAndView.addObject("productList", productService.findAllProducts());
@@ -30,31 +30,22 @@ public class AdminController {
     }
 
     @PostMapping("/admin-page")
-    public ModelAndView postNavbarForm(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
+    public ModelAndView addProduct(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/shop");
         productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags());
         modelAndView.addObject("addProduct", product);
         return modelAndView;
     }
 
-    @RequestMapping("/admin-page-orders")
-    public ModelAndView orderList(ModelAndView modelAndView) {
-        modelAndView.setViewName("adminsOrderList");
-        modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
-        return modelAndView;
+    @DeleteMapping(path = "/product-order/{id}")
+    @ResponseBody
+    public void removeProductOrder(@PathVariable Long id) {
+        productOrderService.removeProductOrder(id);
     }
 
-    @RequestMapping(path = "/product-order/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/product/{id}")
     @ResponseBody
-    public String removeProductOrder(@PathVariable Long id) {
-        productOrderService.removeProductOrderByAdmin(id);
-        return "order removed";
-    }
-
-    @RequestMapping(path = "/product/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public String removeProduct(@PathVariable Long id) {
+    public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);
-        return "product removed";
     }
 }

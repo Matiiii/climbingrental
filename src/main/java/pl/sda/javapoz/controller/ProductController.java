@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ModelAndView showProduct(@PathVariable Long id, ModelAndView modelAndView) {
+    public ModelAndView productPage(@PathVariable Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrderEntity());
@@ -44,9 +44,6 @@ public class ProductController {
         ProductEntity productById = productService.findProductById(id);
         Date productOrderStart = productOrder.getOrderStart();
         Date productOrderEnd = productOrder.getOrderEnd();
-        modelAndView.addObject("product", productById);
-        modelAndView.addObject("productOrder", new ProductOrderEntity());
-        modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         UserEntity loggedUser = sessionService.getCurrentUser();
 
         boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, productOrderStart, productOrderEnd);
@@ -57,7 +54,7 @@ public class ProductController {
             modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
         }
 
-        return modelAndView;
+        return productPage(id, modelAndView);
     }
 
     @GetMapping("/products-availability/{id}")

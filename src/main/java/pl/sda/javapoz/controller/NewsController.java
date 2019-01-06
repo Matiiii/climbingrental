@@ -3,9 +3,7 @@ package pl.sda.javapoz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.NewsEntity;
 import pl.sda.javapoz.service.NewsService;
@@ -26,9 +24,7 @@ public class NewsController {
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         NewsEntity news = newsService.findNewsById(id);
         modelAndView.addObject("news", news);
-        if (news == null) {
-            modelAndView = null;
-        }
+
         return modelAndView;
     }
 
@@ -40,6 +36,21 @@ public class NewsController {
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
 
+        return modelAndView;
+    }
+
+    @GetMapping("/newsForm")
+    public ModelAndView newsForm(ModelAndView modelAndView) {
+        modelAndView.setViewName("newsForm");
+        modelAndView.addObject("news", new NewsEntity());
+        return modelAndView;
+    }
+
+    @PostMapping("/newsForm")
+    public ModelAndView addNews(@ModelAttribute NewsEntity news, ModelAndView modelAndView) {
+        modelAndView.setViewName("redirect:/");
+        modelAndView.addObject("news", news);
+        newsService.addNews(news);
         return modelAndView;
     }
 }

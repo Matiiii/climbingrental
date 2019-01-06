@@ -39,18 +39,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         Double price = productOrder.getProductId().getPrice();
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
-        Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime) / (1000 * 60 * 60 * 24);
+        Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
+        Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
         productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
 
     @Override
     public Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders) {
-        Double sum = 0.0;
-        for (ProductOrderEntity productOrder : productOrders) {
-            sum += getPriceOfOrderedProduct(productOrder).getCombinedPrice();
-        }
-        return sum;
+        Double[] sum = {0.0};
+        productOrders.forEach(product -> sum[0] += product.getCombinedPrice());
+
+        return sum[0];
     }
 
     @Override
@@ -104,7 +104,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void removeProductOrderByAdmin(Long id) {
+    public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
 }

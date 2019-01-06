@@ -57,8 +57,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer countProductsByNameAndTime(String name, Date start, Date end) {
         int cnt = 0;
-        List<ProductEntity> list = productRepository.findByProductName(name);
-        for (ProductEntity product : list) {
+        List<ProductEntity> productList = productRepository.findByProductName(name);
+        for (ProductEntity product : productList) {
             if (productOrderService.isProductAvailableToOrder(product.getId(), start, end)) {
                 cnt++;
             }
