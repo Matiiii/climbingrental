@@ -40,36 +40,26 @@ public class ShopController {
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "orderStart", defaultValue = "") String orderStart,
                                       @RequestParam(value = "orderEnd", defaultValue = "") String orderEnd,
+                                      @RequestParam(value = "datefilter", defaultValue = "") String datefilter,
                                       ModelAndView modelAndView) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
-//        if(!prodName.isEmpty()){ 
-//        	modelAndView.addObject("productName", prodName);
-//        	modelAndView.addObject("info", new Info("Produkty ", true));}
-//        if(!orderStart.isEmpty()&& !orderEnd.isEmpty()){ 
-//        	modelAndView.addObject("orderStart", orderStart);
-//        	modelAndView.addObject("orderEnd", orderEnd);
-        	
-        	
-        if ("".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.countAllProductsByName());
-            modelAndView.addObject("info", new Info("Nie podano zadnej wartości", false));
-        } else if (!"".equals(prodName) && "".equals(orderStart) && "".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
-            modelAndView.addObject("info", new Info("Produkty zawierające frazę: " + prodName, true));
-        } else if ("".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(formatter.parse(orderStart),
-                    formatter.parse(orderEnd)));
-            modelAndView.addObject("info", new Info("Produkty dostępne od " +  orderStart + " do " + orderEnd, true));
-        } else if (!"".equals(prodName) && !"".equals(orderStart) && !"".equals(orderEnd)) {
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(formatter.parse(orderStart),
-                    formatter.parse(orderEnd), prodName));
-            modelAndView.addObject("info", new Info("Produkty zawierające frazę: " + prodName + " dostępne od " +  orderStart + " do " + orderEnd, true));
-        }
 
+        if ("".equals(prodName) && "".equals(datefilter)) {
+            modelAndView.addObject("countProducts", productService.countAllProductsByName());
+        } else if (!"".equals(prodName) && "".equals(datefilter)) {
+            modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
+            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
+        } else if ("".equals(prodName) && !"".equals(datefilter)) {
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(datefilter));
+            modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + datefilter + "</b>", true));
+        } else if (!"".equals(prodName) && !"".equals(datefilter)) {
+            modelAndView.addObject("countProducts" , productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
+            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + datefilter + "</b>", true));
+        }
         return modelAndView;
     }
 }
