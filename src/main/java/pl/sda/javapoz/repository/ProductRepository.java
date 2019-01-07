@@ -2,7 +2,7 @@ package pl.sda.javapoz.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
 
 import java.util.List;
 import java.util.Set;

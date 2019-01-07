@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.model.NewsEntity;
+import pl.sda.javapoz.model.entity.NewsEntity;
 import pl.sda.javapoz.service.NewsService;
 
 @Controller

@@ -1,8 +1,8 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.ProductEntity;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 
 import java.util.Date;
 import java.util.List;

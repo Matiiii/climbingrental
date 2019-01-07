@@ -5,9 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.Info;
-import pl.sda.javapoz.model.ProductEntity;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
+import pl.sda.javapoz.service.BasketService;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
 import pl.sda.javapoz.service.SessionService;
@@ -21,12 +22,14 @@ public class ProductController {
     private ProductService productService;
     private ProductOrderService productOrderService;
     private SessionService sessionService;
+    private BasketService basketService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductOrderService productOrderService, SessionService sessionService) {
+    public ProductController(ProductService productService, ProductOrderService productOrderService, SessionService sessionService, BasketService basketService) {
         this.productService = productService;
         this.productOrderService = productOrderService;
         this.sessionService = sessionService;
+        this.basketService = basketService;
     }
 
     @GetMapping("/product/{id}")
@@ -38,8 +41,9 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping("/product/{id}")
-    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrderEntity productOrder, ModelAndView modelAndView) {
+/*    @PostMapping("/product/{id}")
+    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrderEntity productOrder,
+                                     @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
         Date productOrderStart = productOrder.getOrderStart();
@@ -54,6 +58,17 @@ public class ProductController {
             modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
         }
 
+        return productPage(id, modelAndView);
+    }*/
+
+    @PostMapping("/product/{id}")
+    public ModelAndView addProductToBasket(@PathVariable("id") Long id, @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
+        modelAndView.setViewName("product");
+        ProductEntity productById = productService.findProductById(id);
+
+        modelAndView.addObject("info", new Info("produkt dodany do koszyka", true));
+        basketService.addProductToBasket(productById);
+        
         return productPage(id, modelAndView);
     }
 

@@ -1,4 +1,4 @@
-package pl.sda.javapoz.model;
+package pl.sda.javapoz.model.entity;
 
 import javax.persistence.*;
 

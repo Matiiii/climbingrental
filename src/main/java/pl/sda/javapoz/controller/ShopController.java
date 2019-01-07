@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.FilterProducts;
 import pl.sda.javapoz.model.Info;
-import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
 
@@ -49,10 +49,8 @@ public class ShopController {
         boolean hasNoParameters = "".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
-        boolean hasAllParameters = !"".equals(prodName) && !"".equals(datefilter);
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
@@ -62,7 +60,7 @@ public class ShopController {
         } else if (hasOnlyDates) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(datefilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + datefilter + "</b>", true));
-        } else if (hasAllParameters) {
+        } else  {
             modelAndView.addObject("countProducts" , productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + datefilter + "</b>", true));
         }
