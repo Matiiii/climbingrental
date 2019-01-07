@@ -66,16 +66,14 @@
                     </div>
                 </div>
                 <hr/>
+
+
                 <div align="center">
-                    <form id="orderForm" th:action="${postOrder}" th:object="${productOrder}" method="post">
-                        <p>Wybierz okres, na który chcesz wypożyczyć sprzęt:</p>
-                        <label for="from">od:</label>
-                        <input type="text" id="from" name="from" th:field="*{orderStart}"/>
-                        <label for="to">do:</label>
-                        <input type="text" id="to" name="to" th:field="*{orderEnd}"/>
-                        <input type="text" name="datefilter" autocomplete="off" value="" />
-                        <input id="inputUser" type="hidden" class="form-control" th:field="*{userId}"/>
-                        <input id="inputProduct" type="hidden" class="form-control" th:field="*{productId}"/>
+                    <form id="addToCart"  method="post" th:action="@{'/product/' + ${product.id}}">
+
+                        <label for="productCount">Wybierz ilość: </label>
+                        <input id="productCount" name="productCount" type="number" min="1" />
+                        <input id="productName" name="productName" type="hidden" class="form-control" th:value="${product.productName}"/>
                         <div class="form-group">
                             <button align="center" type="submit" class="btn btn-success">Wypożycz</button>
                         </div>

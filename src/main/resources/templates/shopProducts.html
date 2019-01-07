@@ -97,6 +97,8 @@
         </div>
         <!-- /.container -->
 
+        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
         <script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
         <script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
         <script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
