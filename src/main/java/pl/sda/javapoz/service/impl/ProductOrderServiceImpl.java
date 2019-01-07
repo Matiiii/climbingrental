@@ -59,6 +59,25 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    public boolean isProductAvailableToOrder(Long id, String dateFilter) {
+        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        boolean availableToOrder = true;
+        for (ProductOrderEntity order : orders) {
+            Date orderStart = order.getOrderStart();
+            Date orderEnd = order.getOrderEnd();
+            String[] dates = dateFilter.split("-");
+            Date productOrderStart = new Date(dates[0]);
+            Date productOrderEnd = new Date(dates[1]);
+
+            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
+                availableToOrder = false;
+                break;
+            }
+        }
+        return availableToOrder;
+    }
+
+    @Override
     public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrderEntity> orders = findProductOrderByProductId(id);
         boolean availableToOrder = true;

@@ -65,10 +65,16 @@ public class ProductController {
     public ModelAndView addProductToBasket(@PathVariable("id") Long id, @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
+        UserEntity loggedUser = sessionService.getCurrentUser();
 
-        modelAndView.addObject("info", new Info("produkt dodany do koszyka", true));
-        basketService.addProductToBasket(productById);
-        
+        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
+        if (availableToOrder) {
+            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
+            basketService.addProductToBasket(productById);
+        } else {
+            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
+        }
+
         return productPage(id, modelAndView);
     }
 

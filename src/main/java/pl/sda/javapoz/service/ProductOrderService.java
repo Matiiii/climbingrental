@@ -20,6 +20,8 @@ public interface ProductOrderService {
 
     boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd);
 
+    boolean isProductAvailableToOrder(Long id, String dateFilter);
+
     List<String> getListOfDatesWhenProductIsReserved(Long id);
 
     List<ProductOrderEntity> findAllProductOrders();
