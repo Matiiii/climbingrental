@@ -100,33 +100,6 @@
         <script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
         <script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
         <script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
-        <script>
-
-            $(function () {
-                var dateFormat = "mm/dd/yy", from = $("#from").datepicker(
-                    {
-                        dateFormat: "mm/dd/yy"
-                    }).on("change", function () {
-                    to.datepicker("option", "minDate", getDate(this));
-                }), to = $("#to").datepicker(
-                    {
-                        dateFormat: "mm/dd/yy"
-                    }).on("change", function () {
-                    from.datepicker("option", "maxDate", getDate(this));
-                });
-
-                function getDate(element) {
-                    var date;
-                    try {
-                        date = $.datepicker.parseDate(dateFormat, element.value);
-                    } catch (error) {
-                        date = null;
-                    }
-
-                    return date;
-                }
-            });
-        </script>
 
     </div>
 </div>
