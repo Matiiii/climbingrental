@@ -1,13 +1,3 @@
 .container.row.col-md-3.lead.list-group.list-group-item:hover {
     color: green;
-
-}
-body {
-    padding-top: 54px;
-}
-
-@media (min-width: 992px) {
-    body {
-        padding-top: 56px;
-    }
 }
