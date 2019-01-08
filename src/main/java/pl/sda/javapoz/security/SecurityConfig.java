@@ -28,12 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/static**").permitAll()
-                /*.antMatchers("/user").hasAnyRole("USER", "ADMIN")*/
-                .antMatchers("/register").hasRole("ADMIN")
-                .antMatchers("/shop", "/beans", "/").permitAll()
-                .antMatchers("/", "/news/**").permitAll()
-                .antMatchers("/contact", "/product/**").permitAll()
+                .antMatchers("/resources/**", "/static/**").permitAll()
+                .antMatchers("/user").authenticated()
+                .antMatchers("/admin-page").hasRole("ADMIN")
+                .antMatchers("/shop", "/shop/**", "/").permitAll()
+                .antMatchers("/register", "/news/**").permitAll()
+                .antMatchers("/cart", "/contact", "/product/**").permitAll()
                 .antMatchers("/login*", "/signin/**", "/signup/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

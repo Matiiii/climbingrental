@@ -3,11 +3,14 @@ package pl.sda.javapoz.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.FilterProducts;
 import pl.sda.javapoz.model.Info;
 import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.service.CartService;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
 
@@ -19,11 +22,14 @@ public class ShopController {
 
     private NewsService newsService;
     private ProductService productService;
+    private CartService cartService;
 
     @Autowired
-    public ShopController(NewsService newsService, ProductService productService) {
+    public ShopController(NewsService newsService, ProductService productService, CartService cartService) {
+
         this.newsService = newsService;
         this.productService = productService;
+        this.cartService = cartService;
     }
 
     @GetMapping(value = "/")
@@ -39,15 +45,14 @@ public class ShopController {
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String datefilter,
-                                      ModelAndView modelAndView) throws ParseException {
+                                      ModelAndView modelAndView) {
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
-        
+
         boolean hasNoParameters = "".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
-
 
 
         if (hasNoParameters) {
@@ -58,10 +63,26 @@ public class ShopController {
         } else if (hasOnlyDates) {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(datefilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + datefilter + "</b>", true));
-        } else  {
-            modelAndView.addObject("countProducts" , productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
+        } else {
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + datefilter + "</b>", true));
         }
         return modelAndView;
+    }
+
+    @PostMapping("/shop/{id}")
+    public ModelAndView addProductToCart(@PathVariable Long id,
+                                         @RequestParam(value = "productCount") String productCount,
+                                         ModelAndView modelAndView) {
+        modelAndView.setViewName("shop");
+        ProductEntity productById = productService.findProductById(id);
+
+        if (productCount.isEmpty() || Integer.parseInt(productCount) < 1) {
+            modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
+        } else {
+            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
+            cartService.addProductToBasket(productById);
+        }
+        return foundProducts("", "", modelAndView);
     }
 }
