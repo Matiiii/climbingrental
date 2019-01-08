@@ -1,5 +1,7 @@
 package pl.sda.javapoz.model;
 
+import pl.sda.javapoz.model.entity.ProductEntity;
+
 public class CountProducts {
 
     private ProductEntity product;

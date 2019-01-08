@@ -3,7 +3,7 @@ package pl.sda.javapoz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.sda.javapoz.model.*;
+import pl.sda.javapoz.model.entity.*;
 import pl.sda.javapoz.repository.NewsRepository;
 import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.UserService;

@@ -2,7 +2,7 @@ package pl.sda.javapoz.service;
 
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
 
 import java.util.Date;
 import java.util.List;

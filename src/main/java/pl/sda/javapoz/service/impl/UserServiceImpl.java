@@ -3,7 +3,7 @@ package pl.sda.javapoz.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.UserRepository;
 import pl.sda.javapoz.repository.UserRoleRepository;
 import pl.sda.javapoz.service.UserService;
