@@ -25,19 +25,21 @@
             <form id="orderForm" method="get" th:action="@{/shop}">
                 <table>
                     <tr>
-                        <td class="order"><label for="productName">Wpisz nazwę produktu</label></td>
+                        <td class="flexCenter"><label for="productName">Wpisz nazwę produktu</label></td>
                     </tr>
                     <tr>
-                        <td class="order"><input  type="text" name="productName" id="productName"/></td>
+                        <td class="flexCenter"><input type="text" name="productName" id="productName"/></td>
                     </tr>
                     <tr>
-                        <td class="order"><label for="dateFilter">Wybierz okres, na który chcesz wypożyczyć sprzęt:</label></td>
+                        <td class="flexCenter"><label for="dateFilter">Wybierz okres, na który chcesz wypożyczyć
+                            sprzęt:</label></td>
                     </tr>
                     <tr>
-                        <td class="order"><input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" /></td>
+                        <td class="flexCenter"><input id="dateFilter" type="text" name="datefilter" autocomplete="off"
+                                                 value=""/></td>
                     </tr>
                     <tr>
-                        <td class="order">
+                        <td class="flexCenter">
                             <button type="submit" class="btn btn-success">Sprawdz dostepnosc</button>
                         </td>
                     </tr>
@@ -69,16 +71,27 @@
                         </div>
 
                         <div class="caption">
+                            <div class="productName">
+                                <a href="shop.html" th:href="'/product/'+${countProduct.product.id}">
+                                    <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
+                            </div>
+                            <div class="productInfo flexAround">
+                                <span class="price left" th:text="'Cena: '+${countProduct.product.price}+'zl'">
+                                $24.99</span>
+                                <span class="count right" th:text="'Dostepnych: '+${countProduct.count}"> ilość</span>
+                            </div>
+                            <div class="addToCart">
 
-                            <a href="shop.html" th:href="'/product/'+${countProduct.product.id}"><h3 class="pull-right"
-                                                                                                     th:text="${countProduct.product.productName}">
-                                Name</h3></a>
-                            <p class="pull-right" th:text="'Cena za dzien: '+${countProduct.product.price}+'zl'">
-                                $24.99</p>
-                            <br/>
-                            <p class="pull-right" th:text="'Na magazynie dostepnych: '+${countProduct.count}">0</p>
-                            <br/>
-
+                                <form id="addToCart" method="post" th:action="@{'/shop/' + ${countProduct.product.id}}">
+                                    <div>
+                                        <label for="productCount">Wybierz ilość: </label>
+                                        <input id="productCount" name="productCount" type="number" th:default="1" min="1"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button align="center" type="submit" class="btn btn-success">do koszyka</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

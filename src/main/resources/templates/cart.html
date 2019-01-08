@@ -49,10 +49,11 @@
 
     <div class="col-md-12">
         <div class="list-group">
-            <table class="table table-hover">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Produkt</th>
+                    <th></th>
                     <th>Cena</th>
                     <th>Ilość</th>
                     <th>Dodaj/Usuń</th>
@@ -67,13 +68,14 @@
 
                         <td>
                             <div class="col-md-4">
-                                <p th:text="${product.productName}">dsa</p>
+
                                 <img th:src="${product.smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
+                        <td><a href="shop.html" th:href="'/product/'+${product.id}"><h4 th:text="${product.productName}">nazwa produktu</h4></a></td>
                         <td><p th:text="${product.price}">cena</p></td>
                         <td><p th:text="${product.price}">cena</p></td>
                         <td>
