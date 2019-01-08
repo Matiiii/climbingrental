@@ -48,8 +48,6 @@ public class ShopController {
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
 
-
-
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
         } else if (hasOnlyProductName) {

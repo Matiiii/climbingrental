@@ -41,19 +41,20 @@ public class ProductController {
 
     @PostMapping("/product/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
-                                     @RequestParam(value = "productCount") String productCount,
+                                     @RequestParam(value = "productCount") Integer productCount,
                                      @RequestParam(value = "productName") String productName,
                                      ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
 
         //boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
-        if (productCount.isEmpty() || Integer.parseInt(productCount) < 1) {
-            modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
-        } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName , true));
-            cartService.addProductToBasket(productById);
+        if (productCount == null) {
+            productCount = 1;
+            //modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         }
+            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName , true));
+            cartService.addProductToBasket(productById, productCount);
+
 
 /*        if (availableToOrder) {
             modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
