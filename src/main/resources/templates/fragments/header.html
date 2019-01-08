@@ -63,12 +63,12 @@
 		    	<li class="nav-item">
 		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
 		    	</li>
+				<li class="nav-item" >
+					<a class="nav-link"  href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
+				</li>
 		    	<li class="nav-item" >
 			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
 			    </li>
-			    <li class="nav-item" >
-		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
-            	</li>
             	<li class="nav-item" >
 		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
             	</li>
