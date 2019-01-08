@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
-public class Basket {
+public class Cart {
 
     List<ProductEntity> products = new LinkedList<>();
 
