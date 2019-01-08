@@ -3,7 +3,7 @@ package pl.sda.javapoz.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.sda.javapoz.model.NewsEntity;
+import pl.sda.javapoz.model.entity.NewsEntity;
 
 import java.util.List;
 

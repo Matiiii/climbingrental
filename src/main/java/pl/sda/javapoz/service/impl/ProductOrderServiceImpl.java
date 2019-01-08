@@ -2,9 +2,9 @@ package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sda.javapoz.model.ProductEntity;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
@@ -56,6 +56,25 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
         return productOrderRepository.findByProductIdId(productId);
+    }
+
+    @Override
+    public boolean isProductAvailableToOrder(Long id, String dateFilter) {
+        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        boolean availableToOrder = true;
+        for (ProductOrderEntity order : orders) {
+            Date orderStart = order.getOrderStart();
+            Date orderEnd = order.getOrderEnd();
+            String[] dates = dateFilter.split("-");
+            Date productOrderStart = new Date(dates[0]);
+            Date productOrderEnd = new Date(dates[1]);
+
+            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
+                availableToOrder = false;
+                break;
+            }
+        }
+        return availableToOrder;
     }
 
     @Override

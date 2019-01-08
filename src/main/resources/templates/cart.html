@@ -61,7 +61,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div th:each="product: ${countProductList}">
+                <div th:each="product: ${products}">
 
 
                     <tr th:attr="product-id=${product.id}">
@@ -76,7 +76,7 @@
                             </div>
                         </td>
                         <td><p th:text="${product.price}">cena</p></td>
-                        <td><p th:text="${product.count}">cena</p></td>
+                        <td><p th:text="${product.price}">cena</p></td>
                         <td>
 
                             <button type="submit" class="btn btn-primary btn-delete">Usuń

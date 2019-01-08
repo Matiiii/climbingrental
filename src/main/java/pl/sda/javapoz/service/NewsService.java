@@ -1,7 +1,7 @@
 package pl.sda.javapoz.service;
 
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.NewsEntity;
+import pl.sda.javapoz.model.entity.NewsEntity;
 import pl.sda.javapoz.model.Pagination;
 
 import java.util.List;
