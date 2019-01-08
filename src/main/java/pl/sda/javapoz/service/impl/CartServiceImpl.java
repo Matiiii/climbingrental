@@ -19,7 +19,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addProductToBasket(ProductEntity product, int quantity) {
+    public void addProductToCart(ProductEntity product, int quantity) {
         List<ProductEntity> products = cart.getProducts();
         for(int i = 0; i < quantity; i++){
             products.add(product);
@@ -27,7 +27,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<ProductEntity> getListOfProductsInBasket() {
+    public List<ProductEntity> getListOfProductsInCart() {
         return cart.getProducts();
     }
 }

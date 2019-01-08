@@ -50,6 +50,10 @@
 
     <div class="col-md-12">
         <div class="list-group">
+            <form th:action="@{/makeorder}" method="post">
+                <button class="btn btn-primary" type="submit">Zamow</button>
+            </form>
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -62,10 +66,7 @@
                 </thead>
                 <tbody>
                 <div th:each="product: ${products}">
-
-
                     <tr th:attr="product-id=${product.id}">
-
                         <td>
                             <div class="col-md-4">
                                 <p th:text="${product.productName}">dsa</p>

@@ -30,6 +30,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    public void saveOrder(List<ProductEntity> products) {
+        productOrderRepository.save(new ProductOrderEntity(products));
+    }
+
+    @Override
     public List<ProductOrderEntity> findProductsByUserId(Long id) {
         return productOrderRepository.findByUserIdId(id);
     }
