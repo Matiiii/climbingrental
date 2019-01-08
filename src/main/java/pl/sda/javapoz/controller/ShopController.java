@@ -38,8 +38,6 @@ public class ShopController {
 
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
-                                      @RequestParam(value = "orderStart", defaultValue = "") String orderStart,
-                                      @RequestParam(value = "orderEnd", defaultValue = "") String orderEnd,
                                       @RequestParam(value = "datefilter", defaultValue = "") String datefilter,
                                       ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("shopProducts");
@@ -50,8 +48,6 @@ public class ShopController {
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
         boolean hasAllParameters = !"".equals(prodName) && !"".equals(datefilter);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 
         if (hasNoParameters) {
