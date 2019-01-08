@@ -41,25 +41,22 @@ public class ProductController {
         return modelAndView;
     }
 
-/*    @PostMapping("/product/{id}")
-    public ModelAndView orderProduct(@PathVariable Long id, @ModelAttribute ProductOrderEntity productOrder,
-                                     @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
-        modelAndView.setViewName("product");
-        ProductEntity productById = productService.findProductById(id);
-        Date productOrderStart = productOrder.getOrderStart();
-        Date productOrderEnd = productOrder.getOrderEnd();
-        UserEntity loggedUser = sessionService.getCurrentUser();
 
-        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, productOrderStart, productOrderEnd);
-        if (availableToOrder) {
-            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
-            productOrderService.saveOrder(loggedUser, productById, productOrderStart, productOrderEnd);
+    @PostMapping("/product/{id}")
+    public ModelAndView addProductToCart(@PathVariable Long id,
+                                     @RequestParam(value = "productCount") String productCount,
+                                     @RequestParam(value = "productName") String productName,
+                                     ModelAndView modelAndView) {
+        modelAndView.setViewName("product");
+
+        if (productCount.isEmpty() || Integer.parseInt(productCount) < 1) {
+            modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
-            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
+            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName , true));
         }
 
         return productPage(id, modelAndView);
-    }*/
+    }
 
     @PostMapping("/product/{id}")
     public ModelAndView addProductToBasket(@PathVariable("id") Long id, @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {

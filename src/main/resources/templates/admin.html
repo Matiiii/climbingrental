@@ -4,7 +4,7 @@
 
 <head>
 <link th:include="fragments/header :: head" th:remove="tag" />
-<link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
+<link th:href="@{/css/admin.css}" href="../static/CSS/admin.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -255,12 +255,9 @@
 
 
 <!-- /.container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
 
 <script th:src="@{/js/admin.js}"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </body>
 

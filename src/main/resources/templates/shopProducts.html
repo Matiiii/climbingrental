@@ -4,8 +4,8 @@
 <head>
 
     <link th:include="fragments/header :: head" th:remove="tag"/>
-    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
-    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
+    <link th:href="@{/css/products.css}" href="../static/CSS/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -22,19 +22,19 @@
         <div class="col-xs-12 col-ms-12 col-md-3 form">
 
 
-            <form id="orderForm" method="get" th:action="@{/shop}" th:object="${filterProducts}">
+            <form id="orderForm" method="get" th:action="@{/shop}">
                 <table>
                     <tr>
-                        <td class="order"><label>Wpisz nazwę produktu</label></td>
+                        <td class="order"><label for="productName">Wpisz nazwę produktu</label></td>
                     </tr>
                     <tr>
-                        <td class="order"><input type="text" name="productName" id="usr"/></td>
+                        <td class="order"><input  type="text" name="productName" id="productName"/></td>
                     </tr>
                     <tr>
-                        <td class="order"><p>Wybierz okres, na który chcesz wypożyczyć sprzęt:</p></td>
+                        <td class="order"><label for="dateFilter">Wybierz okres, na który chcesz wypożyczyć sprzęt:</label></td>
                     </tr>
                     <tr>
-                        <td class="order"><input type="text" name="datefilter" autocomplete="off" value="" /></td>
+                        <td class="order"><input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" /></td>
                     </tr>
                     <tr>
                         <td class="order">
@@ -96,6 +96,8 @@
             </footer>
         </div>
         <!-- /.container -->
+
+        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
 
         <script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
         <script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
