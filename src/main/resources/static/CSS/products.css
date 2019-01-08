@@ -2,6 +2,12 @@ img {
     max-width: 200px;
     max-height: 150px;
 }
+input {
+    width: -webkit-fill-available;
+    text-align: center;
+    margin-bottom: 0.3em;
+
+}
 
 .productImg {
     height: 150px;
@@ -48,12 +54,9 @@ img {
     body {
         text-align: -webkit-center;
     }
-
-    input {
-        width: -webkit-fill-available;
-        text-align: center;
-        margin-bottom: 0.3em;
-
+    .productImg {
+        height: 150px;
+        min-width: 160px;
     }
 
     table {
@@ -69,13 +72,6 @@ img {
 @media (max-width: 576px) {
     body {
         text-align: -webkit-center;
-    }
-
-    input {
-        width: -webkit-fill-available;
-        text-align: center;
-        margin-bottom: 0.3em;
-
     }
 
     img {
