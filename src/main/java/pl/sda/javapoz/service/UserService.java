@@ -1,6 +1,7 @@
 package pl.sda.javapoz.service;
 
 import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.VerificationTokenEntity;
 
 import java.util.List;
 
@@ -12,5 +13,9 @@ public interface UserService {
     UserEntity getUserByEmail(String email);
 
      List<UserEntity> findAllUsers();
+
+    void createVerificationToken(UserEntity user, String token);
+
+    VerificationTokenEntity getVerificationToken(String VerificationToken);
 
 }
