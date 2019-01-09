@@ -16,7 +16,6 @@ public class ProductOrderEntity {
     @OneToOne(cascade = CascadeType.PERSIST)
     private UserEntity user;
 
-
     @ManyToMany
     @Column(name = "product_id")
     private List<ProductEntity> products = new LinkedList<>();

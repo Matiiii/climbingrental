@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.javapoz.model.Cart;
 import pl.sda.javapoz.model.entity.ProductEntity;
-import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.CartService;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addProductToCart(ProductEntity product, int quantity) {
         List<ProductEntity> products = cart.getProducts();
-        for(int i = 0; i < quantity ; i++){
+        for (int i = 0; i < quantity; i++) {
             products.add(product);
         }
     }

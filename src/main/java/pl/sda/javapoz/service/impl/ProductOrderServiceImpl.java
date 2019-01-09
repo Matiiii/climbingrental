@@ -2,10 +2,11 @@ package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.sda.javapoz.DateFilter;
 import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
-import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
+import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
 import java.text.SimpleDateFormat;
@@ -18,20 +19,17 @@ import java.util.List;
 public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository productOrderRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
-    public void saveOrder(UserEntity user, ProductEntity productId, Date orderStart, Date orderEnd) {
-        productOrderRepository.save(new ProductOrderEntity(user, orderStart, orderEnd));
-    }
-
-    @Override
-    public void saveOrder(List<ProductEntity> products) {
-        productOrderRepository.save(new ProductOrderEntity(products));
+    public void saveOrder(ProductOrderEntity order) {
+        productOrderRepository.save(order);
     }
 
     @Override
@@ -41,12 +39,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public ProductOrderEntity getPriceOfOrderedProduct(ProductOrderEntity productOrder) {
-        // TODO: 09.01.2019  przerobić metode.
+        //Double price = productOrder.getProductId().getPrice();
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
         Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
         Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
-        productOrder.setCombinedPrice(lengthOfOrder);
+        //productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
 
@@ -58,19 +56,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return sum[0];
     }
 
-    @Override
-    public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
-        return productOrderRepository.findByProductsId(productId);
-    }
 
     @Override
     public boolean isProductAvailableToOrder(Long id, String dateFilter) {
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
         boolean availableToOrder = true;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
-            String[] dates = dateFilter.split("-");
+            String[] dates = DateFilter.filterData(dateFilter);
             Date productOrderStart = new Date(dates[0]);
             Date productOrderEnd = new Date(dates[1]);
 
@@ -84,7 +78,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
         boolean availableToOrder = true;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
@@ -99,7 +93,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public List<String> getListOfDatesWhenProductIsReserved(Long id) {
         List<String> dates = new ArrayList<>();
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
 
         String pattern = "MM/dd/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -116,6 +110,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
             }
         }
         return dates;
+    }
+
+    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
+        ProductEntity product = productRepository.findOne(productId);
+        return productOrderRepository.findAllByProductsContaining(product);
     }
 
     @Override
