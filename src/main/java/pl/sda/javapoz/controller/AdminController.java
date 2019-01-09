@@ -32,7 +32,7 @@ public class AdminController {
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/shop");
-        productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags());
+        productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags(), product.getQuantity());
         modelAndView.addObject("addProduct", product);
         return modelAndView;
     }

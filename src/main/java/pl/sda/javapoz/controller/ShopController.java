@@ -54,7 +54,6 @@ public class ShopController {
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
         boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
 
-
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
         } else if (hasOnlyProductName) {
@@ -72,16 +71,16 @@ public class ShopController {
 
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
-                                         @RequestParam(value = "productCount") String productCount,
+                                         @RequestParam(value = "productCount") Integer productCount,
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("shop");
         ProductEntity productById = productService.findProductById(id);
 
-        if (productCount.isEmpty() || Integer.parseInt(productCount) < 1) {
+        if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
-            cartService.addProductToBasket(productById);
+            cartService.addProductToCart(productById, productCount);
         }
         return foundProducts("", "", modelAndView);
     }

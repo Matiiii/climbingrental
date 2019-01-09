@@ -41,46 +41,34 @@ public class ProductController {
 
     @PostMapping("/product/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
-                                     @RequestParam(value = "productCount") String productCount,
+                                     @RequestParam(value = "productCount") Integer productCount,
                                      @RequestParam(value = "productName") String productName,
                                      ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
 
         //boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
-        if (productCount.isEmpty() || Integer.parseInt(productCount) < 1) {
-            modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
-        } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName , true));
-            cartService.addProductToBasket(productById);
+        if (productCount == null) {
+            productCount = 1;
         }
+        else if(productCount < 0){
+            modelAndView.addObject("info", new Info("Nieprawidłowa ilość", false));
+            return productPage(id, modelAndView);
+        }
+
+        modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName , true));
+        cartService.addProductToCart(productById, productCount);
+
 
 /*        if (availableToOrder) {
             modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
-            cartService.addProductToBasket(productById);
+            cartService.addProductToCart(productById);
         } else {
             modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
         }*/
 
         return productPage(id, modelAndView);
     }
-
- /*   @PostMapping("/product/{id}")
-    public ModelAndView addProductToBasket(@PathVariable("id") Long id, @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
-        modelAndView.setViewName("product");
-        ProductEntity productById = productService.findProductById(id);
-        UserEntity loggedUser = sessionService.getCurrentUser();
-
-        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
-        if (availableToOrder) {
-            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
-            cartService.addProductToBasket(productById);
-        } else {
-            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
-        }
-
-        return productPage(id, modelAndView);
-    }*/
 
     @GetMapping("/products-availability/{id}")
     @ResponseBody

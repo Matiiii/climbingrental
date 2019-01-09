@@ -16,17 +16,19 @@ public class ProductEntity {
     private String smallImage;
     private String bigImage;
     private String tags;
+    private Integer quantity;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags) {
+    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
         this.productName = productName;
         this.price = price;
         this.description = description;
         this.smallImage = smallImage;
         this.bigImage = bigImage;
         this.tags = tags;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -83,6 +85,14 @@ public class ProductEntity {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override

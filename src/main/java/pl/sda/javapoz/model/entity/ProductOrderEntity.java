@@ -2,6 +2,8 @@ package pl.sda.javapoz.model.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Entity(name = "product_order")
@@ -16,6 +18,10 @@ public class ProductOrderEntity {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private ProductEntity productId;
+
+    @ManyToMany
+    @Column(name = "product_id")
+    private List<ProductEntity> products = new LinkedList<>();
 
     private Date orderStart;
     private Date orderEnd;
@@ -79,5 +85,17 @@ public class ProductOrderEntity {
         this.productId = productId;
         this.orderStart = orderStart;
         this.orderEnd = orderEnd;
+    }
+
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductEntity> products) {
+        this.products = products;
+    }
+
+    public ProductOrderEntity(List<ProductEntity> products) {
+        this.products = products;
     }
 }

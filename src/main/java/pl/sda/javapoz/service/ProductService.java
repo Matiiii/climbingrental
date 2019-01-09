@@ -31,7 +31,7 @@ public interface ProductService {
 
     Set<Link> findRelatedProducts(ProductEntity product);
 
-    void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags);
+    void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity);
 
     void removeProduct(Long id);
 }
