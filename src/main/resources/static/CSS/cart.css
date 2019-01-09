@@ -1,3 +1,11 @@
+div ul li a {
+    margin-right: 5px;
+}
+
+footer {
+    padding-top: 2em;
+}
+
 .btn {
     margin: 2px;
     min-width: 80px;
@@ -10,19 +18,21 @@
 .textarea {
     margin-bottom: 8px;
 }
-div ul li a {
-    margin-right: 5px;
-}
-.infoContainer{
+
+.infoContainer {
     padding-top: 2em;
 }
+
 .info {
     margin-left: 5em;
 }
 
+.img-responsive {
+    max-width: 100px;
+    max-height: 100px;
+
+}
+
 .imgBasket {
     max-width: 150px;
-}
-footer{
-    padding-top: 2em;
 }

@@ -29,7 +29,6 @@
             </div>
             <!-- end info -->
             <div class="base info">
-                <p class="title">Koszyk</p>
                 <p class="orderPeriod">Termin wypożyczenia: <b th:text="'jakaś data'">data</b></p>
                 <form id="orderPeriod" method="post" th:action="@{/cart/changePeriod}">
                     <label for="dateFilter">Zmień termin:</label>
@@ -54,10 +53,11 @@
                 <button class="btn btn-primary" type="submit">Zamow</button>
             </form>
 
-            <table class="table table-hover">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Produkt</th>
+                    <th></th>
                     <th>Cena</th>
                     <th>Ilość</th>
                     <th>Dodaj/Usuń</th>
@@ -69,13 +69,14 @@
                     <tr th:attr="product-id=${product.id}">
                         <td>
                             <div class="col-md-4">
-                                <p th:text="${product.productName}">dsa</p>
+
                                 <img th:src="${product.smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
+                        <td><a href="shop.html" th:href="'/product/'+${product.id}"><h4 th:text="${product.productName}">nazwa produktu</h4></a></td>
                         <td><p th:text="${product.price}">cena</p></td>
                         <td><p th:text="${product.price}">cena</p></td>
                         <td>
