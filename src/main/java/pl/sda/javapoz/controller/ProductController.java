@@ -70,23 +70,6 @@ public class ProductController {
         return productPage(id, modelAndView);
     }
 
- /*   @PostMapping("/product/{id}")
-    public ModelAndView addProductToCart(@PathVariable("id") Long id, @RequestParam(value = "datefilter", defaultValue = "") String dateFilter, ModelAndView modelAndView) {
-        modelAndView.setViewName("product");
-        ProductEntity productById = productService.findProductById(id);
-        UserEntity loggedUser = sessionService.getCurrentUser();
-
-        boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
-        if (availableToOrder) {
-            modelAndView.addObject("info", new Info("produkt zamówiony poprawnie", true));
-            cartService.addProductToCart(productById);
-        } else {
-            modelAndView.addObject("info", new Info("produkt niedostępny w tym okresie", false));
-        }
-
-        return productPage(id, modelAndView);
-    }*/
-
     @GetMapping("/products-availability/{id}")
     @ResponseBody
     public List<String> getAvailabilitiesForProduct(@PathVariable Long id) {

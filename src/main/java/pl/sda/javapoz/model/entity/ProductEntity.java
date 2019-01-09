@@ -21,15 +21,6 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-/*    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags) {
-        this.productName = productName;
-        this.price = price;
-        this.description = description;
-        this.smallImage = smallImage;
-        this.bigImage = bigImage;
-        this.tags = tags;
-    }*/
-
     public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
         this.productName = productName;
         this.price = price;
