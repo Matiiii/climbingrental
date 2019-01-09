@@ -38,7 +38,7 @@ public class CartController {
     public ModelAndView makeOrder(@ModelAttribute("order") ProductOrderEntity order, ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
-        order.setUserId(user);
+        order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart());
         productOrderService.saveOrder(order);
         return modelAndView;

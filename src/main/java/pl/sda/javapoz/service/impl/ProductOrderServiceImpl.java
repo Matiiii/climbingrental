@@ -40,7 +40,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrderEntity> findProductsByUserId(Long id) {
-        return productOrderRepository.findByUserIdId(id);
+        return productOrderRepository.findByUserId(id);
     }
 
     @Override

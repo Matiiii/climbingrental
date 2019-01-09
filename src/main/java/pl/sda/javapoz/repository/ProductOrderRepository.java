@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProductOrderRepository extends CrudRepository<ProductOrderEntity, Long> {
-    List<ProductOrderEntity> findByUserIdId(Long id);
+    List<ProductOrderEntity> findByUserId(Long id);
 }
