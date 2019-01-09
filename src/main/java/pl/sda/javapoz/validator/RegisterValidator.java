@@ -2,7 +2,7 @@ package pl.sda.javapoz.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.UserService;
 
 import java.util.List;

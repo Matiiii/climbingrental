@@ -1,6 +1,8 @@
 package pl.sda.javapoz.model;
 
 
+import pl.sda.javapoz.model.entity.UserEntity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;

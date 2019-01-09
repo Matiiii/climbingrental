@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.SessionService;
 

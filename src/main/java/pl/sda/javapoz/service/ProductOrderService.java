@@ -1,8 +1,8 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.ProductEntity;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -20,9 +20,11 @@ public interface ProductOrderService {
 
     boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd);
 
+    boolean isProductAvailableToOrder(Long id, String dateFilter);
+
     List<String> getListOfDatesWhenProductIsReserved(Long id);
 
     List<ProductOrderEntity> findAllProductOrders();
 
-    void removeProductOrderByAdmin(Long id);
+    void removeProductOrder(Long id);
 }

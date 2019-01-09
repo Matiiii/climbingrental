@@ -1,7 +1,7 @@
 package pl.sda.javapoz.service;
 
-import pl.sda.javapoz.model.UserEntity;
 import pl.sda.javapoz.model.VerificationTokenEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 
 import java.util.List;
 

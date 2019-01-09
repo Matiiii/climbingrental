@@ -10,14 +10,11 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+	<!-- bootstrap css -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../../static/CSS/bootstrap.min.css" />
+
     <!-- Custom css -->
-    <link href="https://blackrockdigital.github.io/startbootstrap-shop-homepage/css/shop-homepage.css"
-          rel="stylesheet"/>
-    <link th:href="@{/css/header.css}" href="../static/css/header.css" rel="stylesheet"/>
+	<link th:href="@{/css/header.css}" href="../../static/CSS/header.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,14 +23,14 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link th:href="@{/css/label.css}" href="../static/css/label.css" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/label.css}" href="../../static/CSS/label.css" rel="stylesheet" media="screen"/>
 
 </head>
 <body>
 
-
 <div class="container" th:fragment="navbar">
-                    <span class="navbar-text" sec:authorize="isAuthenticated()">
+
+<span class="hello" sec:authorize="isAuthenticated()">
                			 Witaj <b sec:authentication="name"></b>!
                			<b class="hello" sec:authentication="principal.authorities">User</b>
             		</span>
@@ -46,23 +43,45 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-            <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
-                <li class="nav-item">
-                    <a class="nav-link" href=" #" th:href="@{/shop}">Wypozyczalnia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href=" #" th:href="@{/}">Informacje</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href=" #" th:href="@{/contact}">Kontakt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href=" #" th:href="@{#}">Regulamin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}"
-                       th:text="Admin">About</a>
-                </li>
+ <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
+			   	<li class="nav-item">
+			    	<a class="nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
+			   	</li>
+			   	<li class="nav-item">
+			    	<a class="nav-link"  href=" #" th:href="@{/}" th:text="Informacje">About</a>
+			    </li>
+			    <li class="nav-item">
+			    	<a class="nav-link"  href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
+			   	</li>
+			   	<li class="nav-item">
+			   		<a class="nav-link"  href=" #" th:href="@{#}" th:text="Regulamin">About</a>
+			   	</li>
+			    <li class="nav-item">
+			    	<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}" th:text="Admin">About</a>
+			    </li>
+		    </ul>
+		    
+		    <ul class="navbar-nav ml-auto my-sm-0">
+		    	<li class="nav-item">
+		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
+		    	</li>
+				<li class="nav-item" >
+					<a class="nav-link"  href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
+				</li>
+		    	<li class="nav-item" >
+			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
+			    </li>
+            	<li class="nav-item" >
+		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
+            	</li>
+		    	<li class="nav-item">
+		    		<form class="form-inline " th:action="@{/logout}"  method="post" id="logout"></form>
+					<a class="nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+				</li>
+
+		   		<li>
+		   			
+            	</li>
             </ul>
 
             <ul class="navbar-nav ml-auto my-sm-0">

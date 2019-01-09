@@ -6,7 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
@@ -37,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
         productRepository.findAll().forEach(products::add);
         return products;
     }
-
     @Override
     public Set<ProductEntity> findProductByName() {
         return new HashSet<>(findAllProducts());
@@ -56,8 +55,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer countProductsByNameAndTime(String name, Date start, Date end) {
         int cnt = 0;
-        List<ProductEntity> list = productRepository.findByProductName(name);
-        for (ProductEntity product : list) {
+        List<ProductEntity> productList = productRepository.findByProductName(name);
+        for (ProductEntity product : productList) {
             if (productOrderService.isProductAvailableToOrder(product.getId(), start, end)) {
                 cnt++;
             }
@@ -84,13 +83,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<CountProducts> countAllAvailableProductsByName(Date start, Date end) {
+    public List<CountProducts> countAllAvailableProductsByName(String dateFilter) {
+        String dates[] = dateFilter.split("-");
+        Date start =  new Date(dates[0]);
+        Date end = new Date(dates[1]);
         Set<ProductEntity> set = findProductByName();
         return addProductsWithTimeToList(set, start, end);
     }
 
     @Override
-    public List<CountProducts> countAllAvailableProductsByNameFiltered(Date start, Date end, String name) {
+    public List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFilter, String name) {
+        String dates[] = dateFilter.split("-");
+        Date start =  new Date(dates[0]);
+        Date end = new Date(dates[1]);
         Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
         return addProductsWithTimeToList(set, start, end);
     }

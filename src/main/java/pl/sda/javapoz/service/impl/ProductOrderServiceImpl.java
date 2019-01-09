@@ -2,9 +2,9 @@ package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sda.javapoz.model.ProductEntity;
-import pl.sda.javapoz.model.ProductOrderEntity;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
@@ -39,23 +39,42 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         Double price = productOrder.getProductId().getPrice();
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
-        Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime) / (1000 * 60 * 60 * 24);
+        Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
+        Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
         productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
 
     @Override
     public Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders) {
-        Double sum = 0.0;
-        for (ProductOrderEntity productOrder : productOrders) {
-            sum += getPriceOfOrderedProduct(productOrder).getCombinedPrice();
-        }
-        return sum;
+        Double[] sum = {0.0};
+        productOrders.forEach(product -> sum[0] += product.getCombinedPrice());
+
+        return sum[0];
     }
 
     @Override
     public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
         return productOrderRepository.findByProductIdId(productId);
+    }
+
+    @Override
+    public boolean isProductAvailableToOrder(Long id, String dateFilter) {
+        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        boolean availableToOrder = true;
+        for (ProductOrderEntity order : orders) {
+            Date orderStart = order.getOrderStart();
+            Date orderEnd = order.getOrderEnd();
+            String[] dates = dateFilter.split("-");
+            Date productOrderStart = new Date(dates[0]);
+            Date productOrderEnd = new Date(dates[1]);
+
+            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
+                availableToOrder = false;
+                break;
+            }
+        }
+        return availableToOrder;
     }
 
     @Override
@@ -104,7 +123,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void removeProductOrderByAdmin(Long id) {
+    public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
 }

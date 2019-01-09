@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/cart.css}" href="../static/CSS/cart.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="fragments/header :: navbar">
+</div>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row infoContainer">
+        <div class="col-xs-12 col-ms-12 col-md-3 imgBasket">
+            <img class="imgBasket" th:src="@{/images/icon_add_to_cart_740405.png}" src="../static/images/icon_add_to_cart_740405.png"/>
+        </div>
+
+        <div class="col-xs col-sm col-md-9 info">
+            <!-- info for User -->
+            <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
+                status produktu
+            </div>
+            <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+                status produktu
+            </div>
+            <!-- end info -->
+            <div class="base info">
+                <p class="orderPeriod">Termin wypożyczenia: <b th:text="'jakaś data'">data</b></p>
+                <form id="orderPeriod" method="post" th:action="@{/cart/changePeriod}">
+                    <label for="dateFilter">Zmień termin:</label>
+                   <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
+                    <button type="submit" class="btn btn-success">Zmień</button>
+                </form>
+                <p>Łączna ilość dni: <b th:text="'Jakaś liczba'">liczba dni</b></p>
+                <p>Łączy koszt wypożyczenia: <b th:text="'jakaś suma'">suma</b></p>
+                <p>Wymagana kaucja: <b th:text="'Jakas kaucja'">kaucja</b></p>
+                <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="list-group">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th></th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                    <th>Dodaj/Usuń</th>
+                    <th>Razem</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:each="product: ${products}">
+
+
+                    <tr th:attr="product-id=${product.id}">
+
+                        <td>
+                            <div class="col-md-4">
+
+                                <img th:src="${product.smallImage}"
+                                     src="../static/images/LINA_DUZA.jpg"
+                                     class="img-responsive"
+                                     alt=""/>
+                            </div>
+                        </td>
+                        <td><a href="shop.html" th:href="'/product/'+${product.id}"><h4 th:text="${product.productName}">nazwa produktu</h4></a></td>
+                        <td><p th:text="${product.price}">cena</p></td>
+                        <td><p th:text="${product.price}">cena</p></td>
+                        <td>
+
+                            <button type="submit" class="btn btn-primary btn-delete">Usuń
+                            </button>
+                        </td>
+                        <td><p th:text="suma">suma</p></td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+<!-- /.container -->
+
+<div class="container">
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
+</div>
+<!-- /.container -->
+
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+</body>
+
+</html>

@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.listener.OnRegistrationCompleteEvent;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.UserService;
 import pl.sda.javapoz.validator.RegisterValidator;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 public class UserRegisterController {
@@ -32,8 +31,6 @@ public class UserRegisterController {
         this.registerValidator = registerValidator;
         this.eventPublisher = eventPublisher;
     }
-
-    @Autowired
 
 
     @GetMapping("/register")
@@ -61,21 +58,5 @@ public class UserRegisterController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/register")
-    public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserEntity user, BindingResult bindingResult, WebRequest webRequest, Errors errors) {
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView("registration", "user", user);
-        }
-        UserEntity registeredUser = new UserEntity();
-        if (registeredUser == null) {
-            bindingResult.rejectValue("email", "message.regError");
-        }
-        try {
-            String appUrl = webRequest.getContextPath();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registeredUser, webRequest.getLocale(), appUrl));
-        } catch (Exception me) {
-            return new ModelAndView("emailError", "user", user);
-        }
-        return new ModelAndView("successRegister", "user", user);
-    }
+
 }

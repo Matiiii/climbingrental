@@ -1,7 +1,7 @@
 package pl.sda.javapoz.listener;
 
 import org.springframework.context.ApplicationEvent;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 
 import java.util.Locale;
 

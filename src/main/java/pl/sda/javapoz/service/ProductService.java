@@ -2,7 +2,7 @@ package pl.sda.javapoz.service;
 
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -25,9 +25,9 @@ public interface ProductService {
 
     List<CountProducts> countAllProductsByNameFiltered(String name);
 
-    List<CountProducts> countAllAvailableProductsByName(Date start, Date end);
+    List<CountProducts> countAllAvailableProductsByName(String dateFilter);
 
-    List<CountProducts> countAllAvailableProductsByNameFiltered(Date start, Date end, String name);
+    List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFiltered, String name);
 
     Set<Link> findRelatedProducts(ProductEntity product);
 

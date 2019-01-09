@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <link th:include="fragments/header :: head" th:remove="tag" />
@@ -87,11 +87,8 @@
 
     <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../static/js/bootstrap.min.js"></script>
 </div>
 </body>
 </html>

@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import pl.sda.javapoz.model.UserEntity;
+import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.UserService;
 
 import java.util.UUID;
