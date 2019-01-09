@@ -44,15 +44,15 @@ public class ShopController {
 
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
-                                      @RequestParam(value = "datefilter", defaultValue = "") String datefilter,
+                                      @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                       ModelAndView modelAndView) {
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
-        boolean hasNoParameters = "".equals(prodName) && "".equals(datefilter);
-        boolean hasOnlyProductName = !"".equals(prodName) && "".equals(datefilter);
-        boolean hasOnlyDates = "".equals(prodName) && !"".equals(datefilter);
+        boolean hasNoParameters = "".equals(prodName) && "".equals(dateFilter);
+        boolean hasOnlyProductName = !"".equals(prodName) && "".equals(dateFilter);
+        boolean hasOnlyDates = "".equals(prodName) && !"".equals(dateFilter);
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
@@ -60,11 +60,11 @@ public class ShopController {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
         } else if (hasOnlyDates) {
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(datefilter));
-            modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + datefilter + "</b>", true));
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
+            modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
         } else {
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(datefilter, prodName));
-            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + datefilter + "</b>", true));
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
+            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
         }
         return modelAndView;
     }

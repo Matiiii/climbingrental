@@ -19,8 +19,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductRepository productRepository;
 
     @Autowired
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -62,25 +63,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return sum[0];
     }
 
-    @Override
-    public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
-        Iterable<ProductOrderEntity> ordersIterable = productOrderRepository.findAll();
-        List<ProductOrderEntity> allOrders = new LinkedList<>();
-        ordersIterable.forEach(allOrders::add);
-        List<ProductOrderEntity> orders = new LinkedList<>();
-        for(ProductOrderEntity order: allOrders){
-            if(order.getProducts().contains(productRepository.findOne(productId))){
-                orders.add(order);
-            }
-        }
-
-        return orders;
-        //return productOrderRepository.findByProductIdId(productId);
-    }
 
     @Override
     public boolean isProductAvailableToOrder(Long id, String dateFilter) {
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
         boolean availableToOrder = true;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
@@ -99,7 +85,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
         boolean availableToOrder = true;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
@@ -114,7 +100,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public List<String> getListOfDatesWhenProductIsReserved(Long id) {
         List<String> dates = new ArrayList<>();
-        List<ProductOrderEntity> orders = findProductOrderByProductId(id);
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
 
         String pattern = "MM/dd/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -131,6 +117,30 @@ public class ProductOrderServiceImpl implements ProductOrderService {
             }
         }
         return dates;
+    }
+
+/*    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
+
+        ProductEntity product = productRepository.findOne(productId);
+        List<ProductOrderEntity> orders = productOrderRepository.findAllByProductsContaining(product);
+        System.out.println(orders);
+
+        return orders;
+    }*/
+
+    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
+        Iterable<ProductOrderEntity> ordersIterable = productOrderRepository.findAll();
+        List<ProductOrderEntity> allOrders = new LinkedList<>();
+        ordersIterable.forEach(allOrders::add);
+        //ordersIterable.forEach(orderEntity -> orderEntity.getProducts().stream().forEach(productEntity -> productEntity.getId().equals(productId)));
+        List<ProductOrderEntity> orders = new LinkedList<>();
+        for(ProductOrderEntity order: allOrders){
+            if(order.getProducts().contains(productRepository.findOne(productId))){
+                orders.add(order);
+            }
+        }
+
+        return orders;
     }
 
     @Override

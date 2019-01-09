@@ -20,7 +20,7 @@ public interface ProductOrderService {
 
     Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders);
 
-    List<ProductOrderEntity> findProductOrderByProductId(Long productId);
+    //List<ProductOrderEntity> findProductOrderByProductId(Long productId);
 
     boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd);
 

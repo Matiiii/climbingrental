@@ -5,12 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.CartService;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.SessionService;
+
+import java.util.Date;
 
 @Controller
 public class CartController {
@@ -35,11 +38,19 @@ public class CartController {
     }
 
     @PostMapping("/makeorder")
-    public ModelAndView makeOrder(@ModelAttribute("order") ProductOrderEntity order, ModelAndView modelAndView) {
+    public ModelAndView makeOrder(@ModelAttribute("order") ProductOrderEntity order,
+                                  @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                  ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
+        System.out.println("dade" + dateFilter);
+        String dates[] = dateFilter.split("-");
+        Date start =  new Date(dates[0]);
+        Date end = new Date(dates[1]);
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart());
+        order.setOrderStart(start);
+        order.setOrderEnd(end);
         productOrderService.saveOrder(order);
         return modelAndView;
     }
