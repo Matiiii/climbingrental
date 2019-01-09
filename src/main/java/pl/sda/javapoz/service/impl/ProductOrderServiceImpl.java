@@ -6,18 +6,17 @@ import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
+import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository productOrderRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository) {
@@ -25,13 +24,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void saveOrder(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd) {
-        productOrderRepository.save(new ProductOrderEntity(userId, productId, orderStart, orderEnd));
+    public void saveOrder(UserEntity userId, Date orderStart, Date orderEnd) {
+        productOrderRepository.save(new ProductOrderEntity(userId, orderStart, orderEnd));
     }
 
     @Override
-    public void saveOrder(List<ProductEntity> products) {
+    public void saveOrder(UserEntity user, List<ProductEntity> products) {
         productOrderRepository.save(new ProductOrderEntity(products));
+    }
+
+    @Override
+    public void saveOrder(ProductOrderEntity order) {
+        productOrderRepository.save(order);
     }
 
     @Override
@@ -41,12 +45,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public ProductOrderEntity getPriceOfOrderedProduct(ProductOrderEntity productOrder) {
-        Double price = productOrder.getProductId().getPrice();
+        //Double price = productOrder.getProductId().getPrice();
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
         Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
         Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
-        productOrder.setCombinedPrice(price * lengthOfOrder);
+        //productOrder.setCombinedPrice(price * lengthOfOrder);
         return productOrder;
     }
 
@@ -60,7 +64,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
-        return productOrderRepository.findByProductIdId(productId);
+        Iterable<ProductOrderEntity> ordersIterable = productOrderRepository.findAll();
+        List<ProductOrderEntity> allOrders = new LinkedList<>();
+        ordersIterable.forEach(allOrders::add);
+        List<ProductOrderEntity> orders = new LinkedList<>();
+        for(ProductOrderEntity order: allOrders){
+            if(order.getProducts().contains(productRepository.findOne(productId))){
+                orders.add(order);
+            }
+        }
+
+        return orders;
+        //return productOrderRepository.findByProductIdId(productId);
     }
 
     @Override

@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProductOrderService {
-    void saveOrder(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd);
+    void saveOrder(UserEntity userId, Date orderStart, Date orderEnd);
 
-    void saveOrder(List<ProductEntity> products);
+    void saveOrder(UserEntity user, List<ProductEntity> products);
+
+    void saveOrder(ProductOrderEntity order);
 
     List<ProductOrderEntity> findProductsByUserId(Long id);
 
