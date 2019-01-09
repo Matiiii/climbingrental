@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import pl.sda.javapoz.model.Link;
-import pl.sda.javapoz.model.entity.NewsEntity;
 import pl.sda.javapoz.model.Pagination;
+import pl.sda.javapoz.model.entity.NewsEntity;
 import pl.sda.javapoz.repository.NewsRepository;
 import pl.sda.javapoz.service.NewsService;
 

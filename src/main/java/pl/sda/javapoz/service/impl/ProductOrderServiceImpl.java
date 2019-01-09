@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 import pl.sda.javapoz.DateFilter;
 import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
-import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
 import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -24,17 +26,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
     }
-
-    @Override
-    public void saveOrder(UserEntity userId, Date orderStart, Date orderEnd) {
-        productOrderRepository.save(new ProductOrderEntity(userId, orderStart, orderEnd));
-    }
-
-    @Override
-    public void saveOrder(UserEntity user, List<ProductEntity> products) {
-        productOrderRepository.save(new ProductOrderEntity(products));
-    }
-
+    
     @Override
     public void saveOrder(ProductOrderEntity order) {
         productOrderRepository.save(order);
@@ -122,9 +114,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
         ProductEntity product = productRepository.findOne(productId);
-        List<ProductOrderEntity> orders = productOrderRepository.findAllByProductsContaining(product);
-
-        return orders;
+        return productOrderRepository.findAllByProductsContaining(product);
     }
 
     @Override

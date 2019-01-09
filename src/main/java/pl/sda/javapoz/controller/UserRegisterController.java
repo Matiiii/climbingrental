@@ -32,10 +32,9 @@ public class UserRegisterController {
     @PostMapping("/register")
     public String addUser(@ModelAttribute @Valid UserEntity user,
                           BindingResult bindResult) {
-        if (bindResult.hasErrors()){
+        if (bindResult.hasErrors()) {
             return "register";
-        }
-        else {
+        } else {
             userService.saveUser(user);
             return "redirect:/login";
         }

@@ -14,9 +14,6 @@ import pl.sda.javapoz.service.CartService;
 import pl.sda.javapoz.service.NewsService;
 import pl.sda.javapoz.service.ProductService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 @Controller
 public class ShopController {
 

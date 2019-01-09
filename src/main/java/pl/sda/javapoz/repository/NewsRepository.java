@@ -12,9 +12,7 @@ public interface NewsRepository extends CrudRepository<NewsEntity, Long> {
 
     List<NewsEntity> findNewsByTag(String tag);
 
-
     @Query(value = "SELECT * FROM News n WHERE n.id >= ?1*5-4 AND n.id <=?1*5", nativeQuery = true)
     List<NewsEntity> findByNews(Integer newsPage);
-
 
 }

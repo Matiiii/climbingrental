@@ -46,9 +46,8 @@ public class CartController {
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart());
-        String[] dates = DateFilter.filterData(dateFilter);
-        order.setOrderStart(new Date(dates[0]));
-        order.setOrderEnd(new Date(dates[1]));
+        order.setOrderStart(new Date(DateFilter.filterData(dateFilter)[0]));
+        order.setOrderEnd(new Date(DateFilter.filterData(dateFilter)[1]));
         productOrderService.saveOrder(order);
         return modelAndView;
     }
