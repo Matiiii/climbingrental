@@ -50,14 +50,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer countProductsByName(String name) {
-        return productRepository.findByProductName(name).size();
+        return productRepository.findByProductName(name).getQuantity();
     }
 
     @Override
     public Integer countProductsByNameAndTime(String name, Date start, Date end) {
         int cnt = 0;
-        List<ProductEntity> productList = productRepository.findByProductName(name);
-        for (ProductEntity product : productList) {
+        ProductEntity product = productRepository.findByProductName(name);
+        for (int i = 0; i < product.getQuantity(); i++) {
             if (productOrderService.isProductAvailableToOrder(product.getId(), start, end)) {
                 cnt++;
             }
@@ -119,8 +119,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags) {
-        productRepository.save(new ProductEntity(productName, price, description, smallImage, bigImage, tags));
+    public void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
+        productRepository.save(new ProductEntity(productName, price, description, smallImage, bigImage, tags, quantity));
     }
 
     @Override
