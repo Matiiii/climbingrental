@@ -47,7 +47,7 @@ public class ProductController {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
 
-        //boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, dateFilter);
+        //boolean availableToOrder = productOrderService.isProductAvailableToOrder(id, filterData);
         if (productCount == null) {
             productCount = 1;
         }

@@ -2,6 +2,7 @@ package pl.sda.javapoz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.sda.javapoz.DateFilter;
 import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.model.entity.UserEntity;
@@ -71,7 +72,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
-            String[] dates = dateFilter.split("-");
+            String[] dates = DateFilter.filterData(dateFilter);
             Date productOrderStart = new Date(dates[0]);
             Date productOrderEnd = new Date(dates[1]);
 
@@ -119,26 +120,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return dates;
     }
 
-/*    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
-
+    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
         ProductEntity product = productRepository.findOne(productId);
         List<ProductOrderEntity> orders = productOrderRepository.findAllByProductsContaining(product);
-        System.out.println(orders);
-
-        return orders;
-    }*/
-
-    private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
-        Iterable<ProductOrderEntity> ordersIterable = productOrderRepository.findAll();
-        List<ProductOrderEntity> allOrders = new LinkedList<>();
-        ordersIterable.forEach(allOrders::add);
-        //ordersIterable.forEach(orderEntity -> orderEntity.getProducts().stream().forEach(productEntity -> productEntity.getId().equals(productId)));
-        List<ProductOrderEntity> orders = new LinkedList<>();
-        for(ProductOrderEntity order: allOrders){
-            if(order.getProducts().contains(productRepository.findOne(productId))){
-                orders.add(order);
-            }
-        }
 
         return orders;
     }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.sda.javapoz.DateFilter;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.CartService;
@@ -43,14 +44,11 @@ public class CartController {
                                   ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
-        System.out.println("dade" + dateFilter);
-        String dates[] = dateFilter.split("-");
-        Date start =  new Date(dates[0]);
-        Date end = new Date(dates[1]);
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart());
-        order.setOrderStart(start);
-        order.setOrderEnd(end);
+        String[] dates = DateFilter.filterData(dateFilter);
+        order.setOrderStart(new Date(dates[0]));
+        order.setOrderEnd(new Date(dates[1]));
         productOrderService.saveOrder(order);
         return modelAndView;
     }
