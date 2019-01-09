@@ -23,7 +23,7 @@ public class MyUserPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new LinkedList<>();
         Set<UserRoleEntity> userRoles = user.getRoles();
-        for(UserRoleEntity role: userRoles){
+        for (UserRoleEntity role : userRoles) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
 

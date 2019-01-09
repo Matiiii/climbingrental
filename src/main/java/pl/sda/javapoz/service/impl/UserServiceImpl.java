@@ -5,7 +5,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.UserRepository;
-import pl.sda.javapoz.repository.UserRoleRepository;
 import pl.sda.javapoz.service.UserService;
 
 import java.util.List;
@@ -15,15 +14,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private UserRoleRepository userRoleRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
