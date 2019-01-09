@@ -14,10 +14,8 @@ public class ProductOrderEntity {
     private Long id;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    private UserEntity userId;
+    private UserEntity user;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private ProductEntity productId;
 
     @ManyToMany
     @Column(name = "product_id")
@@ -37,20 +35,12 @@ public class ProductOrderEntity {
         this.id = id;
     }
 
-    public UserEntity getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
-    }
-
-    public ProductEntity getProductId() {
-        return productId;
-    }
-
-    public void setProductId(ProductEntity productId) {
-        this.productId = productId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Date getOrderStart() {
@@ -80,9 +70,8 @@ public class ProductOrderEntity {
     public ProductOrderEntity() {
     }
 
-    public ProductOrderEntity(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd) {
-        this.userId = userId;
-        this.productId = productId;
+    public ProductOrderEntity(UserEntity user, Date orderStart, Date orderEnd) {
+        this.user = user;
         this.orderStart = orderStart;
         this.orderEnd = orderEnd;
     }

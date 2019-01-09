@@ -4,6 +4,7 @@
 <head>
     <link th:include="fragments/header :: head" th:remove="tag"/>
     <link th:href="@{/css/cart.css}" href="../static/CSS/cart.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -105,6 +106,10 @@
 <!-- /.container -->
 
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+<script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
+<script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
+<script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
 
 </body>
 

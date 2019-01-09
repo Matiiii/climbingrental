@@ -25,8 +25,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public void saveOrder(UserEntity userId, ProductEntity productId, Date orderStart, Date orderEnd) {
-        productOrderRepository.save(new ProductOrderEntity(userId, productId, orderStart, orderEnd));
+    public void saveOrder(UserEntity user, ProductEntity productId, Date orderStart, Date orderEnd) {
+        productOrderRepository.save(new ProductOrderEntity(user, orderStart, orderEnd));
     }
 
     @Override
@@ -36,17 +36,17 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrderEntity> findProductsByUserId(Long id) {
-        return productOrderRepository.findByUserIdId(id);
+        return productOrderRepository.findByUserId(id);
     }
 
     @Override
     public ProductOrderEntity getPriceOfOrderedProduct(ProductOrderEntity productOrder) {
-        Double price = productOrder.getProductId().getPrice();
+        // TODO: 09.01.2019  przerobić metode.
         Long productOrderStartTime = productOrder.getOrderStart().getTime();
         Long productOrderEndTime = productOrder.getOrderEnd().getTime();
         Long numberOfMillisecondsInDay = (long) (1000 * 60 * 60 * 24);
         Double lengthOfOrder = (double) (productOrderEndTime - productOrderStartTime + numberOfMillisecondsInDay) / numberOfMillisecondsInDay;
-        productOrder.setCombinedPrice(price * lengthOfOrder);
+        productOrder.setCombinedPrice(lengthOfOrder);
         return productOrder;
     }
 
@@ -60,7 +60,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrderEntity> findProductOrderByProductId(Long productId) {
-        return productOrderRepository.findByProductIdId(productId);
+        return productOrderRepository.findByProductsId(productId);
     }
 
     @Override
