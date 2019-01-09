@@ -37,7 +37,7 @@ public class CartController {
     @GetMapping("/cart")
     public ModelAndView cartTemplate(ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
-        modelAndView.addObject("products", cartService.getListOfProductsInCart());
+        modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart()));
         modelAndView.addObject("order", new ProductOrderEntity());
         return modelAndView;
     }

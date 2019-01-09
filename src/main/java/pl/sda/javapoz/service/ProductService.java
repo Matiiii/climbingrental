@@ -37,4 +37,6 @@ public interface ProductService {
     void removeProduct(Long id);
 
     boolean isOrderAvailableToSave(ProductOrderEntity order);
+
+    List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
 }

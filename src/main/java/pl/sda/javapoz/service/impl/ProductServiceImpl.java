@@ -143,8 +143,8 @@ public class ProductServiceImpl implements ProductService {
 
         return true;
     }
-
-    private List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
+    @Override
+    public List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
         List<CountProducts> countProducts = new LinkedList<>();
 
