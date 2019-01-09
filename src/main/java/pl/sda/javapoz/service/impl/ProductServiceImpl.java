@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
 import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
 import pl.sda.javapoz.service.ProductService;
@@ -55,15 +56,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Integer countProductsByNameAndTime(String name, Date start, Date end) {
-        int cnt = 0;
+    public Integer countProductsAvailableByNameAndTime(String name, Date start, Date end) {
         ProductEntity product = productRepository.findByProductName(name);
-        for (int i = 0; i < product.getQuantity(); i++) {
-            if (productOrderService.isProductAvailableToOrder(product.getId(), start, end)) {
-                cnt++;
-            }
-        }
-        return cnt;
+        int countOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
+        int quantity = product.getQuantity();
+
+        return quantity-countOrders;
     }
 
     @Override
@@ -104,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
 
     private List<CountProducts> addProductsWithTimeToList(Set<ProductEntity> set, Date start, Date end) {
         List<CountProducts> list = new LinkedList<>();
-        set.forEach(product -> list.add(new CountProducts(product, countProductsByNameAndTime(product.getProductName(), start, end))));
+        set.forEach(product -> list.add(new CountProducts(product, countProductsAvailableByNameAndTime(product.getProductName(), start, end))));
         return list;
     }
 
@@ -127,6 +125,33 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public boolean isOrderAvailableToSave(ProductOrderEntity order) {
+
+        List<ProductEntity> products = order.getProducts();
+        List<CountProducts> countProducts = countProductsInProductList(products);
+
+        for (CountProducts countProduct : countProducts) {
+            if (countProductsAvailableByNameAndTime(
+                    countProduct.getProduct().getProductName(), order.getOrderStart(), order.getOrderEnd())
+                    < countProduct.getCount()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
+        Set<ProductEntity> setProducts = new HashSet<>(productList);
+        List<CountProducts> countProducts = new LinkedList<>();
+
+        for (ProductEntity product : setProducts) {
+            countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
+        }
+        return countProducts;
     }
 
 }

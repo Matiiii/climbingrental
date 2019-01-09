@@ -75,10 +75,8 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="order : ${orders}">
-                                            <td><img th:src="${order.productId.smallImage}"
-                                                     src="../static/images/LINA_DUZA.jpg" class="img-responsive"
-                                                     alt=""/></td>
-                                            <td th:text="${order.productId.description}">Jakiś opis</td>
+                                            <td th:text="${order.products.size()}">number of products</td>
+                                            <td th:text="${order.id}">order id</td>
                                             <td th:text="${order.orderStart}">2017-02-03</td>
                                             <td th:text="${order.orderEnd}">2017-04-03</td>
                                             <td th:text="${order.combinedPrice}">Jakas cena</td>

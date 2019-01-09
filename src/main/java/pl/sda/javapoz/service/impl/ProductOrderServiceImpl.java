@@ -1,19 +1,20 @@
 package pl.sda.javapoz.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.javapoz.DateFilter;
+import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.model.entity.ProductOrderEntity;
 import pl.sda.javapoz.repository.ProductOrderRepository;
 import pl.sda.javapoz.repository.ProductRepository;
 import pl.sda.javapoz.service.ProductOrderService;
+import pl.sda.javapoz.service.ProductService;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -21,11 +22,16 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductOrderRepository productOrderRepository;
     private ProductRepository productRepository;
 
+
+
     @Autowired
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
+
     }
+
+
 
     @Override
     public void saveOrder(ProductOrderEntity order) {
@@ -51,43 +57,45 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public Double getPriceOfOrderedProducts(List<ProductOrderEntity> productOrders) {
         Double[] sum = {0.0};
-        productOrders.forEach(product -> sum[0] += product.getCombinedPrice());
+        // productOrders.forEach(product -> sum[0] += product.getCombinedPrice());
 
         return sum[0];
     }
 
-
     @Override
-    public boolean isProductAvailableToOrder(Long id, String dateFilter) {
-        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
-        boolean availableToOrder = true;
+    public Integer countOrdersProductInPeriod(Long productId, Date productOrderStart, Date productOrderEnd) {
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(productId);
+
+        int count = 0;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
             Date orderEnd = order.getOrderEnd();
-            String[] dates = DateFilter.filterData(dateFilter);
-            Date productOrderStart = new Date(dates[0]);
-            Date productOrderEnd = new Date(dates[1]);
-
             if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
-                availableToOrder = false;
-                break;
+                count += order.getProducts().stream()
+                        .filter(productEntity -> productEntity.getId().equals(productId))
+                        .collect(Collectors.toList())
+                        .size();
             }
         }
-        return availableToOrder;
+
+        return count;
     }
 
     @Override
-    public boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd) {
-        List<ProductOrderEntity> orders = findProductOrdersByProductId(id);
-        boolean availableToOrder = true;
-        for (ProductOrderEntity order : orders) {
-            Date orderStart = order.getOrderStart();
-            Date orderEnd = order.getOrderEnd();
-            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
-                availableToOrder = false;
-            }
-        }
-        return availableToOrder;
+    public boolean isProductAvailableToOrder(Long productId, String dateFilter) {
+        String[] dates = DateFilter.filterData(dateFilter);
+        Date productOrderStart = new Date(dates[0]);
+        Date productOrderEnd = new Date(dates[1]);
+
+        return isProductAvailableToOrder(productId, productOrderStart, productOrderEnd);
+    }
+
+    @Override
+    public boolean isProductAvailableToOrder(Long productId, Date productOrderStart, Date productOrderEnd) {
+        ProductEntity product = productRepository.findOne(productId);
+        Integer countOrders = countOrdersProductInPeriod(productId, productOrderStart, productOrderEnd);
+
+        return countOrders < product.getQuantity();
     }
 
     @Override

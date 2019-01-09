@@ -3,6 +3,7 @@ package pl.sda.javapoz.service;
 import pl.sda.javapoz.model.CountProducts;
 import pl.sda.javapoz.model.Link;
 import pl.sda.javapoz.model.entity.ProductEntity;
+import pl.sda.javapoz.model.entity.ProductOrderEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface ProductService {
 
     Integer countProductsByName(String name);
 
-    Integer countProductsByNameAndTime(String name, Date start, Date end);
+    Integer countProductsAvailableByNameAndTime(String name, Date start, Date end);
 
     List<CountProducts> countAllProductsByName();
 
@@ -34,4 +35,6 @@ public interface ProductService {
     void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity);
 
     void removeProduct(Long id);
+
+    boolean isOrderAvailableToSave(ProductOrderEntity order);
 }
