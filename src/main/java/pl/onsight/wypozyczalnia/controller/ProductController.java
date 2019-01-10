@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
@@ -36,6 +37,16 @@ public class ProductController {
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrderEntity());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
+        modelAndView.addObject("cart", cartService.getCart());
+        String dateFilter = "";
+
+        if(dateFilter.isEmpty()){
+            modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
+        }else {
+            modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter ,productService.findProductById(id).getProductName()));
+
+        }
+
         return modelAndView;
     }
 
