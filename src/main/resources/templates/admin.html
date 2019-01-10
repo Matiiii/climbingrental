@@ -192,12 +192,9 @@
                                             <tr th:attr="order-id=${order.id}">
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.productId.productName}">dsa</p>
-                                                        <p th:text="${order.productId.id}">rew</p>
-                                                        <img th:src="${order.productId.smallImage}"
-                                                             src="../static/images/LINA_DUZA.jpg"
-                                                             class="img-responsive"
-                                                             alt=""/>
+                                                        <p th:text="${order.products.size()}">Ilość</p>
+                                                        <p th:text="${order.combinedPrice}">price</p>
+                                                        <p th:src="${order.products.}">user id</p>
                                                     </div>
                                                 </td>
                                                 <td>

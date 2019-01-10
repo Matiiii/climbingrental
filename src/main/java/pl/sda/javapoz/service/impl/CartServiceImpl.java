@@ -6,6 +6,7 @@ import pl.sda.javapoz.model.Cart;
 import pl.sda.javapoz.model.entity.ProductEntity;
 import pl.sda.javapoz.service.CartService;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -29,5 +30,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<ProductEntity> getListOfProductsInCart() {
         return cart.getProducts();
+    }
+
+    @Override
+    public void removeProductFromCart() {
+        cart.setProducts(new LinkedList<>());
     }
 }

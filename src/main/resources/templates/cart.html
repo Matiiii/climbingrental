@@ -4,6 +4,7 @@
 <head>
     <link th:include="fragments/header :: head" th:remove="tag"/>
     <link th:href="@{/css/cart.css}" href="../static/CSS/cart.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -49,7 +50,7 @@
 
     <div class="col-md-12">
         <div class="list-group">
-            <form th:action="@{/makeorder}" method="post">
+            <form th:action="@{/makeOrder}" method="post">
                 <input type="text" name="datefilter" autocomplete="off" value="" />
                 <button class="btn btn-primary" type="submit">Zamow</button>
             </form>
@@ -66,26 +67,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div th:each="product: ${products}">
-                    <tr th:attr="product-id=${product.id}">
+                <div th:each="countProduct: ${products}">
+                    <tr th:attr="product-id=${countProduct.getProduct().id}">
                         <td>
                             <div class="col-md-4">
 
-                                <img th:src="${product.smallImage}"
+                                <img th:src="${countProduct.getProduct().smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="shop.html" th:href="'/product/'+${product.id}"><h4 th:text="${product.productName}">nazwa produktu</h4></a></td>
-                        <td><p th:text="${product.price}">cena</p></td>
-                        <td><p th:text="${product.price}">cena</p></td>
+                        <td><a href="shop.html" th:href="'/product/'+${countProduct.getProduct().id}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
+                        <td><p th:text="${countProduct.product.price}">cena</p></td>
+                        <td><p th:text="${countProduct.count}">cena</p></td>
                         <td>
 
                             <button type="submit" class="btn btn-primary btn-delete">Usuń
                             </button>
                         </td>
-                        <td><p th:text="suma">suma</p></td>
+                        <td><p th:text="${countProduct.product.price * countProduct.count}">suma</p></td>
                     </tr>
                 </div>
                 </tbody>
@@ -106,6 +107,10 @@
 <!-- /.container -->
 
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+<script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
+<script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
+<script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
 
 </body>
 
