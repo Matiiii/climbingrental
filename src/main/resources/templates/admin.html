@@ -194,7 +194,7 @@
                                                     <div class="col-md-4">
                                                         <p th:text="${order.products.size()}">Ilość</p>
                                                         <p th:text="${order.combinedPrice}">price</p>
-                                                        <p th:src="${order.products.}">user id</p>
+                                                        <p th:text="${order.products.size()}">user id</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -204,13 +204,13 @@
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderStart}"></p>
+                                                        <p th:text="${order.orderStart.getDate()}"></p>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderEnd}"></p>
+                                                        <p th:text="${order.orderEnd.getDate()}"></p>
                                                     </div>
                                                 </td>
                                                 <td>

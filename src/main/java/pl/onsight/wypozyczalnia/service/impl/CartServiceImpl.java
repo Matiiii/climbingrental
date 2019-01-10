@@ -36,4 +36,9 @@ public class CartServiceImpl implements CartService {
     public void removeProductFromCart() {
         cart.setProducts(new LinkedList<>());
     }
+
+    @Override
+    public Cart getCart(){
+        return cart;
+    }
 }
