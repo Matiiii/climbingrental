@@ -67,6 +67,11 @@
                 </tr>
                 </thead>
                 <tbody>
+
+                    <div th:each="product: ${cart.getProducts()}">
+                        <p th:text="${product.getProductName()}"></p>
+                    </div>
+
                 <div th:each="countProduct: ${products}">
                     <tr th:attr="product-id=${countProduct.getProduct().id}">
                         <td>
