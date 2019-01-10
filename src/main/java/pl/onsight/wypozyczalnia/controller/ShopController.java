@@ -2,11 +2,10 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.FilterProducts;
@@ -15,6 +14,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 
 @Controller
+@SessionAttributes("cart")
 public class ShopController {
 
     private NewsService newsService;
@@ -69,6 +69,8 @@ public class ShopController {
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
+                                         @ModelAttribute("cart") Cart cart,
+                                         RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("shop");
         ProductEntity productById = productService.findProductById(id);
@@ -77,8 +79,15 @@ public class ShopController {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
-            //cartService.addProductToCart(productById, productCount);
+            cartService.addProductToCart(cart, productById, productCount);
         }
+        attributes.addFlashAttribute("cart", cart);
+
         return foundProducts("", "", modelAndView);
+    }
+
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart();
     }
 }
