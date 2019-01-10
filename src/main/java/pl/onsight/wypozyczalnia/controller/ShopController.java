@@ -77,7 +77,7 @@ public class ShopController {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
-            cartService.addProductToCart(productById, productCount);
+            //cartService.addProductToCart(productById, productCount);
         }
         return foundProducts("", "", modelAndView);
     }
