@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td class="flexCenter"><input id="dateFilter" type="text" name="datefilter" autocomplete="off"
-                                                 value=""/></td>
+                                                      value=""/></td>
                     </tr>
                     <tr>
                         <td class="flexCenter">
@@ -74,17 +74,24 @@
                                 <a href="shop.html" th:href="'/product/'+${countProduct.product.id}">
                                     <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
                             </div>
-                            <div class="productInfo flexAround">
-                                <span class="price left" th:text="'Cena: '+${countProduct.product.price}+'zl'">
-                                $24.99</span>
-                                <span class="count right" th:text="'Dostepnych: '+${countProduct.count}"> ilość</span>
+                            <div class="productInfo">
+                                <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
+                                        th:text="'W koszyku: '+${cart.getCountOfProductInCart(countProduct.product)}"></b>
+                                </div>
+                                <div class="flexAround">
+                                <span class="price left">
+                                Cena: <b th:text="${countProduct.product.price}">cena</b> zł</span>
+                                    <span class="count right">Dostępnych:  <b th:text="${countProduct.count}">count</b></span>
+                                </div>
+
                             </div>
                             <div class="addToCart">
-
                                 <form id="addToCart" method="post" th:action="@{'/shop/' + ${countProduct.product.id}}">
                                     <div>
                                         <label for="productCount">Wybierz ilość: </label>
-                                        <input id="productCount" name="productCount" type="number" th:default="1" min="1"/>
+                                        <input id="productCount" name="productCount" type="number" th:default="1"
+                                               th:min="1"
+                                               th:max="${countProduct.count - (cart.getCountOfProductInCart(countProduct.product))}"/>
                                     </div>
                                     <div class="form-group">
                                         <button align="center" type="submit" class="btn btn-success">Do koszyka</button>

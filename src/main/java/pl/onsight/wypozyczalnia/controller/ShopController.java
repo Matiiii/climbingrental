@@ -46,6 +46,7 @@ public class ShopController {
         modelAndView.setViewName("shopProducts");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
+        modelAndView.addObject("cart", cartService.getCart());
 
         boolean hasNoParameters = "".equals(prodName) && "".equals(dateFilter);
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(dateFilter);
@@ -76,7 +77,7 @@ public class ShopController {
         if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
+            modelAndView.addObject("info", new Info("Dodano do koszyka <b>" + productCount + " x " + productById.getProductName() + "</b>", true));
             cartService.addProductToCart(productById, productCount);
         }
         return foundProducts("", "", modelAndView);
