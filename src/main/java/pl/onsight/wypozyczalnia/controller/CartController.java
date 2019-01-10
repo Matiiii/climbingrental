@@ -2,11 +2,9 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
@@ -19,6 +17,7 @@ import pl.onsight.wypozyczalnia.service.CartService;
 import java.util.Date;
 
 @Controller
+@SessionAttributes("todos")
 public class CartController {
 
     private CartService cartService;
@@ -35,7 +34,7 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cartTemplate(ModelAndView modelAndView) {
+    public ModelAndView cartTemplate(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart()));
         modelAndView.addObject("order", new ProductOrderEntity());
@@ -44,6 +43,7 @@ public class CartController {
 
     @PostMapping("/makeOrder")
     public ModelAndView makeOrder(@ModelAttribute("order") ProductOrderEntity order,
+                                  @ModelAttribute("cart") Cart cart,
                                   @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                   ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
@@ -61,6 +61,6 @@ public class CartController {
             modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
         }
 
-        return cartTemplate(modelAndView);
+        return cartTemplate(cart, modelAndView);
     }
 }

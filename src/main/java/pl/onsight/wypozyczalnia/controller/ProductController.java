@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.DateFilter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
@@ -16,6 +18,7 @@ import pl.onsight.wypozyczalnia.service.CartService;
 import java.util.List;
 
 @Controller
+@SessionAttributes("cart")
 public class ProductController {
 
     private ProductService productService;
@@ -51,9 +54,11 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}")
-    public ModelAndView addProductToCart(@PathVariable Long id,
+    public RedirectView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
                                          @RequestParam(value = "productName") String productName,
+                                         @ModelAttribute("cart") Cart cart,
+                                         RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
@@ -63,10 +68,12 @@ public class ProductController {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName, true));
-            cartService.addProductToCart(productById, productCount);
+            //cartService.addProductToCart(productById, productCount);
+            cart.getProducts().add(productById);
         }
-
-        return productPage(id, modelAndView);
+        attributes.addFlashAttribute("cart", cart);
+        return new RedirectView("/cart.html");
+        //return productPage(id, modelAndView);
     }
 
     @GetMapping("/products-availability/{id}")
@@ -75,4 +82,8 @@ public class ProductController {
         return productOrderService.getListOfDatesWhenProductIsReserved(id);
     }
 
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart();
+    }
 }
