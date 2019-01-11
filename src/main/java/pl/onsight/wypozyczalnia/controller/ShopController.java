@@ -1,7 +1,6 @@
 package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,13 +17,13 @@ import pl.onsight.wypozyczalnia.service.CartService;
 @SessionAttributes("cart")
 public class ShopController {
 
-    private NewsService newsService;
+
     private ProductService productService;
     private CartService cartService;
 
     @Autowired
-    public ShopController(NewsService newsService, ProductService productService, CartService cartService) {
-        this.newsService = newsService;
+    public ShopController(ProductService productService, CartService cartService) {
+
         this.productService = productService;
         this.cartService = cartService;
     }
@@ -38,19 +37,28 @@ public class ShopController {
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
-        boolean hasNoParameters = "".equals(prodName) && "".equals(dateFilter);
-        boolean hasOnlyProductName = !"".equals(prodName) && "".equals(dateFilter);
-        boolean hasOnlyDates = "".equals(prodName) && !"".equals(dateFilter);
+        boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+        boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+        boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
+
         } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
+
         } else if (hasOnlyDates) {
+            if (dateFilter.isEmpty()) {
+                dateFilter = cart.getDate();
+            }
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
+
         } else {
+            if (dateFilter.isEmpty()) {
+                dateFilter = cart.getDate();
+            }
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
         }
@@ -71,12 +79,17 @@ public class ShopController {
         if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
+            modelAndView.addObject("info", new Info("Dodano do koszyka <b>" + productCount + " x " + productById.getProductName() + "</b>", true));
             cartService.addProductToCart(cart, productById, productCount);
         }
         attributes.addFlashAttribute("cart", cart);
 
-        return foundProducts("", cart.getDate(), cart, modelAndView);
+
+        if (cart.getDate() != null) {
+            return foundProducts("", cart.getDate(), cart, modelAndView);
+        }
+
+        return foundProducts("", "", cart, modelAndView);
     }
 
     @ModelAttribute("cart")
