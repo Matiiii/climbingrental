@@ -17,7 +17,7 @@ import pl.onsight.wypozyczalnia.service.CartService;
 import java.util.Date;
 
 @Controller
-@SessionAttributes("todos")
+@SessionAttributes("cart")
 public class CartController {
 
     private CartService cartService;
@@ -34,33 +34,39 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cartTemplate(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
+    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
-        modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart()));
+        modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart(cart)));
         modelAndView.addObject("order", new ProductOrderEntity());
         return modelAndView;
     }
 
-    @PostMapping("/makeOrder")
-    public ModelAndView makeOrder(@ModelAttribute("order") ProductOrderEntity order,
-                                  @ModelAttribute("cart") Cart cart,
-                                  @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
-                                  ModelAndView modelAndView) {
+    @PostMapping("/createOrder")
+    public ModelAndView createOrder(@ModelAttribute("order") ProductOrderEntity order,
+                                    @ModelAttribute("cart") Cart cart,
+                                    @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                    ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
-        order.setProducts(cartService.getListOfProductsInCart());
+        order.setProducts(cartService.getListOfProductsInCart(cart));
         order.setOrderStart(new Date(DateFilter.filterData(dateFilter)[0]));
         order.setOrderEnd(new Date(DateFilter.filterData(dateFilter)[1]));
 
         if (productService.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
             productOrderService.saveOrder(order);
-            cartService.removeProductFromCart();
+            cartService.removeProductFromCart(cart);
         } else {
             modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
         }
 
-        return cartTemplate(cart, modelAndView);
+        return cartPage(cart, modelAndView);
+    }
+
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart();
     }
 }
+

@@ -1,26 +1,24 @@
 package pl.onsight.wypozyczalnia.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
+import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@SessionAttributes("cart")
 public class CartServiceImpl implements CartService {
 
-    private Cart cart;
+    public CartServiceImpl() {
 
-    @Autowired
-    public CartServiceImpl(Cart cart) {
-        this.cart = cart;
     }
 
     @Override
-    public void addProductToCart(ProductEntity product, int quantity) {
+    public void addProductToCart(Cart cart, ProductEntity product, int quantity) {
         List<ProductEntity> products = cart.getProducts();
         for (int i = 0; i < quantity; i++) {
             products.add(product);
@@ -28,17 +26,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<ProductEntity> getListOfProductsInCart() {
+    public List<ProductEntity> getListOfProductsInCart(Cart cart) {
         return cart.getProducts();
     }
 
     @Override
-    public void removeProductFromCart() {
+    public void removeProductFromCart(Cart cart) {
         cart.setProducts(new LinkedList<>());
     }
 
     @Override
     public Cart getCart(){
-        return cart;
+        return null;
     }
 }

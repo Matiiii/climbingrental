@@ -2,11 +2,10 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.FilterProducts;
@@ -15,6 +14,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 
 @Controller
+@SessionAttributes("cart")
 public class ShopController {
 
     private NewsService newsService;
@@ -38,7 +38,7 @@ public class ShopController {
         modelAndView.setViewName("shop");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
-        modelAndView.addObject("cart", cartService.getCart());
+
 
         boolean hasNoParameters = "".equals(prodName) && "".equals(dateFilter);
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(dateFilter);
@@ -62,6 +62,8 @@ public class ShopController {
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
+                                         @ModelAttribute("cart") Cart cart,
+                                         RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("info");
         ProductEntity productById = productService.findProductById(id);
@@ -69,9 +71,16 @@ public class ShopController {
         if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
         } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka <b>" + productCount + " x " + productById.getProductName() + "</b>", true));
-            cartService.addProductToCart(productById, productCount);
+            modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
+            cartService.addProductToCart(cart, productById, productCount);
         }
+        attributes.addFlashAttribute("cart", cart);
+
         return foundProducts("", "", modelAndView);
+    }
+
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart();
     }
 }

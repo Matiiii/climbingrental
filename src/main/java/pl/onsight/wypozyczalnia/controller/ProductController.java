@@ -5,15 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.service.SessionService;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}")
-    public RedirectView addProductToCart(@PathVariable Long id,
+    public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
                                          @RequestParam(value = "productName") String productName,
                                          @ModelAttribute("cart") Cart cart,
@@ -68,12 +67,10 @@ public class ProductController {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName, true));
-            //cartService.addProductToCart(productById, productCount);
-            cart.getProducts().add(productById);
+            cartService.addProductToCart(cart, productById, productCount);
         }
         attributes.addFlashAttribute("cart", cart);
-        return new RedirectView("/cart.html");
-        //return productPage(id, modelAndView);
+        return productPage(id, modelAndView);
     }
 
     @GetMapping("/products-availability/{id}")

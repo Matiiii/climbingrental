@@ -192,7 +192,7 @@
                                             <tr th:attr="order-id=${order.id}">
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.products.size()}">Ilość</p>
+                                                        <p th:text="${order.getId()}">Ilość</p>
                                                         <p th:text="${order.combinedPrice}">price</p>
                                                         <p th:text="${order.products.size()}">user id</p>
                                                     </div>
@@ -204,13 +204,13 @@
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderStart.getDate()}"></p>
+                                                        <p th:text="${order.orderStart.toLocaleString()}"></p>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderEnd.getDate()}"></p>
+                                                        <p th:text="${order.orderEnd.toInstant()}"></p>
                                                     </div>
                                                 </td>
                                                 <td>

@@ -50,7 +50,7 @@
 
     <div class="col-md-12">
         <div class="list-group">
-            <form th:action="@{/makeOrder}" method="post">
+            <form th:action="@{/createOrder}" method="post">
                 <input type="text" name="datefilter" autocomplete="off" value="" />
                 <button class="btn btn-primary" type="submit">Zamow</button>
             </form>
@@ -67,11 +67,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
-                    <div th:each="product: ${cart.getProducts()}">
-                        <p th:text="${product.getProductName()}"></p>
-                    </div>
-
                 <div th:each="countProduct: ${products}">
                     <tr th:attr="product-id=${countProduct.getProduct().id}">
                         <td>
