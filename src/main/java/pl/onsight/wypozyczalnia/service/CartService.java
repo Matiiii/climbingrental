@@ -8,9 +8,9 @@ import java.util.List;
 public interface CartService {
     void addProductToCart(Cart cart, ProductEntity product, int quantity);
 
+    void addDateToCart(Cart cart, String dateFilter);
+
     List<ProductEntity> getListOfProductsInCart(Cart cart);
 
-
-    public Cart getCart();
     void removeProductFromCart(Cart cart);
 }

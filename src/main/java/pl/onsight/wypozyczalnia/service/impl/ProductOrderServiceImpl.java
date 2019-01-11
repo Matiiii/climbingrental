@@ -27,8 +27,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     }
 
-
-
     @Override
     public void saveOrder(ProductOrderEntity order) {
         productOrderRepository.save(order);
@@ -61,7 +59,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public Integer countOrdersProductInPeriod(Long productId, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrderEntity> orders = findProductOrdersByProductId(productId);
-
         int count = 0;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();

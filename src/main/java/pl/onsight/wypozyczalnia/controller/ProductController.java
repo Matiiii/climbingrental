@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.SessionService;
 
 import java.util.List;
 
@@ -39,14 +39,12 @@ public class ProductController {
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrderEntity());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
-        modelAndView.addObject("cart", cartService.getCart());
         String dateFilter = "";
 
         if(dateFilter.isEmpty()){
             modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
         }else {
             modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter ,productService.findProductById(id).getProductName()));
-
         }
 
         return modelAndView;
@@ -61,7 +59,6 @@ public class ProductController {
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
-
 
         if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość", false));

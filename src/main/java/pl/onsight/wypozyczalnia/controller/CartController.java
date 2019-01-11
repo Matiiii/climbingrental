@@ -14,6 +14,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 
+import javax.jws.WebParam;
 import java.util.Date;
 
 @Controller
@@ -44,14 +45,13 @@ public class CartController {
     @PostMapping("/createOrder")
     public ModelAndView createOrder(@ModelAttribute("order") ProductOrderEntity order,
                                     @ModelAttribute("cart") Cart cart,
-                                    @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                     ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
-        order.setOrderStart(new Date(DateFilter.filterData(dateFilter)[0]));
-        order.setOrderEnd(new Date(DateFilter.filterData(dateFilter)[1]));
+        order.setOrderStart(new Date(DateFilter.filterData(cart.getDate())[0]));
+        order.setOrderEnd(new Date(DateFilter.filterData(cart.getDate())[1]));
 
         if (productService.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
@@ -61,6 +61,14 @@ public class CartController {
             modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
         }
 
+        return cartPage(cart, modelAndView);
+    }
+
+    @PostMapping("/changeDate")
+    public ModelAndView changeDate(@ModelAttribute("cart") Cart cart,
+                                   @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                   ModelAndView modelAndView){
+        cartService.addDateToCart(cart, dateFilter);
         return cartPage(cart, modelAndView);
     }
 

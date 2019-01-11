@@ -1,6 +1,7 @@
 package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,22 +24,19 @@ public class ShopController {
 
     @Autowired
     public ShopController(NewsService newsService, ProductService productService, CartService cartService) {
-
         this.newsService = newsService;
         this.productService = productService;
         this.cartService = cartService;
     }
 
-
-
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                      @ModelAttribute("cart") Cart cart,
                                       ModelAndView modelAndView) {
         modelAndView.setViewName("shop");
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
-
 
         boolean hasNoParameters = "".equals(prodName) && "".equals(dateFilter);
         boolean hasOnlyProductName = !"".equals(prodName) && "".equals(dateFilter);
@@ -56,6 +54,8 @@ public class ShopController {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
         }
+
+        cartService.addDateToCart(cart, dateFilter);
         return modelAndView;
     }
 
@@ -76,7 +76,7 @@ public class ShopController {
         }
         attributes.addFlashAttribute("cart", cart);
 
-        return foundProducts("", "", modelAndView);
+        return foundProducts("", cart.getDate(), cart, modelAndView);
     }
 
     @ModelAttribute("cart")
