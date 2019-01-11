@@ -62,7 +62,6 @@ public class ShopController {
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
-                                         @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                          @ModelAttribute("cart") Cart cart,
                                          RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
@@ -74,7 +73,6 @@ public class ShopController {
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
             cartService.addProductToCart(cart, productById, productCount);
-            cartService.addDateToCart(cart, dateFilter);
         }
         attributes.addFlashAttribute("cart", cart);
 
