@@ -17,13 +17,13 @@ import pl.onsight.wypozyczalnia.service.CartService;
 @SessionAttributes("cart")
 public class ShopController {
 
-    private NewsService newsService;
+
     private ProductService productService;
     private CartService cartService;
 
     @Autowired
-    public ShopController(NewsService newsService, ProductService productService, CartService cartService) {
-        this.newsService = newsService;
+    public ShopController(ProductService productService, CartService cartService) {
+
         this.productService = productService;
         this.cartService = cartService;
     }
@@ -90,7 +90,7 @@ public class ShopController {
         if (cart.getDate() != null) {
             return foundProducts("", cart.getDate(), cart, modelAndView);
         }
-        
+
         return foundProducts("", "", cart, modelAndView);
     }
 
