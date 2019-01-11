@@ -15,6 +15,7 @@ import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
 import java.util.Date;
 
@@ -25,13 +26,15 @@ public class CartController {
     private ProductOrderService productOrderService;
     private SessionService sessionService;
     private ProductService productService;
+    private OrderValidator orderValidator;
 
     @Autowired
-    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService) {
+    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator) {
         this.cartService = cartService;
         this.productOrderService = productOrderService;
         this.sessionService = sessionService;
         this.productService = productService;
+        this.orderValidator = orderValidator;
     }
 
     @GetMapping("/cart")
@@ -53,7 +56,7 @@ public class CartController {
         order.setOrderStart(new Date(DateFilter.filterData(dateFilter)[0]));
         order.setOrderEnd(new Date(DateFilter.filterData(dateFilter)[1]));
 
-        if (productService.isOrderAvailableToSave(order)) {
+        if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
             productOrderService.saveOrder(order);
             cartService.removeProductFromCart();

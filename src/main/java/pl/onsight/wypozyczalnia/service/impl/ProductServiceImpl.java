@@ -127,9 +127,8 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(id);
     }
 
-    @Override
+/*    @Override
     public boolean isOrderAvailableToSave(ProductOrderEntity order) {
-
         List<ProductEntity> products = order.getProducts();
         List<CountProducts> countProducts = countProductsInProductList(products);
 
@@ -142,7 +141,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return true;
-    }
+    }*/
+
     @Override
     public List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
