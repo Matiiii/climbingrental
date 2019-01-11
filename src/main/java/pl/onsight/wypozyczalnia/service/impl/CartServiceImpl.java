@@ -34,5 +34,4 @@ public class CartServiceImpl implements CartService {
     public void removeProductFromCart(Cart cart) {
         cart.setProducts(new LinkedList<>());
     }
-
 }

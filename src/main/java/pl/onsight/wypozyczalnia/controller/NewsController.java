@@ -18,6 +18,16 @@ public class NewsController {
         this.newsService = newsService;
     }
 
+    @GetMapping(value = "/")
+    public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex, ModelAndView modelAndView) {
+        modelAndView.setViewName("info");
+        modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
+        modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
+        modelAndView.addObject("tagsLinks", newsService.findAllTag());
+        modelAndView.addObject("page", pageIndex);
+        return modelAndView;
+    }
+
     @GetMapping("/news/{id}")
     public ModelAndView modelAndView(@PathVariable Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("news");
@@ -30,7 +40,7 @@ public class NewsController {
 
     @GetMapping(value = "/", params = {"tag"})
     public ModelAndView foundNews(@RequestParam(value = "tag", defaultValue = "") String tag, ModelAndView modelAndView, @RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
-        modelAndView.setViewName("shop");
+        modelAndView.setViewName("info");
         modelAndView.addObject("news", new NewsEntity());
         modelAndView.addObject("news", newsService.findNewsByTag(tag));
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));

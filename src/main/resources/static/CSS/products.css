@@ -8,6 +8,12 @@ input {
     margin-bottom: 0.3em;
 
 }
+.productInfo{
+    height:40px;
+}
+.countCart{
+    color: #1e7e34;
+}
 
 .productImg {
     height: 150px;
