@@ -34,4 +34,6 @@ public interface ProductService {
     void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags);
 
     void removeProduct(Long id);
+
+    ProductEntity addProduct(ProductEntity newProduct);
 }

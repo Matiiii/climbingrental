@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.findAll().forEach(products::add);
         return products;
     }
+
     @Override
     public Set<ProductEntity> findProductByName() {
         return new HashSet<>(findAllProducts());
@@ -85,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<CountProducts> countAllAvailableProductsByName(String dateFilter) {
         String dates[] = dateFilter.split("-");
-        Date start =  new Date(dates[0]);
+        Date start = new Date(dates[0]);
         Date end = new Date(dates[1]);
         Set<ProductEntity> set = findProductByName();
         return addProductsWithTimeToList(set, start, end);
@@ -94,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFilter, String name) {
         String dates[] = dateFilter.split("-");
-        Date start =  new Date(dates[0]);
+        Date start = new Date(dates[0]);
         Date end = new Date(dates[1]);
         Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
         return addProductsWithTimeToList(set, start, end);
@@ -125,6 +126,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public ProductEntity addProduct(ProductEntity newProduct) {
+        return productRepository.save(newProduct);
     }
 
 }
