@@ -76,7 +76,7 @@ public class ShopController {
         }
         attributes.addFlashAttribute("cart", cart);
 
-        return foundProducts("", "", cart, modelAndView);
+        return foundProducts("", cart.getDate(), cart, modelAndView);
     }
 
     @ModelAttribute("cart")
