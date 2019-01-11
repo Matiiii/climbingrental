@@ -30,8 +30,8 @@
             </div>
             <!-- end info -->
             <div class="base info">
-                <p class="orderPeriod">Termin wypożyczenia: <b th:text="'jakaś data'">data</b></p>
-                <form id="orderPeriod" method="post" th:action="@{/cart/changePeriod}">
+                <p class="orderPeriod">Termin wypożyczenia: <b th:text="${cart.date}">data</b></p>
+                <form id="orderPeriod" method="post" th:action="@{/changeDate}">
                     <label for="dateFilter">Zmień termin:</label>
                    <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
                     <button type="submit" class="btn btn-success">Zmień</button>
@@ -40,6 +40,9 @@
                 <p>Łączy koszt wypożyczenia: <b th:text="'jakaś suma'">suma</b></p>
                 <p>Wymagana kaucja: <b th:text="'Jakas kaucja'">kaucja</b></p>
                 <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
+                <form th:action="@{/createOrder}" method="post">
+                    <button class="btn btn-primary" type="submit">Zamow</button>
+                </form>
             </div>
 
         </div>
@@ -50,11 +53,6 @@
 
     <div class="col-md-12">
         <div class="list-group">
-            <form th:action="@{/makeOrder}" method="post">
-                <input type="text" name="datefilter" autocomplete="off" value="" />
-                <button class="btn btn-primary" type="submit">Zamow</button>
-            </form>
-
             <table class="table">
                 <thead>
                 <tr>

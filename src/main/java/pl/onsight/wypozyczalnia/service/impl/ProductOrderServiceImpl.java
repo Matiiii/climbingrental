@@ -20,16 +20,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductOrderRepository productOrderRepository;
     private ProductRepository productRepository;
 
-
-
     @Autowired
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
 
     }
-
-
 
     @Override
     public void saveOrder(ProductOrderEntity order) {
@@ -63,7 +59,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public Integer countOrdersProductInPeriod(Long productId, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrderEntity> orders = findProductOrdersByProductId(productId);
-
         int count = 0;
         for (ProductOrderEntity order : orders) {
             Date orderStart = order.getOrderStart();
