@@ -32,11 +32,9 @@ public interface ProductService {
 
     Set<Link> findRelatedProducts(ProductEntity product);
 
-    void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity);
+    void addProductByAdmin(ProductEntity product);
 
     void removeProduct(Long id);
-
-    //boolean isOrderAvailableToSave(ProductOrderEntity order);
 
     List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
 }

@@ -118,30 +118,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
-        productRepository.save(new ProductEntity(productName, price, description, smallImage, bigImage, tags, quantity));
+    public void addProductByAdmin(ProductEntity product) {
+        productRepository.save(product);
     }
 
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
     }
-
-/*    @Override
-    public boolean isOrderAvailableToSave(ProductOrderEntity order) {
-        List<ProductEntity> products = order.getProducts();
-        List<CountProducts> countProducts = countProductsInProductList(products);
-
-        for (CountProducts countProduct : countProducts) {
-            if (countProductsAvailableByNameAndTime(
-                    countProduct.getProduct().getProductName(), order.getOrderStart(), order.getOrderEnd())
-                    < countProduct.getCount()) {
-                return false;
-            }
-        }
-
-        return true;
-    }*/
 
     @Override
     public List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {

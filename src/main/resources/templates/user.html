@@ -21,13 +21,13 @@
 
     <div class="row">
 
-        <div class="col-md-4" th:each="user : ${users}">
+<!--        <div class="col-md-4" th:each="user : ${users}">
             <h2 class="h2" th:text="'Witaj,' + ${user.firstName} "> </h2>
             <h3 class="h2" th:unless="${user.admin}" th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName} "></h3>
             <h3 class="h2" th:if="${user.admin}"
                 th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName}+'(admin) ' "></h3>
         </div>
-        <!--pobieranie imienia i nazwiska użytkownika-->
+        &lt;!&ndash;pobieranie imienia i nazwiska użytkownika&ndash;&gt;-->
         <div class="col-md-4">
 
                 <p class="lead">Dane użytkownika</p>
@@ -73,23 +73,6 @@
                                             <th>Cena</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr th:each="order : ${orders}">
-                                            <td th:text="${order.products.size()}">number of products</td>
-                                            <td th:text="${order.id}">order id</td>
-                                            <td th:text="${order.orderStart}">2017-02-03</td>
-                                            <td th:text="${order.orderEnd}">2017-04-03</td>
-                                            <td th:text="${order.combinedPrice}">Jakas cena</td>
-                                        </tr>
-                                        <!--<p th:text="${prices}"></p>-->
-                                        </tbody>
-                                        <tfoot>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td th:text="${combinedPrice}"></td>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
