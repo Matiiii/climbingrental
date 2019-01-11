@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.DateFilter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
@@ -16,6 +17,7 @@ import pl.onsight.wypozyczalnia.service.CartService;
 import java.util.List;
 
 @Controller
+@SessionAttributes("cart")
 public class ProductController {
 
     private ProductService productService;
@@ -37,14 +39,12 @@ public class ProductController {
         modelAndView.addObject("product", productService.findProductById(id));
         modelAndView.addObject("productOrder", new ProductOrderEntity());
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
-        modelAndView.addObject("cart", cartService.getCart());
         String dateFilter = "";
 
         if(dateFilter.isEmpty()){
             modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
         }else {
             modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter ,productService.findProductById(id).getProductName()));
-
         }
 
         return modelAndView;
@@ -54,18 +54,19 @@ public class ProductController {
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
                                          @RequestParam(value = "productName") String productName,
+                                         @ModelAttribute("cart") Cart cart,
+                                         RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
         modelAndView.setViewName("product");
         ProductEntity productById = productService.findProductById(id);
-
 
         if (productCount == null || productCount < 1) {
             modelAndView.addObject("info", new Info("Nieprawidłowa ilość", false));
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productName, true));
-            cartService.addProductToCart(productById, productCount);
+            cartService.addProductToCart(cart, productById, productCount);
         }
-
+        attributes.addFlashAttribute("cart", cart);
         return productPage(id, modelAndView);
     }
 
@@ -75,4 +76,8 @@ public class ProductController {
         return productOrderService.getListOfDatesWhenProductIsReserved(id);
     }
 
+    @ModelAttribute("cart")
+    public Cart cart() {
+        return new Cart();
+    }
 }
