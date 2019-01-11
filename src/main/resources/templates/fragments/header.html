@@ -10,11 +10,11 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
 
-	<!-- bootstrap css -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../../static/CSS/bootstrap.min.css" />
+    <!-- bootstrap css -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../../static/CSS/bootstrap.min.css"/>
 
     <!-- Custom css -->
-	<link th:href="@{/css/header.css}" href="../../static/CSS/header.css" rel="stylesheet"/>
+    <link th:href="@{/css/header.css}" href="../../static/CSS/header.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,69 +43,52 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
- <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
-			   	<li class="nav-item">
-			    	<a class="nav-link"  href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
-			   	</li>
-			   	<li class="nav-item">
-			    	<a class="nav-link"  href=" #" th:href="@{/}" th:text="Informacje">About</a>
-			    </li>
-			    <li class="nav-item">
-			    	<a class="nav-link"  href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
-			   	</li>
-			   	<li class="nav-item">
-			   		<a class="nav-link"  href=" #" th:href="@{#}" th:text="Regulamin">About</a>
-			   	</li>
-			    <li class="nav-item">
-			    	<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}" th:text="Admin">About</a>
-			    </li>
-		    </ul>
-		    
-		    <ul class="navbar-nav ml-auto my-sm-0">
-		    	<li class="nav-item">
-		    		<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}" th:text="Rejestracja">About</a>
-		    	</li>
-				<li class="nav-item" >
-					<a class="nav-link"  href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
-				</li>
-		    	<li class="nav-item" >
-			    	<a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}" th:text="Zaloguj">About</a>
-			    </li>
-            	<li class="nav-item" >
-		   			<a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
-            	</li>
-		    	<li class="nav-item">
-		    		<form class="form-inline " th:action="@{/logout}"  method="post" id="logout"></form>
-					<a class="nav-link" sec:authorize="isAuthenticated()" href="#" onclick="document.getElementById('logout').submit()"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
-				</li>
-
-		   		<li>
-		   			
-            	</li>
+            <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/}" th:text="Informacje">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{#}" th:text="Regulamin">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}"
+                       th:text="Admin">About</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto my-sm-0">
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}"
-                    >Rejestracja</a>
+                       th:text="Rejestracja">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}"
-                    >Zaloguj</a>
+                       th:text="Zaloguj">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{#}">Koszyk</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}">Profil</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
                 </li>
                 <li class="nav-item">
                     <form class="form-inline " th:action="@{/logout}" method="post" id="logout"></form>
                     <a class="nav-link" sec:authorize="isAuthenticated()" href="#"
                        onclick="document.getElementById('logout').submit()"><span
-                            class="glyphicon glyphicon-log-out"></span>Log out</a>
+                            class="glyphicon glyphicon-log-out"></span> Log out</a>
+                </li>
+
+                <li>
+
                 </li>
             </ul>
+
         </div>
     </nav>
 </div>

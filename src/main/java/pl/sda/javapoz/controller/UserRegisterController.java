@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.javapoz.listener.OnRegistrationCompleteEvent;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.service.UserService;
 import pl.sda.javapoz.validator.RegisterValidator;
@@ -48,7 +45,6 @@ public class UserRegisterController {
         } else if (registerValidator.isEmailTaken(user)) {
             modelAndView.addObject("emailIsTaken", "Użytkownik o podanym emailu juz istnieje!");
             modelAndView.addObject("emailIsTakenInfo", "Wprowadź inny mail lub zaloguj się na istniejące konto!");
-
             return registrationPage(modelAndView);
         } else {
             userService.saveUser(user);

@@ -15,9 +15,6 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "enabled")
-    private boolean enabled;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     private AddressEntity address;
 
@@ -31,9 +28,6 @@ public class UserEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    public UserEntity() {
-        this.enabled = false;
-    }
 
     public Set<UserRoleEntity> getRoles() {
         return roles;

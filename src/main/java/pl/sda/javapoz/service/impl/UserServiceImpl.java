@@ -3,12 +3,10 @@ package pl.sda.javapoz.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.sda.javapoz.model.VerificationTokenEntity;
 import pl.sda.javapoz.model.entity.UserEntity;
 import pl.sda.javapoz.repository.UserRepository;
 import pl.sda.javapoz.repository.UserRoleRepository;
 import pl.sda.javapoz.service.UserService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +27,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(UserEntity user) {
+    public UserEntity saveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -50,16 +49,6 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> allUsers = new ArrayList<>();
         allUsersIterable.forEach(allUsers::add);
         return allUsers;
-    }
-
-    @Override
-    public void createVerificationToken(UserEntity user, String token) {
-
-    }
-
-    @Override
-    public VerificationTokenEntity getVerificationToken(String VerificationToken) {
-        return null;
     }
 
 
