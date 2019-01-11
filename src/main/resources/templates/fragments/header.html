@@ -31,7 +31,7 @@
 <div class="container" th:fragment="navbar">
 
 <span class="hello" sec:authorize="isAuthenticated()">
-               			 Witaj <b sec:authentication="name"></b>!
+               			 Witaj <b sec:authentication="principal.username"></b>!
                			<b class="hello" sec:authentication="principal.authorities">User</b>
             		</span>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

@@ -4,6 +4,7 @@
 <head>
     <link th:include="fragments/header :: head" th:remove="tag"/>
     <link th:href="@{/css/cart.css}" href="../static/CSS/cart.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -29,8 +30,8 @@
             </div>
             <!-- end info -->
             <div class="base info">
-                <p class="orderPeriod">Termin wypożyczenia: <b th:text="'jakaś data'">data</b></p>
-                <form id="orderPeriod" method="post" th:action="@{/cart/changePeriod}">
+                <p class="orderPeriod">Termin wypożyczenia: <b th:text="${cart.date}">data</b></p>
+                <form id="orderPeriod" method="post" th:action="@{/changeDate}">
                     <label for="dateFilter">Zmień termin:</label>
                    <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
                     <button type="submit" class="btn btn-success">Zmień</button>
@@ -39,6 +40,9 @@
                 <p>Łączy koszt wypożyczenia: <b th:text="'jakaś suma'">suma</b></p>
                 <p>Wymagana kaucja: <b th:text="'Jakas kaucja'">kaucja</b></p>
                 <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
+                <form th:action="@{/createOrder}" method="post">
+                    <button class="btn btn-primary" type="submit">Zamow</button>
+                </form>
             </div>
 
         </div>
@@ -61,29 +65,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div th:each="product: ${products}">
-
-
-                    <tr th:attr="product-id=${product.id}">
-
+                <div th:each="countProduct: ${products}">
+                    <tr th:attr="product-id=${countProduct.getProduct().id}">
                         <td>
                             <div class="col-md-4">
 
-                                <img th:src="${product.smallImage}"
+                                <img th:src="${countProduct.getProduct().smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="shop.html" th:href="'/product/'+${product.id}"><h4 th:text="${product.productName}">nazwa produktu</h4></a></td>
-                        <td><p th:text="${product.price}">cena</p></td>
-                        <td><p th:text="${product.price}">cena</p></td>
+                        <td><a href="info.html" th:href="'/product/'+${countProduct.getProduct().id}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
+                        <td><p th:text="${countProduct.product.price}">cena</p></td>
+                        <td><p th:text="${countProduct.count}">cena</p></td>
                         <td>
 
                             <button type="submit" class="btn btn-primary btn-delete">Usuń
                             </button>
                         </td>
-                        <td><p th:text="suma">suma</p></td>
+                        <td><p th:text="${countProduct.product.price * countProduct.count}">suma</p></td>
                     </tr>
                 </div>
                 </tbody>
@@ -104,6 +105,10 @@
 <!-- /.container -->
 
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+<script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
+<script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
+<script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
 
 </body>
 

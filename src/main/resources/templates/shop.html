@@ -2,56 +2,101 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<link th:include="fragments/header :: head" th:remove="tag" />
+
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/products.css}" href="../static/CSS/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
 
 <!-- Navigation -->
 <div th:replace="fragments/header :: navbar">
-  
 </div>
 
 <!-- Page Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-    </div>
+<div class="container content">
+
     <div class="row">
 
-        <div class="col-md-3">
-            <p class="lead">Tags</p>
-            <div class="list-group">
-                <a th:each="link : ${tagsLinks}" th:text=" '#' + ${link.name}"
-                   th:href="${link.link}" class="list-group-item">Category</a>
+        <div class="col-xs-12 col-ms-12 col-md-3 form">
+
+
+            <form id="orderForm" method="get" th:action="@{/shop}">
+                <table>
+                    <tr>
+                        <td class="flexCenter"><label for="productName">Wpisz nazwę produktu:</label></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter"><input type="text" name="productName" id="productName"/></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter"><label for="dateFilter">Wybierz termin: </label></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter"><input id="dateFilter" type="text" name="datefilter" autocomplete="off"
+                                                      value=""/></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter">
+                            <button type="submit" class="btn btn-success">Sprawdz dostepnosc</button>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <div class="form-group">
+
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-xs col-sm col-md-9">
+
+            <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
+                status produktu
             </div>
-        </div>
+            <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+                status produktu
+            </div>
 
+            <div class="row">
 
-        <div class="center">
+                <div th:each="countProduct: ${countProducts}" class="col-xs col-sm col-lg-4 col-md-6 product">
+                    <div class="thumbnail">
+                        <div class="productImg">
+                            <img th:src="${countProduct.product.smallImage}"/>
+                        </div>
 
-            <div class="col-md-9">
+                        <div class="caption">
+                            <div class="productName">
+                                <a href="info.html" th:href="'/product/'+${countProduct.product.id}">
+                                    <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
+                            </div>
+                            <div class="productInfo">
+                                <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
+                                        th:text="'W koszyku: '+${cart.getCountOfProductInCart(countProduct.product)}"></b>
+                                </div>
+                                <div class="flexAround">
+                                <span class="price left">
+                                Cena: <b th:text="${countProduct.product.price}">cena</b> zł</span>
+                                    <span class="count right">Dostępnych:  <b th:text="${countProduct.count}">count</b></span>
+                                </div>
 
-                <div class="row">
-
-                    <div th:each="news: ${news}" class="col-md-9">
-                        <div class="thumbnail">
-                            <!--<img th:src="${product.smallImage.path}" src="http://placehold.it/320x150" th:alt="${product.smallImage.altText}" alt=""/>-->
-                            <div class="caption" style="height: auto">
-                                <!--<h4 class="pull-right" th:text="${news}"></h4>-->
-                                <h4 th:text="${news.title}">
-                                </h4>
-                                <h6 th:text=" '#' + ${news.tag}">
-                                </h6>
-                                <p th:text="${news.description}">See more snippets like this online store item at <a
-                                        target="_blank" href="http://www.bootsnipp.com">Bootsnipp -
-                                    http://bootsnipp.com></a></p>
-
-                                <button type="submit" class="btn btn-success"><a th:href="'/news/' + ${news.id}"
-                                                                                 href="#" th:text="${news.title}"></a>
-                                </button>
-
+                            </div>
+                            <div class="addToCart">
+                                <form id="addToCart" method="post" th:action="@{'/shop/' + ${countProduct.product.id}}">
+                                    <div>
+                                        <label for="productCount">Wybierz ilość: </label>
+                                        <input id="productCount" name="productCount" type="number" th:default="1"
+                                               th:min="1"
+                                               th:max="${countProduct.count - (cart.getCountOfProductInCart(countProduct.product))}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -59,36 +104,25 @@
             </div>
 
         </div>
-        <nav aria-label="...">
-            <ul class="pager nav-list-pagination">
-                <li class="previous" id="prev" th:classappend="${pagination.previousPage ? '' : 'disabled'}"><a
-                        th:href="'/?page='+${pagination.page-1}"
-                        th:classappend="${pagination.previousPage ? '' : 'disabled' }" href=""><span aria-hidden="true">&larr;</span>
-                    Older</a></li>
-                <li class="next" id="next" th:classappend="${pagination.nextPage ? '' : 'disabled'}"><a
-                        th:href="'/?page='+${pagination.page+1}"
-                        th:classappend="${pagination.nextPage ? '' : 'disabled' }" href="">Newer <span
-                        aria-hidden="true">&rarr;</span></a></li>
-            </ul>
-        </nav>
-    </div>
-
-    <!-- /.container -->
-
-    <div class="container">
 
 
-        <!-- Footer -->
-        <footer>
-            <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-        </footer>
+        <!-- /.container -->
+
+        <div class="container">
+            <!-- Footer -->
+            <footer>
+                <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+            </footer>
+        </div>
+        <!-- /.container -->
+
+        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+        <script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
+        <script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
+        <script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
 
     </div>
-
-    <!-- /.container -->
-
-    <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
-
 </div>
 </body>
 </html>
