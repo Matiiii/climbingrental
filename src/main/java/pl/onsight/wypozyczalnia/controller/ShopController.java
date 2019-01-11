@@ -1,6 +1,7 @@
 package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,7 @@ public class ShopController {
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                      @ModelAttribute("cart") Cart cart,
                                       ModelAndView modelAndView) {
         modelAndView.setViewName("shop");
         modelAndView.addObject("product", new ProductEntity());
@@ -52,12 +54,15 @@ public class ShopController {
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
         }
+
+        cartService.addDateToCart(cart, dateFilter);
         return modelAndView;
     }
 
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,
+                                         @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                          @ModelAttribute("cart") Cart cart,
                                          RedirectAttributes attributes,
                                          ModelAndView modelAndView) {
@@ -69,10 +74,11 @@ public class ShopController {
         } else {
             modelAndView.addObject("info", new Info("Dodano do koszyka " + productCount + " " + productById.getProductName(), true));
             cartService.addProductToCart(cart, productById, productCount);
+            cartService.addDateToCart(cart, dateFilter);
         }
         attributes.addFlashAttribute("cart", cart);
 
-        return foundProducts("", "", modelAndView);
+        return foundProducts("", "", cart, modelAndView);
     }
 
     @ModelAttribute("cart")

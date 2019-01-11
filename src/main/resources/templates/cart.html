@@ -30,7 +30,7 @@
             </div>
             <!-- end info -->
             <div class="base info">
-                <p class="orderPeriod">Termin wypożyczenia: <b th:text="'jakaś data'">data</b></p>
+                <p class="orderPeriod">Termin wypożyczenia: <b th:text="${cart.date}">data</b></p>
                 <form id="orderPeriod" method="post" th:action="@{/cart/changePeriod}">
                     <label for="dateFilter">Zmień termin:</label>
                    <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
