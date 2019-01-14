@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class Cart {
 
     private List<ProductEntity> products = new LinkedList<>();
-    String Date;
+    private String Date;
 
     public List<ProductEntity> getProducts() {
         return products;
@@ -30,7 +29,7 @@ public class Cart {
         Date = date;
     }
 
-    public int getCountOfProductInCart(ProductEntity product){
+    public int getCountOfProductInCart(ProductEntity product) {
         return Collections.frequency(products, product);
     }
 }

@@ -34,9 +34,12 @@ public class ShopController {
         modelAndView.addObject("product", new ProductEntity());
         modelAndView.addObject("filterProducts", new FilterProducts());
 
-        boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
-        boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
-        boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
+        //boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+        boolean hasNoParameters = prodName.equals("") && dateFilter.equals("");
+        //boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+        boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("");
+        /*boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);*/
+        boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals(""));
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
@@ -44,15 +47,15 @@ public class ShopController {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
         } else if (hasOnlyDates) {
-            if (dateFilter.isEmpty()) {
+/*            if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
-            }
+            }*/
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
         } else {
-            if (dateFilter.isEmpty()) {
+   /*         if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
-            }
+            }*/
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
         }
@@ -77,7 +80,6 @@ public class ShopController {
             cartService.addProductToCart(cart, productById, productCount);
         }
         attributes.addFlashAttribute("cart", cart);
-
 
         if (cart.getDate() != null) {
             return foundProducts("", cart.getDate(), cart, modelAndView);
