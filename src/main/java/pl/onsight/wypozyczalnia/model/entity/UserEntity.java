@@ -28,8 +28,6 @@ public class UserEntity implements Serializable {
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    public UserEntity() {
-    }
 
     public Set<UserRoleEntity> getRoles() {
         return roles;

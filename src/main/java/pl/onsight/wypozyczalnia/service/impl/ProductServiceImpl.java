@@ -36,7 +36,6 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findAllProducts() {
         List<ProductEntity> products = new LinkedList<>();
         productRepository.findAll().forEach(products::add);
-
         return products;
     }
 
@@ -61,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
         int countOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
         int quantity = product.getQuantity();
 
-        return quantity-countOrders;
+        return quantity - countOrders;
     }
 
     @Override
@@ -118,16 +117,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
-        productRepository.save(new ProductEntity(productName, price, description, smallImage, bigImage, tags, quantity));
-    }
-
-    @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
     }
 
     @Override
+    public void addProduct(ProductEntity product) {
+        productRepository.save(product);
+    }
+
     public boolean isOrderAvailableToSave(ProductOrderEntity order) {
 
         List<ProductEntity> products = order.getProducts();
@@ -143,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
 
         return true;
     }
+
     @Override
     public List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
@@ -152,6 +151,7 @@ public class ProductServiceImpl implements ProductService {
             countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
         }
         return countProducts;
-    }
 
+    }
 }
+
