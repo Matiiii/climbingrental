@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.Link;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
-import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
@@ -36,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findAllProducts() {
         List<ProductEntity> products = new LinkedList<>();
         productRepository.findAll().forEach(products::add);
-
         return products;
     }
 
@@ -61,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
         int countOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
         int quantity = product.getQuantity();
 
-        return quantity-countOrders;
+        return quantity - countOrders;
     }
 
     @Override
@@ -117,14 +115,15 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Link::getName))));
     }
 
-    @Override
-    public void addProductByAdmin(ProductEntity product) {
-        productRepository.save(product);
-    }
 
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public void addProduct(ProductEntity product) {
+        productRepository.save(product);
     }
 
     @Override
@@ -136,6 +135,7 @@ public class ProductServiceImpl implements ProductService {
             countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
         }
         return countProducts;
-    }
 
+    }
 }
+

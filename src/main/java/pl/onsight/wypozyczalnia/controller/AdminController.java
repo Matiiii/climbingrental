@@ -2,11 +2,14 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+
+import javax.validation.Valid;
 
 @Controller
 public class AdminController {
@@ -30,9 +33,14 @@ public class AdminController {
     }
 
     @PostMapping("/admin-page")
-    public ModelAndView addProduct(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/shop");
-        productService.addProductByAdmin(product);
+    public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
+                                   BindingResult bindingResult, ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin");
+        } else {
+            productService.addProduct(product);
+            modelAndView.setViewName("redirect:/shop");
+        }
         return modelAndView;
     }
 
@@ -47,4 +55,6 @@ public class AdminController {
     public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);
     }
+
+
 }
