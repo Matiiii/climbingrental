@@ -5,14 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.onsight.wypozyczalnia.model.entity.*;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
+import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class Application {
@@ -25,6 +23,9 @@ public class Application {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductOrderRepository productOrderRepository;
 
     public static void main(String[] args) {
         System.setProperty("spring.profiles.active", "mysql");
@@ -145,6 +146,15 @@ public class Application {
         newsRepository.save(news);
         newsRepository.save(news2);
         newsRepository.save(news3);
+
+
+        ProductOrderEntity order1 = new ProductOrderEntity();
+        order1.setUser(new UserEntity());
+        order1.setOrderStart(new Date());
+        order1.setOrderEnd(new Date());
+
+        productOrderRepository.save(order1);
+
     }
 }
 
