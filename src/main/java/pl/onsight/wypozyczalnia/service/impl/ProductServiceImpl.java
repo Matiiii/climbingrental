@@ -122,8 +122,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity addProduct(ProductEntity newProduct) {
-        return productRepository.save(newProduct);
+    public void addProduct(ProductEntity product) {
+        productRepository.save(product);
     }
 
     public boolean isOrderAvailableToSave(ProductOrderEntity order) {

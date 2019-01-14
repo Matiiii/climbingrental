@@ -21,13 +21,11 @@ public class UserRegisterController {
 
     private UserService userService;
     private RegisterValidator registerValidator;
-    ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public UserRegisterController(UserService userService, RegisterValidator registerValidator , ApplicationEventPublisher eventPublisher) {
+    public UserRegisterController(UserService userService, RegisterValidator registerValidator) {
         this.userService = userService;
         this.registerValidator = registerValidator;
-        this.eventPublisher = eventPublisher;
     }
 
 

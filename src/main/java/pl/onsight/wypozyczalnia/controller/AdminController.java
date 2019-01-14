@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
@@ -23,7 +24,7 @@ public class AdminController {
         this.productService = productService;
     }
 
-@GetMapping("/admin-page")
+    @GetMapping("/admin-page")
     public ModelAndView adminPage(ModelAndView modelAndView) {
         modelAndView.setViewName("admin");
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
@@ -52,7 +53,7 @@ public class AdminController {
             modelAndView.setViewName("admin");
         } else {
             productService.addProduct(product);
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("redirect:/shop");
         }
         return modelAndView;
     }

@@ -34,7 +34,7 @@ public interface ProductService {
 
     void removeProduct(Long id);
 
-    ProductEntity addProduct(ProductEntity newProduct);
+    void addProduct(ProductEntity product);
 
     boolean isOrderAvailableToSave(ProductOrderEntity order);
 
