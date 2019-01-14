@@ -16,6 +16,8 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
 
     List<ProductEntity> findByProductNameAndTags(String productName, String Tags);
 
-    Set<ProductEntity> findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(String productName, String Tags);
+    //Set<ProductEntity> findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(String productName, String Tags);
+
+    List<ProductEntity> findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(String productName, String Tags);
 
 }

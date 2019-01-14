@@ -40,13 +40,18 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    @Override
+/*    @Override
     public Set<ProductEntity> findProductByName() {
         return new HashSet<>(findAllProducts());
-    }
+    }*/
+
+/*    @Override
+    public Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag) {
+        return productRepository.findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(productNameOrTag, productNameOrTag);
+    }*/
 
     @Override
-    public Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag) {
+    public List<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag) {
         return productRepository.findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(productNameOrTag, productNameOrTag);
     }
 
@@ -66,19 +71,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<CountProducts> countAllProductsByName() {
-        Set<ProductEntity> set = findProductByName();
-        return addProductsToList(set);
+        //Set<ProductEntity> set = findProductByName();
+        //return addProductsToList(set);
+        return addProductsToList(findAllProducts());
     }
 
-    @Override
+/*    @Override
     public List<CountProducts> countAllProductsByNameFiltered(String name) {
         Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
         return addProductsToList(set);
+    }*/
+
+    @Override
+    public List<CountProducts> countAllProductsByNameFiltered(String name) {
+        List<ProductEntity> list = findAllProductsByProductNameOrTags(name);
+        return addProductsToList(list);
     }
 
-    private List<CountProducts> addProductsToList(Set<ProductEntity> set) {
+/*    private List<CountProducts> addProductsToList(Set<ProductEntity> set) {
         List<CountProducts> list = new LinkedList<>();
         set.forEach(product -> list.add(new CountProducts(product, countProductsByName(product.getProductName()))));
+        return list;
+    }*/
+
+    private List<CountProducts> addProductsToList(List<ProductEntity> lis) {
+        List<CountProducts> list = new LinkedList<>();
+        lis.forEach(product -> list.add(new CountProducts(product, countProductsByName(product.getProductName()))));
         return list;
     }
 
@@ -87,22 +105,39 @@ public class ProductServiceImpl implements ProductService {
         String dates[] = dateFilter.split("-");
         Date start = new Date(dates[0]);
         Date end = new Date(dates[1]);
-        Set<ProductEntity> set = findProductByName();
-        return addProductsWithTimeToList(set, start, end);
+        //Set<ProductEntity> set = findProductByName();
+        List<ProductEntity> list = findAllProducts();
+        //return addProductsWithTimeToList(set, start, end);
+        return addProductsWithTimeToList(list, start, end);
     }
 
-    @Override
+/*    @Override
     public List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFilter, String name) {
         String dates[] = dateFilter.split("-");
         Date start = new Date(dates[0]);
         Date end = new Date(dates[1]);
         Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
         return addProductsWithTimeToList(set, start, end);
+    } */
+
+    @Override
+    public List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFilter, String name) {
+        String dates[] = dateFilter.split("-");
+        Date start = new Date(dates[0]);
+        Date end = new Date(dates[1]);
+        List<ProductEntity> lis = findAllProductsByProductNameOrTags(name);
+        return addProductsWithTimeToList(lis, start, end);
     }
 
-    private List<CountProducts> addProductsWithTimeToList(Set<ProductEntity> set, Date start, Date end) {
+ /*   private List<CountProducts> addProductsWithTimeToList(Set<ProductEntity> set, Date start, Date end) {
         List<CountProducts> list = new LinkedList<>();
         set.forEach(product -> list.add(new CountProducts(product, countProductsAvailableByNameAndTime(product.getProductName(), start, end))));
+        return list;
+    }*/
+
+    private List<CountProducts> addProductsWithTimeToList(List<ProductEntity> lista, Date start, Date end) {
+        List<CountProducts> list = new LinkedList<>();
+        lista.forEach(product -> list.add(new CountProducts(product, countProductsAvailableByNameAndTime(product.getProductName(), start, end))));
         return list;
     }
 
