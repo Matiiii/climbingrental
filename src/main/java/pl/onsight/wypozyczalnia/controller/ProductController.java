@@ -84,23 +84,5 @@ public class ProductController {
         return new Cart();
     }
 
-    @GetMapping(value = "/product/add")
-    public ModelAndView addingPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("addProductToCollection");
-        modelAndView.addObject("newProduct", new ProductEntity());
-        return modelAndView;
-    }
 
-
-    @PostMapping("/product/add")
-    public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
-                                   BindingResult bindingResult, ModelAndView modelAndView) {
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("shop");
-        } else {
-            productService.addProduct(product);
-            modelAndView.setViewName("redirect:/");
-        }
-        return modelAndView;
-    }
 }

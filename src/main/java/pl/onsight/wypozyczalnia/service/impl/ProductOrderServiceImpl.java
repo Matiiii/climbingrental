@@ -24,7 +24,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
-
     }
 
     @Override

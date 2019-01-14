@@ -2,11 +2,14 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+
+import javax.validation.Valid;
 
 @Controller
 public class AdminController {
@@ -20,20 +23,12 @@ public class AdminController {
         this.productService = productService;
     }
 
-    @GetMapping("/admin-page")
+@GetMapping("/admin-page")
     public ModelAndView adminPage(ModelAndView modelAndView) {
         modelAndView.setViewName("admin");
         modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
         modelAndView.addObject("productList", productService.findAllProducts());
         modelAndView.addObject("addProduct", new ProductEntity());
-        return modelAndView;
-    }
-
-    @PostMapping("/admin-page")
-    public ModelAndView addProduct(@ModelAttribute ProductEntity product, ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/shop");
-        productService.addProductByAdmin(product.getProductName(), product.getPrice(), product.getDescription(), product.getSmallImage(), product.getBigImage(), product.getTags(), product.getQuantity());
-        modelAndView.addObject("addProduct", product);
         return modelAndView;
     }
 
@@ -47,5 +42,18 @@ public class AdminController {
     @ResponseBody
     public void removeProduct(@PathVariable Long id) {
         productService.removeProduct(id);
+    }
+
+
+    @PostMapping("/admin-page")
+    public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
+                                   BindingResult bindingResult, ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin");
+        } else {
+            productService.addProduct(product);
+            modelAndView.setViewName("redirect:/");
+        }
+        return modelAndView;
     }
 }
