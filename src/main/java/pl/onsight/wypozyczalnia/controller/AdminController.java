@@ -2,6 +2,7 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,6 +11,7 @@ import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 
 @Controller
@@ -45,7 +47,6 @@ public class AdminController {
         productService.removeProduct(id);
     }
 
-
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
                                    BindingResult bindingResult, ModelAndView modelAndView) {
@@ -55,6 +56,25 @@ public class AdminController {
             productService.addProduct(product);
             modelAndView.setViewName("redirect:/shop");
         }
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView showUpdateForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        ProductEntity product = productService.findProductById(id);
+        modelAndView.addObject("product", product);
+        modelAndView.setViewName("updateProduct");
+        return modelAndView;
+    }
+    @PostMapping("/update/{id}")
+    public ModelAndView updateProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
+                             BindingResult result, ModelAndView modelAndView) {
+        if (result.hasErrors()) {
+            product.setId(id);
+            modelAndView.setViewName("admin");
+            return modelAndView;
+        }
+        productService.editProduct(product);
         return modelAndView;
     }
 }

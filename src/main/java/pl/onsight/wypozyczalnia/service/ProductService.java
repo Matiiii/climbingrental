@@ -39,4 +39,6 @@ public interface ProductService {
     boolean isOrderAvailableToSave(ProductOrderEntity order);
 
     List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
+
+    void editProduct(ProductEntity product);
 }

@@ -77,10 +77,7 @@
                                         </thead>
                                         <tbody>
                                         <div th:each="products: ${productList}">
-
-
                                             <tr th:attr="product-id=${products.id}">
-
                                                 <td>
                                                     <div class="col-md-4">
                                                         <p th:text="${products.productName}">dsa</p>
@@ -93,10 +90,11 @@
                                                 </td>
                                                 <td th:text="${products.description}">Jakiś opis</td>
                                                 <td>
-
                                                     <button type="submit" class="btn btn-primary btn-delete">Usuń
                                                     </button>
-
+                                                </td>
+                                                <td>
+                                                    <td><a th:href="@{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
                                                 </td>
                                             </tr>
                                         </div>

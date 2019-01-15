@@ -153,5 +153,17 @@ public class ProductServiceImpl implements ProductService {
         return countProducts;
 
     }
+
+    @Override
+    public void editProduct(ProductEntity product) {
+        ProductEntity editedProduct=new ProductEntity();
+        editedProduct.setProductName(product.getProductName());
+        editedProduct.setPrice(product.getPrice());
+        editedProduct.setBigImage(product.getBigImage());
+        editedProduct.setSmallImage(product.getSmallImage());
+        editedProduct.setDescription(product.getDescription());
+        editedProduct.setTags(product.getTags());
+        editedProduct.setQuantity(product.getQuantity());
+    }
 }
 
