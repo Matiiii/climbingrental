@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
 import javax.transaction.Transactional;
@@ -46,17 +47,21 @@ public class ProductTest {
 
     @Test
     @Transactional
-    public void should() {
+    public void shouldCheckQuantityOf44() {
         //given
         ProductEntity product = new ProductEntity();
         product.setProductName("Karabinek");
-        product.setQuantity(2);
+        int quantity = 44;
+        product.setQuantity(quantity);
         productService.addProduct(product);
-        
+
         //when
-        int numberOfProducts = productService.countAllProductsByName().size();
+        List<CountProducts> countProducts = productService.countAllProductsByName();
+        for (CountProducts countProducts1: countProducts){
+            System.out.println(countProducts1.getCount());
+        }
 
         //then
-        assertThat(numberOfProducts).isEqualTo(sizeOfDatabase + 2);
+        assertThat(countProducts.get(countProducts.size() - 1).getCount()).isEqualTo(quantity);
     }
 }
