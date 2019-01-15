@@ -60,7 +60,24 @@
                                             <th>Zamówione do</th>
                                             <th>Cena</th>
                                         </tr>
-                                        </thead>
+                                        </thead>git
+                                        <tbody>
+                                        <tr th:each="order : ${orders}">
+                                            <td th:text="${order.products.size()}">number of products</td>
+                                            <td th:text="${order.id}">order id</td>
+                                            <td th:text="${order.orderStart}">2017-02-03</td>
+                                            <td th:text="${order.orderEnd}">2017-04-03</td>
+                                            <td th:text="${order.combinedPrice}">Jakas cena</td>
+                                        </tr>
+                                        <!--<p th:text="${prices}"></p>-->
+                                        </tbody>
+                                        <tfoot>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td th:text="${combinedPrice}"></td>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
