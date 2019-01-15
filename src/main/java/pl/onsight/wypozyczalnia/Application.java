@@ -155,6 +155,13 @@ public class Application {
 
         productOrderRepository.save(order1);
 
+        ProductOrderEntity order2 = new ProductOrderEntity();
+        order2.setUser(new UserEntity());
+        order2.setOrderStart(new Date());
+        order2.setOrderEnd(new Date());
+
+        productOrderRepository.save(order2);
+
     }
 }
 
