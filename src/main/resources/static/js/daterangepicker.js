@@ -397,7 +397,7 @@
 
         this.container.addClass('opens' + this.opens);
 
-        //apply CSS classes and labels to buttons
+        //apply css classes and labels to buttons
         this.container.find('.applyBtn, .cancelBtn').addClass(this.buttonClasses);
         if (this.applyButtonClasses.length)
             this.container.find('.applyBtn').addClass(this.applyButtonClasses);
