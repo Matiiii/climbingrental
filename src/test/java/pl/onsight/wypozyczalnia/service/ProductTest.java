@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.onsight.wypozyczalnia.model.CountProducts;
+import pl.onsight.wypozyczalnia.model.Link;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,16 +27,13 @@ public class ProductTest {
     private int sizeOfDatabase;
 
     @Before
-    public void addProductToDatabase() {
+    public void ini(){
         sizeOfDatabase = productService.findAllProducts().size();
-        ProductEntity product = new ProductEntity();
-        product.setProductName("Lina");
-        productService.addProduct(product);
     }
 
     @Test
     @Transactional
-    public void shouldFindMoreThan2FromOriginalSizeOfProducts() {
+    public void shouldFindMoreThan1FromOriginalSizeOfProducts() {
         //given
         ProductEntity product = new ProductEntity();
         productService.addProduct(product);
@@ -42,7 +42,7 @@ public class ProductTest {
         List<ProductEntity> products = productService.findAllProducts();
 
         //then
-        assertThat(products.size()).isEqualTo(sizeOfDatabase + 2);
+        assertThat(products.size()).isEqualTo(sizeOfDatabase + 1);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ProductTest {
 
     @Test
     @Transactional
-    public void should(){
+    public void shouldFindProduct() {
         //given
         ProductEntity product = new ProductEntity();
         product.setProductName("Buty");
@@ -75,6 +75,56 @@ public class ProductTest {
 
         //then
         assertThat(countProducts.get(0).getProduct().getProductName()).isEqualTo(product.getProductName());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFind2Products() {
+        //given
+        ProductEntity product = new ProductEntity();
+        product.setProductName("Buty");
+        productService.addProduct(product);
+
+        ProductEntity product2 = new ProductEntity();
+        product2.setProductName("Kask");
+        productService.addProduct(product2);
+
+        List<ProductEntity> productList = new LinkedList<>();
+        productList.add(product);
+        productList.add(product);
+        productList.add(product2);
+
+        //when
+        List<CountProducts> countProducts = productService.countProductsInProductList(productList);
+
+        //then
+        assertThat(countProducts.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    public void shouldFound2Links() {
+        //given
+        ProductEntity product = new ProductEntity();
+        product.setProductName("snieg");
+        product.setTags("woda,ogien,zima");
+        productService.addProduct(product);
+
+        ProductEntity product2 = new ProductEntity();
+        product2.setProductName("deszcz");
+        product2.setTags("ogien,woda,komputer");
+        productService.addProduct(product2);
+
+        ProductEntity product3 = new ProductEntity();
+        product3.setProductName("grad");
+        product3.setTags("kaktus");
+        productService.addProduct(product3);
+
+        //when
+        Set<Link> setOfFoundLinks = productService.findRelatedProducts(productService.findProductById((long) (sizeOfDatabase + 2)));
+
+        //then
+        assertThat(setOfFoundLinks.size()).isEqualTo(2);
     }
 
 }
