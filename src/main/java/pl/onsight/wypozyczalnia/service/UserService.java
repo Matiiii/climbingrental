@@ -10,4 +10,6 @@ public interface UserService {
     void saveUsers(List<UserEntity> users);
 
     UserEntity getUserByEmail(String email);
+
+    UserEntity getUserById (Long id);
 }

@@ -1,5 +1,6 @@
 package pl.onsight.wypozyczalnia;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -147,9 +148,8 @@ public class Application {
         newsRepository.save(news2);
         newsRepository.save(news3);
 
-
         ProductOrderEntity order1 = new ProductOrderEntity();
-        order1.setUser(new UserEntity());
+        order1.setUser(userService.getUserById(0L));
         order1.setOrderStart(new Date());
         order1.setOrderEnd(new Date());
 
