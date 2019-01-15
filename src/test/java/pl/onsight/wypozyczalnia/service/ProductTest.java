@@ -57,11 +57,24 @@ public class ProductTest {
 
         //when
         List<CountProducts> countProducts = productService.countAllProductsByName();
-        for (CountProducts countProducts1: countProducts){
-            System.out.println(countProducts1.getCount());
-        }
 
         //then
         assertThat(countProducts.get(countProducts.size() - 1).getCount()).isEqualTo(quantity);
     }
+
+    @Test
+    @Transactional
+    public void should(){
+        //given
+        ProductEntity product = new ProductEntity();
+        product.setProductName("Buty");
+        productService.addProduct(product);
+
+        //when
+        List<CountProducts> countProducts = productService.countAllProductsByNameFiltered(product.getProductName());
+
+        //then
+        assertThat(countProducts.get(0).getProduct().getProductName()).isEqualTo(product.getProductName());
+    }
+
 }
