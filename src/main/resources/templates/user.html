@@ -16,82 +16,74 @@
 
     <div class="row">
 
+        <div class="col-md-4">
 
-    </div>
-
-    <div class="row">
-    </div>
-    <div class="col-md-4">
-
-        <p class="lead">Dane użytkownika</p>
-        <ul class="list-group">
-            <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
-            <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
-            <li class="list-group-item"
-                th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
-                Adres:
-            </li>
-            <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
-            <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
-        </ul>
-    </div>
+            <p class="lead">Dane użytkownika</p>
+            <ul class="list-group">
+                <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
+                <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
+                <li class="list-group-item"
+                    th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
+                    Adres:
+                </li>
+                <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
+                <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
+            </ul>
+        </div>
 
 
-    <div class="col-md-8">
+        <div class="col-md-8">
 
 
-        <div class="container">
-            <div class="navigation">
-                <ul class="nav nav-pills head-menu">
-                    <li class="active"><a href="#twoje-zamowienia" data-toggle="pill">Twoje zamówienia</a></li>
-                    <li>
-                        <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
-                    </li>
-                    <li>
-                        <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
+            <div class="container">
+                <div class="navigation">
+                    <ul class="nav nav-pills head-menu">
+                        <li class="active"><a href="#twoje-zamowienia" data-toggle="pill">Twoje zamówienia</a></li>
+                        <li>
+                            <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
+                        </li>
+                        <li>
+                            <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
 
-                    <div class="tab-pane active" id="twoje-zamowienia">
-                        <div class="col-md-8">
-                            <div class="list-group">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Produkt</th>
-                                        <th>Opis produktu</th>
-                                        <th>Zamówione od</th>
-                                        <th>Zamówione do</th>
-                                        <th>Cena</th>
-                                    </tr>
-                                    </thead>
-                                </table>
+                        <div class="tab-pane active" id="twoje-zamowienia">
+                            <div class="col-md-8">
+                                <div class="list-group">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Produkt</th>
+                                            <th>Opis produktu</th>
+                                            <th>Zamówione od</th>
+                                            <th>Zamówione do</th>
+                                            <th>Cena</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="twoje-rachunki">
+                            <div class="col-md-8">
+                                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                                    massa metus id nunc. </p>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="trzecia-zakladka">
+                            <div class="col-md-8">
+                                <p>trzy </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="twoje-rachunki">
-                        <div class="col-md-8">
-                            <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
-                                massa metus id nunc. </p>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane" id="trzecia-zakladka">
-                        <div class="col-md-8">
-                            <p>trzy </p>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-</div>
-<div class="col-md-8">
-
 </div>
 
 
@@ -104,7 +96,6 @@
     </footer>
 </div>
 
-</div>
 
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
 </body>

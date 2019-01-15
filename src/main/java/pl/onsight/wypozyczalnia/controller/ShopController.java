@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.model.FilterProducts;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
@@ -32,7 +31,6 @@ public class ShopController {
                                       ModelAndView modelAndView) {
         modelAndView.setViewName("shop");
         modelAndView.addObject("product", new ProductEntity());
-        modelAndView.addObject("filterProducts", new FilterProducts());
 
         boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
         boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;

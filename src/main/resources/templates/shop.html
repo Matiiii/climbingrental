@@ -65,7 +65,7 @@
 
                         <div class="caption">
                             <div class="productName">
-                                <a href="info.html" th:href="'/product/'+${countProduct.product.id}">
+                                <a href="info.html" th:href="@{'/product/'+${countProduct.product.id}}">
                                     <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
                             </div>
                             <div class="productInfo">
