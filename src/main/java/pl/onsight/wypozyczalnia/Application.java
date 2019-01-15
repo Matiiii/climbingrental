@@ -149,14 +149,14 @@ public class Application {
         newsRepository.save(news3);
 
         ProductOrderEntity order1 = new ProductOrderEntity();
-        order1.setUser(userService.getUserById(0L));
+        order1.setUser(userService.getUserById(1L));
         order1.setOrderStart(new Date());
         order1.setOrderEnd(new Date());
 
         productOrderRepository.save(order1);
 
         ProductOrderEntity order2 = new ProductOrderEntity();
-        order2.setUser(new UserEntity());
+        order2.setUser(userService.getUserById(2L));
         order2.setOrderStart(new Date());
         order2.setOrderEnd(new Date());
 
