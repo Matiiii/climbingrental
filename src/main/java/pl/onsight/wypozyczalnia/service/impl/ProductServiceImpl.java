@@ -36,7 +36,6 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> findAllProducts() {
         List<ProductEntity> products = new LinkedList<>();
         productRepository.findAll().forEach(products::add);
-
         return products;
     }
 
@@ -97,14 +96,15 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Link::getName))));
     }
 
-    @Override
-    public void addProductByAdmin(ProductEntity product) {
-        productRepository.save(product);
-    }
 
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public void addProduct(ProductEntity product) {
+        productRepository.save(product);
     }
 
     @Override
@@ -115,6 +115,8 @@ public class ProductServiceImpl implements ProductService {
         for (ProductEntity product : setProducts) {
             countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
         }
+
         return countProducts;
     }
 }
+

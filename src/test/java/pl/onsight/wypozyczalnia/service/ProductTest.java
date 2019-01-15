@@ -27,7 +27,7 @@ public class ProductTest {
         sizeOfDatabase = productService.findAllProducts().size();
         ProductEntity product = new ProductEntity();
         product.setProductName("Lina");
-        productService.addProductByAdmin(product);
+        productService.addProduct(product);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ProductTest {
     public void shouldFindMoreThan2FromOriginalSizeOfProducts() {
         //given
         ProductEntity product = new ProductEntity();
-        productService.addProductByAdmin(product);
+        productService.addProduct(product);
 
         //when
         List<ProductEntity> products = productService.findAllProducts();
@@ -51,9 +51,8 @@ public class ProductTest {
         ProductEntity product = new ProductEntity();
         product.setProductName("Karabinek");
         product.setQuantity(2);
-        productService.addProductByAdmin(product);
-
-
+        productService.addProduct(product);
+        
         //when
         int numberOfProducts = productService.countAllProductsByName().size();
 

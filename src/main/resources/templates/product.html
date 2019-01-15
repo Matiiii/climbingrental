@@ -43,6 +43,12 @@
                 <div class="col">
                     <h4 class="pull-right" th:text="|${product.price} zł / dzień|">2</h4></div>
                 </br>
+                <p>
+                <form th:method="delete" th:action="@{'/product/remove/'+${product.id}}">
+                    <input type="hidden" name="id" th:value="${product.id}"/>
+                    <button class="button u-full-width" type="submit">Usuń</button>
+                </form>
+                </p>
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-4"><br/>
                         <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"

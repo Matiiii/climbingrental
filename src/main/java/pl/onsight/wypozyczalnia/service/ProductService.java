@@ -26,9 +26,9 @@ public interface ProductService {
 
     Set<Link> findRelatedProducts(ProductEntity product);
 
-    void addProductByAdmin(ProductEntity product);
-
     void removeProduct(Long id);
+
+    void addProduct(ProductEntity product);
 
     List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
 }
