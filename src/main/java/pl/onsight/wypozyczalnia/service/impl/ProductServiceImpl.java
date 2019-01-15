@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.Link;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
-import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
@@ -116,6 +115,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Link::getName))));
     }
 
+
     @Override
     public void removeProduct(Long id) {
         productRepository.delete(id);
@@ -124,22 +124,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProduct(ProductEntity product) {
         productRepository.save(product);
-    }
-
-    public boolean isOrderAvailableToSave(ProductOrderEntity order) {
-
-        List<ProductEntity> products = order.getProducts();
-        List<CountProducts> countProducts = countProductsInProductList(products);
-
-        for (CountProducts countProduct : countProducts) {
-            if (countProductsAvailableByNameAndTime(
-                    countProduct.getProduct().getProductName(), order.getOrderStart(), order.getOrderEnd())
-                    < countProduct.getCount()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     @Override

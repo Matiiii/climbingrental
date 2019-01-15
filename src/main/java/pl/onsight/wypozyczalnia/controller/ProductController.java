@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.ProductService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,14 +24,12 @@ public class ProductController {
 
     private ProductService productService;
     private ProductOrderService productOrderService;
-    private SessionService sessionService;
     private CartService cartService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductOrderService productOrderService, SessionService sessionService, CartService cartService) {
+    public ProductController(ProductService productService, ProductOrderService productOrderService, CartService cartService) {
         this.productService = productService;
         this.productOrderService = productOrderService;
-        this.sessionService = sessionService;
         this.cartService = cartService;
     }
 

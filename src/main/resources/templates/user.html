@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<link th:include="fragments/header :: head" th:remove="tag" />
+    <link th:include="fragments/header :: head" th:remove="tag"/>
 </head>
 
 <body>
@@ -20,116 +20,93 @@
     </div>
 
     <div class="row">
+    </div>
+    <div class="col-md-4">
 
-     <!--   <div class="col-md-4" th:each="user : ${users}">
-            <h2 class="h2" th:text="'Witaj,' + ${user.firstName} "> </h2>
-            <h3 class="h2" th:unless="${user.admin}" th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName} "></h3>
-            <h3 class="h2" th:if="${user.admin}"
-                th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName}+'(admin) ' "></h3>
-        </div>-->
-        <!--pobieranie imienia i nazwiska użytkownika-->
-        <div class="col-md-4">
+        <p class="lead">Dane użytkownika</p>
+        <ul class="list-group">
+            <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
+            <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
+            <li class="list-group-item"
+                th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
+                Adres:
+            </li>
+            <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
+            <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
+        </ul>
+    </div>
 
-                <p class="lead">Dane użytkownika</p>
-                <ul class="list-group">
-                    <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
-                    <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
-                    <li class="list-group-item"
-                        th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
-                        Adres:
+
+    <div class="col-md-8">
+
+
+        <div class="container">
+            <div class="navigation">
+                <ul class="nav nav-pills head-menu">
+                    <li class="active"><a href="#twoje-zamowienia" data-toggle="pill">Twoje zamówienia</a></li>
+                    <li>
+                        <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
                     </li>
-                    <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
-                    <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
+                    <li>
+                        <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
+                    </li>
                 </ul>
-        </div>
+                <div class="tab-content">
 
-
-        <div class="col-md-8">
-
-
-            <div class="container">
-                <div class="navigation">
-                    <ul class="nav nav-pills head-menu">
-                        <li class="active"><a href="#twoje-zamowienia" data-toggle="pill">Twoje zamówienia</a></li>
-                        <li>
-                            <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
-                        </li>
-                        <li>
-                            <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-
-                        <div class="tab-pane active" id="twoje-zamowienia">
-                            <div class="col-md-8">
-                                <div class="list-group">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Produkt</th>
-                                            <th>Opis produktu</th>
-                                            <th>Zamówione od</th>
-                                            <th>Zamówione do</th>
-                                            <th>Cena</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="order : ${orders}">
-                                            <td th:text="${order.products.size()}">number of products</td>
-                                            <td th:text="${order.id}">order id</td>
-                                            <td th:text="${order.orderStart}">2017-02-03</td>
-                                            <td th:text="${order.orderEnd}">2017-04-03</td>
-                                            <td th:text="${order.combinedPrice}">Jakas cena</td>
-                                        </tr>
-                                        <!--<p th:text="${prices}"></p>-->
-                                        </tbody>
-                                        <tfoot>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td th:text="${combinedPrice}"></td>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="twoje-rachunki">
-                            <div class="col-md-8">
-                                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
-                                    massa metus id nunc. </p>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="trzecia-zakladka">
-                            <div class="col-md-8">
-                                <p>trzy </p>
+                    <div class="tab-pane active" id="twoje-zamowienia">
+                        <div class="col-md-8">
+                            <div class="list-group">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Produkt</th>
+                                        <th>Opis produktu</th>
+                                        <th>Zamówione od</th>
+                                        <th>Zamówione do</th>
+                                        <th>Cena</th>
+                                    </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
 
+                    <div class="tab-pane" id="twoje-rachunki">
+                        <div class="col-md-8">
+                            <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                                massa metus id nunc. </p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="trzecia-zakladka">
+                        <div class="col-md-8">
+                            <p>trzy </p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
-
-    </div>
-    <div class="col-md-8">
-
-    </div>
-
-
-    <!-- /.container -->
-
-    <div class="container">
-        <!-- Footer -->
-        <footer>
-            <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-        </footer>
     </div>
 
 </div>
+<div class="col-md-8">
 
-<div class="row" th:replace="fragments/footer :: javascript">scripts</div></body>
+</div>
+
+
+<!-- /.container -->
+
+<div class="container">
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
+</div>
+
+</div>
+
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+</body>
 
 </html>

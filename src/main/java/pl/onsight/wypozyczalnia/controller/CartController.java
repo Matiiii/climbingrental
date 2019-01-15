@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.DateFilter;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.service.SessionService;
+import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
-import javax.jws.WebParam;
 import java.util.Date;
 
 @Controller
@@ -25,13 +25,15 @@ public class CartController {
     private ProductOrderService productOrderService;
     private SessionService sessionService;
     private ProductService productService;
+    private OrderValidator orderValidator;
 
     @Autowired
-    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService) {
+    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator) {
         this.cartService = cartService;
         this.productOrderService = productOrderService;
         this.sessionService = sessionService;
         this.productService = productService;
+        this.orderValidator = orderValidator;
     }
 
     @GetMapping("/cart")
@@ -53,10 +55,10 @@ public class CartController {
         order.setOrderStart(new Date(DateFilter.filterData(cart.getDate())[0]));
         order.setOrderEnd(new Date(DateFilter.filterData(cart.getDate())[1]));
 
-        if (productService.isOrderAvailableToSave(order)) {
+        if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
             productOrderService.saveOrder(order);
-            cartService.removeProductFromCart(cart);
+            cartService.removeProductsFromCart(cart);
         } else {
             modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
         }
@@ -67,7 +69,7 @@ public class CartController {
     @PostMapping("/changeDate")
     public ModelAndView changeDate(@ModelAttribute("cart") Cart cart,
                                    @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
-                                   ModelAndView modelAndView){
+                                   ModelAndView modelAndView) {
         cartService.addDateToCart(cart, dateFilter);
         return cartPage(cart, modelAndView);
     }

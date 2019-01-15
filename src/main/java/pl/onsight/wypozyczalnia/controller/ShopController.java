@@ -6,24 +6,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.NewsService;
-import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.model.FilterProducts;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductService;
 
 @Controller
 @SessionAttributes("cart")
 public class ShopController {
-
 
     private ProductService productService;
     private CartService cartService;
 
     @Autowired
     public ShopController(ProductService productService, CartService cartService) {
-
         this.productService = productService;
         this.cartService = cartService;
     }
@@ -43,18 +40,15 @@ public class ShopController {
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
-
         } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
-
         } else if (hasOnlyDates) {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
             }
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
-
         } else {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
@@ -83,7 +77,6 @@ public class ShopController {
             cartService.addProductToCart(cart, productById, productCount);
         }
         attributes.addFlashAttribute("cart", cart);
-
 
         if (cart.getDate() != null) {
             return foundProducts("", cart.getDate(), cart, modelAndView);

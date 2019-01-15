@@ -32,7 +32,6 @@
 
 <span class="hello" sec:authorize="isAuthenticated()">
                			 Witaj <b sec:authentication="principal.username"></b>!
-               			<b class="hello" sec:authentication="principal.authorities">User</b>
             		</span>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">On-Sight</a>
@@ -40,7 +39,6 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
             <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
