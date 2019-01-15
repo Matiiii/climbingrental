@@ -74,7 +74,7 @@ public class AdminController {
             modelAndView.setViewName("admin");
             return modelAndView;
         }
-        productService.editProduct(product);
-        return modelAndView;
+        productService.addProduct(product);
+        return adminPage(modelAndView);
     }
 }
