@@ -202,19 +202,17 @@
                                             <tr th:attr="order-id=${order.id}">
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.getId()}">Ilość</p>
-                                                        <p th:text="${order.combinedPrice}">price</p>
-                                                        <p th:text="${order.products.size()}">user id</p>
+                                                        <b th:text="${order.getId()} + ' ' + ${order.combinedPrice} + ' ' + ${order.products.size()}">Ilość</b>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
+                                                        <span th:text="${order.user.firstName}+' '+${order.user.lastName}"></span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderStart.toLocaleString()}"></p>
+                                                        <p th:text="${order.orderStart.toLocaleString().split(' ')[0]}"></p>
                                                     </div>
                                                 </td>
 
