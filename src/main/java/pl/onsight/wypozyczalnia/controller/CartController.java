@@ -15,8 +15,6 @@ import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
-import java.util.Date;
-
 @Controller
 @SessionAttributes("cart")
 public class CartController {
@@ -52,8 +50,8 @@ public class CartController {
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
-        order.setOrderStart(new Date(DateFilter.filterData(cart.getDate())[0]));
-        order.setOrderEnd(new Date(DateFilter.filterData(cart.getDate())[1]));
+        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
 
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.Link;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
@@ -12,6 +13,7 @@ import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,78 +41,58 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Set<ProductEntity> findProductByName() {
-        return new HashSet<>(findAllProducts());
-    }
-
-    @Override
-    public Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag) {
-        return productRepository.findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(productNameOrTag, productNameOrTag);
-    }
-
-    @Override
-    public Integer countProductsByName(String name) {
-        return productRepository.findByProductName(name).getQuantity();
-    }
-
-    @Override
     public Integer countProductsAvailableByNameAndTime(String name, Date start, Date end) {
         ProductEntity product = productRepository.findByProductName(name);
-        int countOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
-        int quantity = product.getQuantity();
+        int productCountInOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
+        int productQuantity = product.getQuantity();
 
-        return quantity - countOrders;
+        return productQuantity - productCountInOrders;
     }
 
     @Override
     public List<CountProducts> countAllProductsByName() {
-        Set<ProductEntity> set = findProductByName();
-        return addProductsToList(set);
+        return createListOfCountProduct(findAllProducts());
     }
 
     @Override
     public List<CountProducts> countAllProductsByNameFiltered(String name) {
-        Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
-        return addProductsToList(set);
+        return createListOfCountProduct(findAllProductsByProductNameOrTags(name));
     }
 
-    private List<CountProducts> addProductsToList(Set<ProductEntity> set) {
-        List<CountProducts> list = new LinkedList<>();
-        set.forEach(product -> list.add(new CountProducts(product, countProductsByName(product.getProductName()))));
-        return list;
+    private List<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag) {
+        return productRepository.findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(productNameOrTag, productNameOrTag);
     }
 
-    @Override
-    public List<CountProducts> countAllAvailableProductsByName(String dateFilter) {
-        String dates[] = dateFilter.split("-");
-        Date start = new Date(dates[0]);
-        Date end = new Date(dates[1]);
-        Set<ProductEntity> set = findProductByName();
-        return addProductsWithTimeToList(set, start, end);
+    private List<CountProducts> createListOfCountProduct(List<ProductEntity> products) {
+        return products.stream().map(product -> new CountProducts(product, product.getQuantity())).collect(Collectors.toList());
     }
 
     @Override
-    public List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFilter, String name) {
-        String dates[] = dateFilter.split("-");
-        Date start = new Date(dates[0]);
-        Date end = new Date(dates[1]);
-        Set<ProductEntity> set = findAllProductsByProductNameOrTags(name);
-        return addProductsWithTimeToList(set, start, end);
+    public List<CountProducts> countAllAvailableProductsByName(String date) {
+        Date[] dates = DateFilter.changeStringToDate(date);
+        List<ProductEntity> list = findAllProducts();
+
+        return addProductsWithTimeToList(list, dates[0], dates[1]);
     }
 
-    private List<CountProducts> addProductsWithTimeToList(Set<ProductEntity> set, Date start, Date end) {
-        List<CountProducts> list = new LinkedList<>();
-        set.forEach(product -> list.add(new CountProducts(product, countProductsAvailableByNameAndTime(product.getProductName(), start, end))));
-        return list;
+    @Override
+    public List<CountProducts> countAllAvailableProductsByNameFiltered(String date, String name) {
+        Date[] dates = DateFilter.changeStringToDate(date);
+        List<ProductEntity> products = findAllProductsByProductNameOrTags(name);
+
+        return addProductsWithTimeToList(products, dates[0], dates[1]);
+    }
+
+    private List<CountProducts> addProductsWithTimeToList(List<ProductEntity> products, Date start, Date end) {
+        return products.stream().map(product -> new CountProducts(product, countProductsAvailableByNameAndTime(product.getProductName(), start, end))).collect(Collectors.toList());
     }
 
     @Override
     public Set<Link> findRelatedProducts(ProductEntity product) {
-        List<String> tagsInProduct = Arrays.asList(product.getTags().split(";"));
-
+        List<String> tagsInProduct = Arrays.asList(product.getTags().split(","));
         List<ProductEntity> products = findAllProducts();
 
-        return products.stream().filter(e -> CollectionUtils.containsAny(Arrays.asList(e.getTags().split(";")), tagsInProduct))
+        return products.stream().filter(p -> CollectionUtils.containsAny(Arrays.asList(p.getTags().split(",")), tagsInProduct))
                 .map(e -> new Link(StringUtils.capitalize(e.getProductName()), "/product/" + e.getId()))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Link::getName))));
     }
@@ -134,8 +116,8 @@ public class ProductServiceImpl implements ProductService {
         for (ProductEntity product : setProducts) {
             countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
         }
-        return countProducts;
 
+        return countProducts;
     }
 }
 

@@ -14,12 +14,6 @@ public interface ProductService {
 
     List<ProductEntity> findAllProducts();
 
-    Set<ProductEntity> findProductByName();
-
-    Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag);
-
-    Integer countProductsByName(String name);
-
     Integer countProductsAvailableByNameAndTime(String name, Date start, Date end);
 
     List<CountProducts> countAllProductsByName();
