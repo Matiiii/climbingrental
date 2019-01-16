@@ -12,6 +12,7 @@ import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -68,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<CountProducts> countAllAvailableProductsByName(String date) {
+    public List<CountProducts> countAllAvailableProductsByName(String date) throws ParseException {
         Date[] dates = DateFilter.changeStringToDate(date);
         List<ProductEntity> list = findAllProducts();
 
@@ -76,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<CountProducts> countAllAvailableProductsByNameFiltered(String date, String name) {
+    public List<CountProducts> countAllAvailableProductsByNameFiltered(String date, String name) throws ParseException {
         Date[] dates = DateFilter.changeStringToDate(date);
         List<ProductEntity> products = findAllProductsByProductNameOrTags(name);
 

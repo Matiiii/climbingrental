@@ -27,7 +27,7 @@ public class ProductTest {
     private int sizeOfDatabase;
 
     @Before
-    public void ini(){
+    public void ini() {
         sizeOfDatabase = productService.findAllProducts().size();
     }
 
@@ -126,5 +126,4 @@ public class ProductTest {
         //then
         assertThat(setOfFoundLinks.size()).isEqualTo(2);
     }
-
 }

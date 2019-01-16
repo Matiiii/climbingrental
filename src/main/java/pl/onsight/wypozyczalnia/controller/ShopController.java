@@ -11,6 +11,8 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 
+import java.text.ParseException;
+
 @Controller
 @SessionAttributes("cart")
 public class ShopController {
@@ -28,7 +30,7 @@ public class ShopController {
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                       @ModelAttribute("cart") Cart cart,
-                                      ModelAndView modelAndView) {
+                                      ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("shop");
         modelAndView.addObject("product", new ProductEntity());
 
@@ -64,7 +66,7 @@ public class ShopController {
                                          @RequestParam(value = "productCount") Integer productCount,
                                          @ModelAttribute("cart") Cart cart,
                                          RedirectAttributes attributes,
-                                         ModelAndView modelAndView) {
+                                         ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("info");
         ProductEntity productById = productService.findProductById(id);
 
