@@ -14,12 +14,6 @@ public interface ProductService {
 
     List<ProductEntity> findAllProducts();
 
-    Set<ProductEntity> findProductByName();
-
-    Set<ProductEntity> findAllProductsByProductNameOrTags(String productNameOrTag);
-
-    Integer countProductsByName(String name);
-
     Integer countProductsAvailableByNameAndTime(String name, Date start, Date end);
 
     List<CountProducts> countAllProductsByName();
@@ -32,11 +26,9 @@ public interface ProductService {
 
     Set<Link> findRelatedProducts(ProductEntity product);
 
-    void addProductByAdmin(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity);
-
     void removeProduct(Long id);
 
-    boolean isOrderAvailableToSave(ProductOrderEntity order);
+    void addProduct(ProductEntity product);
 
     List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
 }

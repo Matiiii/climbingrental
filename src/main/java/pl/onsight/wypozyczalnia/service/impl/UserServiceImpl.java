@@ -3,6 +3,7 @@ package pl.onsight.wypozyczalnia.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.repository.UserRepository;
 import pl.onsight.wypozyczalnia.service.UserService;
@@ -42,4 +43,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUserById (Long id){ return userRepository.findOne(id);}
+
+    @Override
+    public List<UserEntity> findAllUsers() {
+        Iterable<UserEntity> allUsersIterable = userRepository.findAll();
+        List<UserEntity> allUsers = new ArrayList<>();
+        allUsersIterable.forEach(allUsers::add);
+        return allUsers;
+    }
 }

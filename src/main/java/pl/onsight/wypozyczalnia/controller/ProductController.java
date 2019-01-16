@@ -2,18 +2,20 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -22,14 +24,12 @@ public class ProductController {
 
     private ProductService productService;
     private ProductOrderService productOrderService;
-    private SessionService sessionService;
     private CartService cartService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductOrderService productOrderService, SessionService sessionService, CartService cartService) {
+    public ProductController(ProductService productService, ProductOrderService productOrderService, CartService cartService) {
         this.productService = productService;
         this.productOrderService = productOrderService;
-        this.sessionService = sessionService;
         this.cartService = cartService;
     }
 
@@ -41,10 +41,10 @@ public class ProductController {
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         String dateFilter = "";
 
-        if(dateFilter.isEmpty()){
+        if (dateFilter.isEmpty()) {
             modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
-        }else {
-            modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter ,productService.findProductById(id).getProductName()));
+        } else {
+            modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, productService.findProductById(id).getProductName()));
         }
 
         return modelAndView;
@@ -80,4 +80,6 @@ public class ProductController {
     public Cart cart() {
         return new Cart();
     }
+
+
 }

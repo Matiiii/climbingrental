@@ -12,4 +12,6 @@ public interface UserService {
     UserEntity getUserByEmail(String email);
 
     UserEntity getUserById (Long id);
+
+    List<UserEntity> findAllUsers();
 }

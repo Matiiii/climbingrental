@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<link th:include="fragments/header :: head" th:remove="tag" />
+    <link th:include="fragments/header :: head" th:remove="tag"/>
 </head>
 
 <body>
@@ -16,31 +16,19 @@
 
     <div class="row">
 
-
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-4" th:each="user : ${users}">
-            <h2 class="h2" th:text="'Witaj,' + ${user.firstName} "> </h2>
-            <h3 class="h2" th:unless="${user.admin}" th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName} "></h3>
-            <h3 class="h2" th:if="${user.admin}"
-                th:text="'Witaj, '+${user.firstName} +' '+ ${user.lastName}+'(admin) ' "></h3>
-        </div>
-        <!--pobieranie imienia i nazwiska użytkownika-->
         <div class="col-md-4">
 
-                <p class="lead">Dane użytkownika</p>
-                <ul class="list-group">
-                    <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
-                    <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
-                    <li class="list-group-item"
-                        th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
-                        Adres:
-                    </li>
-                    <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
-                    <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
-                </ul>
+            <p class="lead">Dane użytkownika</p>
+            <ul class="list-group">
+                <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
+                <li class="list-group-item" th:text="'Nazwisko: ' + ${user.lastName}">Nazwisko</li>
+                <li class="list-group-item"
+                    th:text="'Adres: ' + ${user.address.city} + ' ' + ${user.address.street} + ' ' + ${user.address.flatNumber} + ' '+${user.address.zipcode}">
+                    Adres:
+                </li>
+                <li class="list-group-item" th:text="'E-mail: ' + ${user.email}">E-mail:</li>
+                <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
+            </ul>
         </div>
 
 
@@ -72,7 +60,7 @@
                                             <th>Zamówione do</th>
                                             <th>Cena</th>
                                         </tr>
-                                        </thead>
+                                        </thead>git
                                         <tbody>
                                         <tr th:each="order : ${orders}">
                                             <td th:text="${order.products.size()}">number of products</td>
@@ -84,11 +72,11 @@
                                         <!--<p th:text="${prices}"></p>-->
                                         </tbody>
                                         <tfoot>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td th:text="${combinedPrice}"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td th:text="${combinedPrice}"></td>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -112,24 +100,21 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="col-md-8">
-
-    </div>
-
-
-    <!-- /.container -->
-
-    <div class="container">
-        <!-- Footer -->
-        <footer>
-            <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-        </footer>
-    </div>
-
 </div>
 
-<div class="row" th:replace="fragments/footer :: javascript">scripts</div></body>
+
+<!-- /.container -->
+
+<div class="container">
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
+</div>
+
+
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+</body>
 
 </html>

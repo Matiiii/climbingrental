@@ -19,7 +19,7 @@ public class NewsController {
     }
 
     @GetMapping(value = "/")
-    public ModelAndView shop(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex, ModelAndView modelAndView) {
+    public ModelAndView newsPage(@RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex, ModelAndView modelAndView) {
         modelAndView.setViewName("info");
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
