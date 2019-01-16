@@ -54,6 +54,7 @@ public class CartController {
         order.setProducts(cartService.getListOfProductsInCart(cart));
         order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
         order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+        order.setCombinedPrice(cart.getCombinedPrice());
 
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));

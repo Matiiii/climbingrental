@@ -23,7 +23,6 @@ public class ProductOrderEntity {
     private Date orderStart;
     private Date orderEnd;
 
-    @Transient
     private Double combinedPrice;
 
     public Long getId() {
