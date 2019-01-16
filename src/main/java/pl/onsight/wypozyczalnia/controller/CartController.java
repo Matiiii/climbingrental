@@ -15,7 +15,7 @@ import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
-import java.util.Date;
+import java.text.ParseException;
 
 @Controller
 @SessionAttributes("cart")
@@ -47,13 +47,13 @@ public class CartController {
     @PostMapping("/createOrder")
     public ModelAndView createOrder(@ModelAttribute("order") ProductOrderEntity order,
                                     @ModelAttribute("cart") Cart cart,
-                                    ModelAndView modelAndView) {
+                                    ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
-        order.setOrderStart(new Date(DateFilter.filterData(cart.getDate())[0]));
-        order.setOrderEnd(new Date(DateFilter.filterData(cart.getDate())[1]));
+        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
 
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));

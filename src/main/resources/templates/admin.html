@@ -190,7 +190,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>Produkt</th>
+                                            <th>Zamówienie</th>
                                             <th>Imię i nazwisko użytkownika</th>
                                             <th>Zamówione od</th>
                                             <th>Zamówione do</th>
@@ -202,12 +202,16 @@
                                             <tr th:attr="order-id=${order.id}">
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <b th:text="${order.getId()} + ' ' + ${order.combinedPrice} + ' ' + ${order.products.size()}">Ilość</b>
+
+                                                        <p th:text="'Nr: '+${order.getId()}">Order id</p>
+
+                                                        <p th:text="'Kwota: '+${order.combinedPrice}+' zł'">price</p>
+
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <span th:text="${order.user.firstName}+' '+${order.user.lastName}"></span>
+                                                        <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -218,7 +222,7 @@
 
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderEnd.toInstant()}"></p>
+                                                        <p th:text="${order.orderEnd.toLocaleString().split(' ')[0]}"></p>
                                                     </div>
                                                 </td>
                                                 <td>
