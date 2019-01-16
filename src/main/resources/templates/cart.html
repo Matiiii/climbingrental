@@ -36,8 +36,8 @@
                    <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
                     <button type="submit" class="btn btn-success">Zmień</button>
                 </form>
-                <p>Łączna ilość dni: <b th:text="'Jakaś liczba'">liczba dni</b></p>
-                <p>Łączy koszt wypożyczenia: <b th:text="'jakaś suma'">suma</b></p>
+                <p>Łączna ilość dni: <b th:text="${cart.getNumberOfDays()}"></b></p>
+                <p>Łączy koszt wypożyczenia: <b th:text="${cart.getCombinedPrice()}">suma</b></p>
                 <p>Wymagana kaucja: <b th:text="'Jakas kaucja'">kaucja</b></p>
                 <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
                 <form th:action="@{/createOrder}" method="post">

@@ -49,7 +49,6 @@ public class Application {
 
         u1.setFirstName("Andrzej");
         u1.setLastName("Kowalski");
-        u1.setAdmin(true);
         u1.setEmail("email");
         u1.setPassword("haslo");
         u1.setPhoneNumber("666 746 666");
@@ -60,7 +59,6 @@ public class Application {
         roles.add(role1);
         u1.setRoles(roles);
 
-        u1.setAdmin(true);
         mockUsers.add(u1);
 
         UserEntity u2 = new UserEntity();
@@ -83,7 +81,6 @@ public class Application {
         roles2.add(role2);
         u2.setRoles(roles2);
 
-        u2.setAdmin(false);
         mockUsers.add(u2);
         userService.saveUsers(mockUsers);
         productRepository.save(new ProductEntity("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask, asekuracja, wspinaczka", 4));

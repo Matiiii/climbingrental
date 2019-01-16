@@ -70,7 +70,7 @@
                             </div>
                             <div class="productInfo">
                                 <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
-                                        th:text="'W koszyku: '+${cart.getCountOfProductInCart(countProduct.product)}"></b>
+                                        th:text="'W koszyku: '+${cart.getCountOfProductsInCart(countProduct.product)}"></b>
                                 </div>
                                 <div class="flexAround">
                                 <span class="price left">
@@ -85,7 +85,7 @@
                                         <label for="productCount">Wybierz ilość: </label>
                                         <input id="productCount" name="productCount" type="number" th:default="1"
                                                th:min="1"
-                                               th:max="${countProduct.count - (cart.getCountOfProductInCart(countProduct.product))}"/>
+                                               th:max="${countProduct.count - (cart.getCountOfProductsInCart(countProduct.product))}"/>
                                     </div>
                                     <div class="form-group">
                                         <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
