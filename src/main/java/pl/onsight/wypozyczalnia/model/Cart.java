@@ -49,6 +49,13 @@ public class Cart {
         return combinedPrice[0] * getNumberOfDays();
     }
 
+    public double getCombinedDeposit(){
+        double[] combinedDeposit = {0};
+        products.forEach(product -> combinedDeposit[0] += product.getDeposit());
+
+        return combinedDeposit[0];
+    }
+
     public int getCountOfProductsInCart(ProductEntity product) {
         return Collections.frequency(products, product);
     }

@@ -17,11 +17,12 @@ public class ProductEntity {
     private String bigImage;
     private String tags;
     private Integer quantity;
+    private Double deposit;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity) {
+    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity, Double deposit) {
         this.productName = productName;
         this.price = price;
         this.description = description;
@@ -29,6 +30,7 @@ public class ProductEntity {
         this.bigImage = bigImage;
         this.tags = tags;
         this.quantity = quantity;
+        this.deposit = deposit;
     }
 
     public Long getId() {
@@ -93,6 +95,14 @@ public class ProductEntity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
     }
 
     @Override
