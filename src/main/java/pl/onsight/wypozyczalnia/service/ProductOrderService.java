@@ -2,6 +2,7 @@ package pl.onsight.wypozyczalnia.service;
 
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ProductOrderService {
 
     boolean isProductAvailableToOrder(Long id, Date productOrderStart, Date productOrderEnd);
 
-    boolean isProductAvailableToOrder(Long id, String dateFilter);
+    boolean isProductAvailableToOrder(Long id, String dateFilter) throws ParseException;
 
     Integer countOrdersProductInPeriod(Long productId, Date productOrderStart, Date productOrderEnd);
 

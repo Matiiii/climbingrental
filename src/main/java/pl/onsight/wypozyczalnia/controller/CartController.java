@@ -15,6 +15,8 @@ import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
+import java.text.ParseException;
+
 @Controller
 @SessionAttributes("cart")
 public class CartController {
@@ -45,7 +47,7 @@ public class CartController {
     @PostMapping("/createOrder")
     public ModelAndView createOrder(@ModelAttribute("order") ProductOrderEntity order,
                                     @ModelAttribute("cart") Cart cart,
-                                    ModelAndView modelAndView) {
+                                    ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);

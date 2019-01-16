@@ -1,10 +1,26 @@
 package pl.onsight.wypozyczalnia;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateFilter {
     public static Date[] changeStringToDate(String dateString) {
-        String[] date = dateString.split("-");
-        return new Date[]{new Date(date[0]), new Date(date[1])};
+        String[] date = dateString.split(" - ");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        date[0] += " 0:00";
+        date[1] += " 23:59";
+
+        Date firstDate = null;
+        Date secondDate = null;
+
+        try {
+            firstDate = sdf.parse(date[0] + " 0:00");
+            secondDate = sdf.parse(date[1] + " 23:59");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return new Date[]{firstDate, secondDate};
     }
 }
