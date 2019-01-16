@@ -13,6 +13,7 @@ import pl.onsight.wypozyczalnia.service.CartService;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.service.SessionService;
+import pl.onsight.wypozyczalnia.validator.DateValidator;
 import pl.onsight.wypozyczalnia.validator.OrderValidator;
 
 import java.text.ParseException;
@@ -26,14 +27,16 @@ public class CartController {
     private SessionService sessionService;
     private ProductService productService;
     private OrderValidator orderValidator;
+    private DateValidator dateValidator;
 
     @Autowired
-    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator) {
+    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator, DateValidator dateValidator) {
         this.cartService = cartService;
         this.productOrderService = productOrderService;
         this.sessionService = sessionService;
         this.productService = productService;
         this.orderValidator = orderValidator;
+        this.dateValidator = dateValidator;
     }
 
     @GetMapping("/cart")
@@ -52,8 +55,14 @@ public class CartController {
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
-        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
-        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+
+        if (dateValidator.isDateValid(cart.getDate())) {
+            order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+            order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+        } else {
+            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+            return cartPage(cart, modelAndView);
+        }
 
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
@@ -69,7 +78,13 @@ public class CartController {
     @PostMapping("/changeDate")
     public ModelAndView changeDate(@ModelAttribute("cart") Cart cart,
                                    @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
-                                   ModelAndView modelAndView) {
+                                   ModelAndView modelAndView) throws ParseException{
+
+        if (!dateValidator.isDateValid(dateFilter)) {
+            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+            return cartPage(cart, modelAndView);
+        }
+
         cartService.addDateToCart(cart, dateFilter);
         return cartPage(cart, modelAndView);
     }
