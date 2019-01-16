@@ -64,6 +64,8 @@ public class CartController {
             return cartPage(cart, modelAndView);
         }
 
+         order.setCombinedPrice(cart.getCombinedPrice());
+
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
             productOrderService.saveOrder(order);
