@@ -19,7 +19,7 @@ $(document).ready(function () {
         var $parentTr = $(this).closest('tr');
         var orderId = $parentTr.attr('order-id')
         $.ajax({
-            url: '/product-order/' + orderId,
+            url: window.location.href + "/" + orderId,
             type: 'DELETE',
             success: function (result) {
                 location.reload();

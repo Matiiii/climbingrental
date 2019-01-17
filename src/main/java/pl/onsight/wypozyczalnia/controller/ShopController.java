@@ -10,6 +10,7 @@ import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.validator.DateValidator;
 
 import java.text.ParseException;
 
@@ -19,11 +20,13 @@ public class ShopController {
 
     private ProductService productService;
     private CartService cartService;
+    private DateValidator dateValidator;
 
     @Autowired
-    public ShopController(ProductService productService, CartService cartService) {
+    public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator) {
         this.productService = productService;
         this.cartService = cartService;
+        this.dateValidator = dateValidator;
     }
 
     @GetMapping(value = "/shop")
@@ -32,8 +35,12 @@ public class ShopController {
                                       @ModelAttribute("cart") Cart cart,
                                       ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("shop");
-        modelAndView.addObject("product", new ProductEntity());
 
+
+        if(!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)){
+            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+            return modelAndView;
+        }
         boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
         boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
         boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
@@ -47,6 +54,7 @@ public class ShopController {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
             }
+
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
         } else {
