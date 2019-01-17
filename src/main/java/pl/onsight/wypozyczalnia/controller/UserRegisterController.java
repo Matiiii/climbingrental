@@ -43,8 +43,8 @@ public class UserRegisterController {
             modelAndView.addObject("emailIsTakenInfo", "Wprowadź inny mail lub zaloguj się na istniejące konto!");
             return registrationPage(modelAndView);
         } else {
-            userService.saveUser(user);
             modelAndView.setViewName("redirect:/login");
+            userService.saveUser(user);
         }
 
         return modelAndView;

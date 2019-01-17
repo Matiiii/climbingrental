@@ -2,11 +2,9 @@ package pl.onsight.wypozyczalnia.model;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
-import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
 import java.util.Collections;
 import java.util.Date;
@@ -18,6 +16,7 @@ public class Cart {
 
     private List<ProductEntity> products = new LinkedList<>();
     private String date;
+    private double discount = 0;
 
     public List<ProductEntity> getProducts() {
         return products;
@@ -33,6 +32,14 @@ public class Cart {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public int getNumberOfDays(){
@@ -62,15 +69,15 @@ public class Cart {
         return Collections.frequency(products, product);
     }
 
-    public boolean removeProductFromCart( ProductEntity product) {
-        List<ProductEntity> products = this.getProducts();
-        if(products.contains(product)){
-            products.remove(product);
-            this.setProducts(products);
-            return true;
-        }
-        return false;
+    public double getPriceWithDiscount(){
+        double discount = 1.0 - this.discount/100;
+        double finalPrice = getCombinedPrice() * discount;
+        finalPrice *= 100;
+        finalPrice = Math.round(finalPrice);
+        finalPrice /= 100;
+        return finalPrice;
     }
+
 
 }
 

@@ -36,7 +36,6 @@ public class OrderValidatorImpl implements OrderValidator {
                 return false;
             }
         }
-
         return true;
     }
 

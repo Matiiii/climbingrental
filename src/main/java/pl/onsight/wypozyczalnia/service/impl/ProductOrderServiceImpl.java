@@ -127,6 +127,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    public List<ProductOrderEntity> findUserOrders(Long id) {
+        return productOrderRepository.findAllByUserId(id);
+    }
+
+    @Override
     public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
