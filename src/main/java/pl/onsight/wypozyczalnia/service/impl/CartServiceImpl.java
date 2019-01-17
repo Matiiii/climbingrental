@@ -31,6 +31,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void addDiscountToCart(Cart cart, double discount) {
+        cart.setDiscount(discount);
+    }
+
+    @Override
     public List<ProductEntity> getListOfProductsInCart(Cart cart) {
         return cart.getProducts();
     }

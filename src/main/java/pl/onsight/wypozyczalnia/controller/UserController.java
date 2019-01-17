@@ -28,13 +28,9 @@ public class UserController {
     public ModelAndView userPage(ModelAndView modelAndView) {
         modelAndView.setViewName("user");
         UserEntity currentUser = sessionService.getCurrentUser();
+        List<ProductOrderEntity> userOrders = productOrdersService.findUserOrders(currentUser.getId());
         modelAndView.addObject("user", currentUser);
-        List<ProductOrderEntity> productsByUserId = productOrdersService.findProductsByUserId(currentUser.getId());
-        productsByUserId = productsByUserId.stream()
-                .map(e -> productOrdersService.getPriceOfOrderedProduct(e))
-                .collect(Collectors.toList());
-        modelAndView.addObject("orders", productsByUserId);
-        modelAndView.addObject("combinedPrice", productOrdersService.getPriceOfOrderedProducts(productsByUserId));
+        modelAndView.addObject("orders", userOrders);
         return modelAndView;
     }
 }

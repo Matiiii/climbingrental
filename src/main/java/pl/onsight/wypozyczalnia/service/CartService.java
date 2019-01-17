@@ -10,6 +10,8 @@ public interface CartService {
 
     void addDateToCart(Cart cart, String dateFilter);
 
+    void addDiscountToCart(Cart cart, double discount);
+
     List<ProductEntity> getListOfProductsInCart(Cart cart);
 
     void removeProductsFromCart(Cart cart);
