@@ -56,7 +56,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin");
         } else if (allNamesOfProducts.contains(product.getProductName())) {
-            modelAndView.addObject("info", new Info("Produkt o nazwie "+product.getProductName()+" już istnieje!", false));
+            modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
             return adminPage(modelAndView);
         } else {
             productService.addProduct(product);
@@ -76,13 +76,23 @@ public class AdminController {
     @PostMapping("/update/{id}")
     public ModelAndView updateProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
                                       BindingResult result, ModelAndView modelAndView) {
+        List<ProductEntity> allProducts = productService.findAllProducts();
+        List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
+        String tempName=product.getProductName();
+        allNamesOfProducts.remove(tempName);
+        String newName=productService.findProductById(id).getProductName();
         if (result.hasErrors()) {
             product.setId(id);
             modelAndView.setViewName("admin");
             return modelAndView;
+        } else if (allNamesOfProducts.contains(newName)) {
+            modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
+            return adminPage(modelAndView);
+        } else {
+            productService.addProduct(product);
+            return adminPage(modelAndView);
         }
-        productService.addProduct(product);
-        return adminPage(modelAndView);
     }
-
 }
+
+
