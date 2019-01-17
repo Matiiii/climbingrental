@@ -13,11 +13,8 @@
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
-
         <div class="col-md-4">
-
             <p class="lead">Dane użytkownika</p>
             <ul class="list-group">
                 <li class="list-group-item" th:text="'Imie: ' + ${user.firstName}">Imię:</li>
@@ -30,11 +27,7 @@
                 <li class="list-group-item" th:text="'Telefon: ' + ${user.phoneNumber}">Telefon:</li>
             </ul>
         </div>
-
-
         <div class="col-md-8">
-
-
             <div class="container">
                 <div class="navigation">
                     <ul class="nav nav-pills head-menu">
@@ -47,15 +40,13 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-
                         <div class="tab-pane active" id="twoje-zamowienia">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <div class="list-group">
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>Produkt</th>
-                                            <th>Opis produktu</th>
+                                            <th>Nr zamowienia</th>
                                             <th>Zamówione od</th>
                                             <th>Zamówione do</th>
                                             <th>Cena</th>
@@ -63,58 +54,42 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="order : ${orders}">
-                                            <td th:text="${order.products.size()}">number of products</td>
-                                            <td th:text="${order.id}">order id</td>
-                                            <td th:text="${order.orderStart}">2017-02-03</td>
-                                            <td th:text="${order.orderEnd}">2017-04-03</td>
-                                            <td th:text="${order.combinedPrice}">Jakas cena</td>
+                                            <td th:text="${order.id}"></td>
+                                            <td th:text="${order.orderStart}"></td>
+                                            <td th:text="${order.orderEnd}"></td>
+                                            <td th:text="${order.combinedPrice}"></td>
                                         </tr>
-                                        <!--<p th:text="${prices}"></p>-->
                                         </tbody>
-                                        <tfoot>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td th:text="${combinedPrice}"></td>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
                         <div class="tab-pane" id="twoje-rachunki">
                             <div class="col-md-8">
                                 <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
                                     massa metus id nunc. </p>
                             </div>
                         </div>
-
                         <div class="tab-pane" id="trzecia-zakladka">
                             <div class="col-md-8">
                                 <p>trzy </p>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- /.container -->
-
+<!-- Footer -->
 <div class="container">
-    <!-- Footer -->
     <footer>
         <div class="row" th:replace="fragments/footer :: footer">static footer</div>
     </footer>
 </div>
 
-
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
-</body>
 
+</body>
 </html>
