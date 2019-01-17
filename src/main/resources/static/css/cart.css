@@ -5,6 +5,9 @@ div ul li a {
 footer {
     padding-top: 2em;
 }
+.red{
+    border:  2px dotted tomato;
+}
 
 .btn {
     margin: 2px;

@@ -1,17 +1,29 @@
 package pl.onsight.wypozyczalnia.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
+import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductService;
 
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
 @SessionAttributes("cart")
 public class CartServiceImpl implements CartService {
+
+    private ProductService productService;
+
+    @Autowired
+    public CartServiceImpl(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public void addProductToCart(Cart cart, ProductEntity product, int quantity) {
@@ -23,7 +35,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addDateToCart(Cart cart, String dateFilter) {
-        if(dateFilter != null && dateFilter.length() > 0){
+        if (dateFilter != null && dateFilter.length() > 0) {
             cart.setDate(dateFilter);
         }
     }
@@ -41,7 +53,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean removeProductFromCart(Cart cart, ProductEntity product) {
         List<ProductEntity> products = cart.getProducts();
-        if(products.contains(product)){
+        if (products.contains(product)) {
             products.remove(product);
             cart.setProducts(products);
             return true;
@@ -52,7 +64,26 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean removeProductsOneTypeFromCart(Cart cart, ProductEntity product) {
         List<ProductEntity> products = cart.getProducts();
-       return products.removeIf(productEntity -> productEntity.equals(product));
+        return products.removeIf(productEntity -> productEntity.equals(product));
 
+    }
+
+    @Override
+    public List<CountProducts> getCountedProductsInCartWithAvailable(Cart cart) throws ParseException {
+        List<CountProducts> countedProducts = productService.changeProductEntityListToCountProductsList(cart.getProducts());
+        if (cart.getDate() != null) {
+            for (CountProducts countProduct : countedProducts) {
+                countProduct.setCountAvailable(productService.countProductsAvailableByNameAndTime(
+                        countProduct.getProduct().getProductName(), DateFilter.changeStringToDate(cart.getDate())[0],
+                        DateFilter.changeStringToDate(cart.getDate())[1]));
+            }
+            return countedProducts;
+        } else {
+            for (CountProducts countProduct : countedProducts) {
+                countProduct.setCountAvailable(countProduct.getProduct().getQuantity());
+            }
+            return countedProducts;
+
+        }
     }
 }

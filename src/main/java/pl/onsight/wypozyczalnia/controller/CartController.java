@@ -2,7 +2,6 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.DateFilter;
@@ -41,9 +40,9 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
+    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
-        modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart(cart)));
+        modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
         modelAndView.addObject("order", new ProductOrderEntity());
         return modelAndView;
     }
@@ -53,11 +52,6 @@ public class CartController {
                                     @ModelAttribute("cart") Cart cart,
                                     ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
-        if(cart.getDate() != null){
-            modelAndView.addObject("countProducts", productService.countAllProductsByName());
-        }else{
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(cart.getDate()));
-        }
 
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
@@ -101,25 +95,25 @@ public class CartController {
     @PostMapping("/cart/deleteProduct/{id}")
     public ModelAndView deleteProductFromCart(@PathVariable Long id,
                                               @ModelAttribute("cart") Cart cart,
-                                              ModelAndView modelAndView){
+                                              ModelAndView modelAndView) throws ParseException {
 
         modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
         cartService.removeProductFromCart(cart, productService.findProductById(id));
         return cartPage(cart, modelAndView);
     }
 
-    @PostMapping("/cart/deleteAllProducts/{id}")
+    @PostMapping("/cart/deleteAllProductsOfType/{id}")
     public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
                                               @ModelAttribute("cart") Cart cart,
-                                              ModelAndView modelAndView){
+                                              ModelAndView modelAndView) throws ParseException {
         modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
-        cartService.removeProductFromCart(cart, productService.findProductById(id));
+        cartService.removeProductsOneTypeFromCart(cart, productService.findProductById(id));
         return cartPage(cart, modelAndView);
     }
     @PostMapping("/cart/addProduct/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                               @ModelAttribute("cart") Cart cart,
-                                              ModelAndView modelAndView){
+                                              ModelAndView modelAndView) throws ParseException {
 
         modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
         cartService.addProductToCart(cart, productService.findProductById(id), 1);

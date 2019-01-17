@@ -2,9 +2,11 @@ package pl.onsight.wypozyczalnia.model;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
 import java.util.Collections;
 import java.util.Date;
@@ -69,6 +71,7 @@ public class Cart {
         }
         return false;
     }
+
 }
 
 

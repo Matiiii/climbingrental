@@ -67,36 +67,44 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div th:each="countProduct: ${products}">
-                    <tr th:attr="product-id=${countProduct.getProduct().id}">
+                <div th:each="countCartProduct: ${products}">
+                    <tr th:attr="product-id=${countCartProduct.getProduct().id}"
+                        th:classappend="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==1}? red">
                         <td>
                             <div class="col-md-4">
 
-                                <img th:src="${countProduct.getProduct().smallImage}"
+                                <img th:src="${countCartProduct.getProduct().smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="info.html" th:href="@{'/product/'+${countProduct.getProduct().id}}"><h4
-                                th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
-                        <td><p th:text="${countProduct.product.price}">cena</p></td>
-                        <td><p th:text="${countProduct.count}">cena</p></td>
+                        <td><a href="info.html" th:href="@{'/product/'+${countCartProduct.getProduct().id}}"><h4
+                                th:text="${countCartProduct.product.productName}">nazwa produktu</h4></a>
+                            <b th:if="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==1}" class="text-danger"
+                               th:text="'Dostepnych tylko: ' + ${countCartProduct.getCountAvailable()}">Dostepnych
+                                tylko</b></td>
+                        <td><p th:text="${countCartProduct.product.price}">cena</p></td>
+                        <td><p th:text="${countCartProduct.count}">cena</p></td>
                         <td>
                             <div class="row">
-                            <form id="deleteProduct" method="post" th:action="@{'/cart/deleteProduct/'+${countProduct.getProduct().id}}">
-                            <button type="submit"  class="btn btn-outline-danger btn-sm">-</button>
-                            </form>
-                            <form id="deleteAllProducts" method="post" th:action="@{'/cart/deleteAllProducts/'+${countProduct.getProduct().id}}">
-                            <button type="submit"  class="btn btn-outline-danger btn-sm">X</button>
-                            </form>
-                            <form id="addProduct" method="post" th:action="@{'/cart/addProduct/'+${countProduct.getProduct().id}}">
-                                <button type="submit"  class="btn btn-outline-success btn-sm">+</button>
-                            </form>
+                                <form id="deleteProduct" method="post"
+                                      th:action="@{'/cart/deleteProduct/'+${countCartProduct.getProduct().id}}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
+                                </form>
+                                <form id="deleteAllProducts" method="post"
+                                      th:action="@{'/cart/deleteAllProductsOfType/'+${countCartProduct.getProduct().id}}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">X</button>
+                                </form>
+                                <form id="addProduct" method="post"
+                                      th:action="@{'/cart/addProduct/'+${countCartProduct.getProduct().id}}"
+                                      th:if="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==-1}">
+                                    <button type="submit" class="btn btn-outline-success btn-sm">+</button>
+                                </form>
 
                             </div>
                         </td>
-                        <td><p th:text="${countProduct.product.price * countProduct.count}">suma</p></td>
+                        <td><p th:text="${countCartProduct.product.price * countCartProduct.count}">suma</p></td>
                     </tr>
                 </div>
                 </tbody>

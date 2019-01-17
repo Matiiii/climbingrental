@@ -21,6 +21,8 @@ public interface ProductService {
 
     List<CountProducts> countAllProductsByNameFiltered(String name);
 
+    List<CountProducts> createListOfCountProduct(List<ProductEntity> products);
+
     List<CountProducts> countAllAvailableProductsByName(String dateFilter) throws ParseException;
 
     List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFiltered, String name) throws ParseException;
@@ -31,5 +33,5 @@ public interface ProductService {
 
     void addProduct(ProductEntity product);
 
-    List<CountProducts> countProductsInProductList(List<ProductEntity> productList);
+    List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList);
 }
