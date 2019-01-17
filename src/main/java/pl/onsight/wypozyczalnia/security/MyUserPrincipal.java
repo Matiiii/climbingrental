@@ -9,7 +9,6 @@ import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class MyUserPrincipal implements UserDetails {
 
@@ -22,10 +21,14 @@ public class MyUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new LinkedList<>();
-        Set<UserRoleEntity> userRoles = user.getRoles();
-        for (UserRoleEntity role : userRoles) {
+        //Set<UserRoleEntity> userRoles = user.getRoles();
+        UserRoleEntity userRole = user.getRole();
+/*        for (UserRoleEntity role : userRoles) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
-        }
+        } */
+
+        authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
+
 
         return authorities;
     }
