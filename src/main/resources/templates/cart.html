@@ -37,9 +37,9 @@
                     <button type="submit" class="btn btn-success">Zmień</button>
                 </form>
                 <p>Łączna ilość dni: <b th:text="${cart.getNumberOfDays()}"></b></p>
-                <p>Łączy koszt wypożyczenia: <b th:text="${cart.getCombinedPrice()}">suma</b></p>
-                <p>Wymagana kaucja: <b th:text="${cart.getCombinedDeposit()}">kaucja</b></p>
-                <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
+                <p>Wymagana kaucja: <b th:text="${cart.getCombinedDeposit()}"></b></p>
+                <p>Rabat: <b th:text="${cart.getDiscount() + '%'}"></b></p>
+                <p>Łączny koszt z rabatem: <b th:text="${cart.getPriceWithDiscount()}"></b></p>
                 <form th:action="@{/createOrder}" method="post">
                     <button class="btn btn-primary" type="submit">Zamow</button>
                 </form>

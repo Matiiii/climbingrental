@@ -41,6 +41,11 @@ public class CartController {
         modelAndView.setViewName("cart");
         modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart(cart)));
         modelAndView.addObject("order", new ProductOrderEntity());
+        UserEntity user = sessionService.getCurrentUser();
+        if(user != null){
+            cartService.addDiscountToCart(cart, user.getRole().getDiscount());
+        }
+
         return modelAndView;
     }
 
@@ -54,7 +59,7 @@ public class CartController {
         order.setProducts(cartService.getListOfProductsInCart(cart));
         order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
         order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
-        order.setCombinedPrice(cart.getCombinedPrice());
+        order.setCombinedPrice(cart.getPriceWithDiscount());
 
         if (orderValidator.isOrderAvailableToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));

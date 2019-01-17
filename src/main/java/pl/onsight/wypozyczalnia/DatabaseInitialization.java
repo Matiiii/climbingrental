@@ -9,7 +9,6 @@ import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.UserService;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +49,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
         UserRoleEntity adminRole = new UserRoleEntity();
         adminRole.setRole("ROLE_ADMIN");
-        adminRole.setDiscount(100);
+        adminRole.setDiscount(90);
         u1.setRole(adminRole);
 
         mockUsers.add(u1);
@@ -71,7 +70,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
         UserRoleEntity userRole = new UserRoleEntity();
         userRole.setRole("ROLE_USER");
-        userRole.setDiscount(10);
+        userRole.setDiscount(0);
         u2.setRole(userRole);
 
         mockUsers.add(u2);
