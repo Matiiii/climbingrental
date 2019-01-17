@@ -41,11 +41,11 @@ public class ShopController {
         modelAndView.setViewName("shop");
 
 
-        if(!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)){
+        if (!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)) {
             modelAndView.addObject("info", new Info("Data niepoprawna!", false));
             return modelAndView;
         }
-        if(!prodName.isEmpty() && !inputValidator.isInputValid(prodName)){
+        if (!prodName.isEmpty() && !inputValidator.isInputValid(prodName)) {
             modelAndView.addObject("info", new Info("Użyto niedozwolonych znaków!", false));
             return modelAndView;
         }
@@ -57,12 +57,15 @@ public class ShopController {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
         } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
-            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
+            if (productService.countAllProductsByNameFiltered(prodName).size() > 0) {
+                modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
+            } else {
+                modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
+            }
         } else if (hasOnlyDates) {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
             }
-
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
         } else {
@@ -70,7 +73,11 @@ public class ShopController {
                 dateFilter = cart.getDate();
             }
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
-            modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
+            if (productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName).size() > 0) {
+                modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
+            } else {
+                modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
+            }
         }
 
         cartService.addDateToCart(cart, dateFilter);
@@ -97,7 +104,6 @@ public class ShopController {
         if (cart.getDate() != null) {
             return foundProducts("", cart.getDate(), cart, modelAndView);
         }
-
         return foundProducts("", "", cart, modelAndView);
     }
 
