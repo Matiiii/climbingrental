@@ -2,6 +2,7 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.DateFilter;
@@ -52,6 +53,12 @@ public class CartController {
                                     @ModelAttribute("cart") Cart cart,
                                     ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
+        if(cart.getDate() != null){
+            modelAndView.addObject("countProducts", productService.countAllProductsByName());
+        }else{
+            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(cart.getDate()));
+        }
+
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
@@ -90,6 +97,36 @@ public class CartController {
         cartService.addDateToCart(cart, dateFilter);
         return cartPage(cart, modelAndView);
     }
+
+    @PostMapping("/cart/deleteProduct/{id}")
+    public ModelAndView deleteProductFromCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView){
+
+        modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
+        cartService.removeProductFromCart(cart, productService.findProductById(id));
+        return cartPage(cart, modelAndView);
+    }
+
+    @PostMapping("/cart/deleteAllProducts/{id}")
+    public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView){
+        modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
+        cartService.removeProductFromCart(cart, productService.findProductById(id));
+        return cartPage(cart, modelAndView);
+    }
+    @PostMapping("/cart/addProduct/{id}")
+    public ModelAndView addProductToCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView){
+
+        modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
+        cartService.addProductToCart(cart, productService.findProductById(id), 1);
+
+        return cartPage(cart, modelAndView);
+    }
+
 
     @ModelAttribute("cart")
     public Cart cart() {

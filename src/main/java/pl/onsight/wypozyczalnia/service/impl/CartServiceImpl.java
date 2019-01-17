@@ -2,12 +2,10 @@ package pl.onsight.wypozyczalnia.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,5 +36,23 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeProductsFromCart(Cart cart) {
         cart.setProducts(new LinkedList<>());
+    }
+
+    @Override
+    public boolean removeProductFromCart(Cart cart, ProductEntity product) {
+        List<ProductEntity> products = cart.getProducts();
+        if(products.contains(product)){
+            products.remove(product);
+            cart.setProducts(products);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeProductsOneTypeFromCart(Cart cart, ProductEntity product) {
+        List<ProductEntity> products = cart.getProducts();
+       return products.removeIf(productEntity -> productEntity.equals(product));
+
     }
 }

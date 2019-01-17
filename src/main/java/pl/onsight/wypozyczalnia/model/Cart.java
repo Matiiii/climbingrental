@@ -59,4 +59,16 @@ public class Cart {
     public int getCountOfProductsInCart(ProductEntity product) {
         return Collections.frequency(products, product);
     }
+
+    public boolean removeProductFromCart( ProductEntity product) {
+        List<ProductEntity> products = this.getProducts();
+        if(products.contains(product)){
+            products.remove(product);
+            this.setProducts(products);
+            return true;
+        }
+        return false;
+    }
 }
+
+

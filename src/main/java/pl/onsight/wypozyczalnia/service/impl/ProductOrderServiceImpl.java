@@ -123,7 +123,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         List<ProductOrderEntity> productOrders = new ArrayList<>();
         Iterable<ProductOrderEntity> productOrderIterable = productOrderRepository.findAll();
         productOrderIterable.forEach(productOrders::add);
-
         return productOrders;
     }
 

@@ -13,4 +13,8 @@ public interface CartService {
     List<ProductEntity> getListOfProductsInCart(Cart cart);
 
     void removeProductsFromCart(Cart cart);
+
+    boolean removeProductFromCart(Cart cart, ProductEntity product);
+
+    boolean removeProductsOneTypeFromCart(Cart cart, ProductEntity product);
 }
