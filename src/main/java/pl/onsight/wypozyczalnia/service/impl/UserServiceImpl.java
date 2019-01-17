@@ -42,12 +42,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity getUserById (Long id){ return userRepository.findOne(id);}
+
+    @Override
     public List<UserEntity> findAllUsers() {
         Iterable<UserEntity> allUsersIterable = userRepository.findAll();
         List<UserEntity> allUsers = new ArrayList<>();
         allUsersIterable.forEach(allUsers::add);
         return allUsers;
     }
-
-
 }

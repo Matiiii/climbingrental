@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
+import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.RegisterValidator;
 
 import javax.validation.Valid;
@@ -26,7 +25,6 @@ public class UserRegisterController {
         this.userService = userService;
         this.registerValidator = registerValidator;
     }
-
 
     @GetMapping("/register")
     public ModelAndView registrationPage(ModelAndView modelAndView) {
@@ -51,6 +49,4 @@ public class UserRegisterController {
 
         return modelAndView;
     }
-
-
 }

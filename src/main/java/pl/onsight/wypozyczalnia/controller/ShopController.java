@@ -6,55 +6,57 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
-import pl.onsight.wypozyczalnia.service.NewsService;
-import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.model.FilterProducts;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
+import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.validator.DateValidator;
+
+import java.text.ParseException;
 
 @Controller
 @SessionAttributes("cart")
 public class ShopController {
 
-
     private ProductService productService;
     private CartService cartService;
+    private DateValidator dateValidator;
 
     @Autowired
-    public ShopController(ProductService productService, CartService cartService) {
-
+    public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator) {
         this.productService = productService;
         this.cartService = cartService;
+        this.dateValidator = dateValidator;
     }
 
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
                                       @ModelAttribute("cart") Cart cart,
-                                      ModelAndView modelAndView) {
+                                      ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("shop");
-        modelAndView.addObject("product", new ProductEntity());
-        modelAndView.addObject("filterProducts", new FilterProducts());
 
+
+        if(!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)){
+            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+            return modelAndView;
+        }
         boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
         boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
         boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
 
         if (hasNoParameters) {
             modelAndView.addObject("countProducts", productService.countAllProductsByName());
-
         } else if (hasOnlyProductName) {
             modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
             modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
-
         } else if (hasOnlyDates) {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
             }
+
             modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
             modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
-
         } else {
             if (dateFilter.isEmpty()) {
                 dateFilter = cart.getDate();
@@ -72,7 +74,7 @@ public class ShopController {
                                          @RequestParam(value = "productCount") Integer productCount,
                                          @ModelAttribute("cart") Cart cart,
                                          RedirectAttributes attributes,
-                                         ModelAndView modelAndView) {
+                                         ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("info");
         ProductEntity productById = productService.findProductById(id);
 
@@ -83,7 +85,6 @@ public class ShopController {
             cartService.addProductToCart(cart, productById, productCount);
         }
         attributes.addFlashAttribute("cart", cart);
-
 
         if (cart.getDate() != null) {
             return foundProducts("", cart.getDate(), cart, modelAndView);

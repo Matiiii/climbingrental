@@ -13,7 +13,7 @@ public class ProductOrderEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     private UserEntity user;
 
     @ManyToMany
@@ -23,7 +23,6 @@ public class ProductOrderEntity {
     private Date orderStart;
     private Date orderEnd;
 
-    @Transient
     private Double combinedPrice;
 
     public Long getId() {

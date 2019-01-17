@@ -10,6 +10,7 @@ import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,10 +75,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public boolean isProductAvailableToOrder(Long productId, String dateFilter) {
-        String[] dates = DateFilter.filterData(dateFilter);
-        Date productOrderStart = new Date(dates[0]);
-        Date productOrderEnd = new Date(dates[1]);
+    public boolean isProductAvailableToOrder(Long productId, String dateFilter) throws ParseException {
+        Date[] dates = DateFilter.changeStringToDate(dateFilter);
+        Date productOrderStart = dates[0];
+        Date productOrderEnd = dates[1];
 
         return isProductAvailableToOrder(productId, productOrderStart, productOrderEnd);
     }

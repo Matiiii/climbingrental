@@ -4,8 +4,8 @@
 <head>
 
     <link th:include="fragments/header :: head" th:remove="tag"/>
-    <link th:href="@{/css/products.css}" href="../static/CSS/products.css" rel="stylesheet"/>
-    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -21,7 +21,6 @@
 
         <div class="col-xs-12 col-ms-12 col-md-3 form">
 
-
             <form id="orderForm" method="get" th:action="@{/shop}">
                 <table>
                     <tr>
@@ -31,6 +30,7 @@
                         <td class="flexCenter"><input type="text" name="productName" id="productName"/></td>
                     </tr>
                     <tr>
+
                         <td class="flexCenter"><label for="dateFilter">Wybierz termin: </label></td>
                     </tr>
                     <tr>
@@ -65,12 +65,12 @@
 
                         <div class="caption">
                             <div class="productName">
-                                <a href="info.html" th:href="'/product/'+${countProduct.product.id}">
+                                <a href="info.html" th:href="@{'/product/'+${countProduct.product.id}}">
                                     <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
                             </div>
                             <div class="productInfo">
                                 <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
-                                        th:text="'W koszyku: '+${cart.getCountOfProductInCart(countProduct.product)}"></b>
+                                        th:text="'W koszyku: '+${cart.getCountOfProductsInCart(countProduct.product)}"></b>
                                 </div>
                                 <div class="flexAround">
                                 <span class="price left">
@@ -85,7 +85,7 @@
                                         <label for="productCount">Wybierz ilość: </label>
                                         <input id="productCount" name="productCount" type="number" th:default="1"
                                                th:min="1"
-                                               th:max="${countProduct.count - (cart.getCountOfProductInCart(countProduct.product))}"/>
+                                               th:max="${countProduct.count - (cart.getCountOfProductsInCart(countProduct.product))}"/>
                                     </div>
                                     <div class="form-group">
                                         <button align="center" type="submit" class="btn btn-success">Do koszyka</button>

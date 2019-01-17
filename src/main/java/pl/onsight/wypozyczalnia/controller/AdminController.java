@@ -2,17 +2,17 @@ package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.model.Info;
+import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
@@ -47,11 +47,17 @@ public class AdminController {
         productService.removeProduct(id);
     }
 
+
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
                                    BindingResult bindingResult, ModelAndView modelAndView) {
+        List<ProductEntity> allProducts = productService.findAllProducts();
+        List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin");
+        } else if (allNamesOfProducts.contains(product.getProductName())) {
+            modelAndView.addObject("info", new Info("Produkt o nazwie "+product.getProductName()+" już istnieje!", false));
+            return adminPage(modelAndView);
         } else {
             productService.addProduct(product);
             modelAndView.setViewName("redirect:/shop");
@@ -66,9 +72,10 @@ public class AdminController {
         modelAndView.setViewName("updateProduct");
         return modelAndView;
     }
+
     @PostMapping("/update/{id}")
     public ModelAndView updateProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
-                             BindingResult result, ModelAndView modelAndView) {
+                                      BindingResult result, ModelAndView modelAndView) {
         if (result.hasErrors()) {
             product.setId(id);
             modelAndView.setViewName("admin");
@@ -77,4 +84,5 @@ public class AdminController {
         productService.addProduct(product);
         return adminPage(modelAndView);
     }
+
 }

@@ -3,8 +3,8 @@
 
 <head>
     <link th:include="fragments/header :: head" th:remove="tag"/>
-    <link th:href="@{/css/cart.css}" href="../static/CSS/cart.css" rel="stylesheet"/>
-    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
+    <link th:href="@{/css/cart.css}" href="../static/css/cart.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -36,9 +36,9 @@
                    <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
                     <button type="submit" class="btn btn-success">Zmień</button>
                 </form>
-                <p>Łączna ilość dni: <b th:text="'Jakaś liczba'">liczba dni</b></p>
-                <p>Łączy koszt wypożyczenia: <b th:text="'jakaś suma'">suma</b></p>
-                <p>Wymagana kaucja: <b th:text="'Jakas kaucja'">kaucja</b></p>
+                <p>Łączna ilość dni: <b th:text="${cart.getNumberOfDays()}"></b></p>
+                <p>Łączy koszt wypożyczenia: <b th:text="${cart.getCombinedPrice()}">suma</b></p>
+                <p>Wymagana kaucja: <b th:text="${cart.getCombinedDeposit()}">kaucja</b></p>
                 <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
                 <form th:action="@{/createOrder}" method="post">
                     <button class="btn btn-primary" type="submit">Zamow</button>
@@ -76,7 +76,7 @@
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="info.html" th:href="'/product/'+${countProduct.getProduct().id}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
+                        <td><a href="info.html" th:href="@{'/product/'+${countProduct.getProduct().id}}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
                         <td><p th:text="${countProduct.product.price}">cena</p></td>
                         <td><p th:text="${countProduct.count}">cena</p></td>
                         <td>

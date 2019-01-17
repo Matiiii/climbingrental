@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity(name = "user")
 public class UserEntity implements Serializable {
 
@@ -22,12 +21,10 @@ public class UserEntity implements Serializable {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private Boolean isAdmin;
     private String password;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
-
 
     public Set<UserRoleEntity> getRoles() {
         return roles;
@@ -85,34 +82,11 @@ public class UserEntity implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", address=" + address +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 }

@@ -12,5 +12,5 @@ public interface CartService {
 
     List<ProductEntity> getListOfProductsInCart(Cart cart);
 
-    void removeProductFromCart(Cart cart);
+    void removeProductsFromCart(Cart cart);
 }

@@ -3,9 +3,9 @@
 
 <head>
     <link th:include="fragments/header :: head" th:remove="tag"/>
-    <link th:href="@{/css/products.css}" href="../static/CSS/products.css" rel="stylesheet"/>
-    <link th:href="@{/css/daterangepicker.css}" href="../static/CSS/daterangepicker.css" rel="stylesheet"/>
-    <link th:href="@{/css/products.css}" href="../static/CSS/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -78,7 +78,7 @@
 
                         <div class="productInfo">
                             <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
-                                    th:text="'W koszyku: '+${cart.getCountOfProductInCart(product)}"></b>
+                                    th:text="'W koszyku: '+${cart.getCountOfProductsInCart(product)}"></b>
                             </div>
                             <div class="flexAround">
                                 <span class="price left">
@@ -91,7 +91,7 @@
                         <label for="productCount">Wybierz ilość: </label>
                         <input id="productCount" name="productCount" type="number" min="1" th:default="1"
                                th:min="1"
-                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductInCart(product))}" />
+                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}" />
                         <input id="productName" name="productName" type="hidden" class="form-control" th:value="${product.productName}"/>
                         <div class="form-group">
                             <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
