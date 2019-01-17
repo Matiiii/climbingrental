@@ -12,7 +12,6 @@ public class DateValidatorImpl implements pl.onsight.wypozyczalnia.validator.Dat
 
     @Override
     public boolean isDateValid(String dates) throws ParseException {
-        System.out.println(dates);
         return isDatesCorrectToParse(dates) && areDatesCorrect(dates) ;
     }
     private boolean areDatesCorrect(String dates) throws ParseException {
@@ -27,7 +26,7 @@ public class DateValidatorImpl implements pl.onsight.wypozyczalnia.validator.Dat
     }
 
     private boolean isDateStartBeforeDateEnd(Date start, Date end){
-        return !start.after(end);
+        return start.before(end);
     }
 
     private boolean isDateNotEmpty(String dates){
