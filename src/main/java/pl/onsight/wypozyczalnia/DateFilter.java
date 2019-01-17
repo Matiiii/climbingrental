@@ -8,17 +8,16 @@ public class DateFilter {
         String[] date = dateString.split(" - ");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        date[0] += " 0:00";
-        date[1] += " 23:59";
 
         Date firstDate = null;
         Date secondDate = null;
 
         try {
-            firstDate = sdf.parse(date[0] + " 0:00");
+            firstDate = sdf.parse(date[0] + " 1:00");
             secondDate = sdf.parse(date[1] + " 23:59");
         } catch (Exception e) {
             System.out.println(e);
+            return new Date[]{};
         }
 
         return new Date[]{firstDate, secondDate};

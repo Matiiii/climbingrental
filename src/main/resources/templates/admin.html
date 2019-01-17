@@ -198,7 +198,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-
                                         <div th:each="order: ${orderList}">
                                             <tr th:attr="order-id=${order.id}">
                                                 <td>
@@ -212,22 +211,18 @@
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-
                                                         <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
-
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="col-md-4">
-
-                                                        <p th:text="${order.orderStart.toLocaleString()}"></p>
-
+                                                        <p th:text="${order.orderStart.toLocaleString().split(' ')[0]}"></p>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="col-md-4">
-                                                        <p th:text="${order.orderEnd.toLocaleString()}"></p>
+                                                        <p th:text="${order.orderEnd.toLocaleString().split(' ')[0]}"></p>
                                                     </div>
                                                 </td>
                                                 <td>

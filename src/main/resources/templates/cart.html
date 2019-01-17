@@ -76,7 +76,7 @@
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="info.html" th:href="'/product/'+${countProduct.getProduct().id}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
+                        <td><a href="info.html" th:href="@{'/product/'+${countProduct.getProduct().id}}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
                         <td><p th:text="${countProduct.product.price}">cena</p></td>
                         <td><p th:text="${countProduct.count}">cena</p></td>
                         <td>

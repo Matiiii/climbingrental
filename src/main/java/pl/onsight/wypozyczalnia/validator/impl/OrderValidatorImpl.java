@@ -20,8 +20,12 @@ public class OrderValidatorImpl implements OrderValidator {
         this.productService = productService;
     }
 
+
     @Override
-    public boolean isOrderAvailableToSave(ProductOrderEntity order) {
+    public boolean isOrderCorrectToSave(ProductOrderEntity order) {
+        return hasOrderProductsInCart(order) && isOrderAvailableToSave(order);
+    }
+    private boolean isOrderAvailableToSave(ProductOrderEntity order){
         List<ProductEntity> products = order.getProducts();
         List<CountProducts> countProducts = productService.countProductsInProductList(products);
 
@@ -34,5 +38,9 @@ public class OrderValidatorImpl implements OrderValidator {
         }
 
         return true;
+    }
+
+    private boolean hasOrderProductsInCart(ProductOrderEntity order) {
+        return order.getProducts().size()>0;
     }
 }
