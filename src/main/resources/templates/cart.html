@@ -33,7 +33,8 @@
                 <p class="orderPeriod">Termin wypożyczenia: <b th:text="${cart.date}">data</b></p>
                 <form id="orderPeriod" method="post" th:action="@{/changeDate}">
                     <label for="dateFilter">Zmień termin:</label>
-                   <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
+                   <input pattern="^(0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}[ ][-][ ](0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}$"
+                          id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
                     <button type="submit" class="btn btn-success">Zmień</button>
                 </form>
                 <p>Łączna ilość dni: <b th:text="${cart.getNumberOfDays()}"></b></p>

@@ -27,15 +27,16 @@
                         <td class="flexCenter"><label for="productName">Wpisz nazwę produktu:</label></td>
                     </tr>
                     <tr>
-                        <td class="flexCenter"><input type="text" name="productName" id="productName"/></td>
+                        <td class="flexCenter"><input type="text" pattern="[a-z]{1,30}" name="productName" id="productName"/></td>
                     </tr>
                     <tr>
 
                         <td class="flexCenter"><label for="dateFilter">Wybierz termin: </label></td>
                     </tr>
                     <tr>
-                        <td class="flexCenter"><input id="dateFilter" type="text" name="datefilter" autocomplete="off"
-                                                      value=""/></td>
+                        <td class="flexCenter"><input id="dateFilter"
+                                                      pattern="^(0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}[ ][-][ ](0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}$"
+                                                      type="text" name="datefilter" autocomplete="off" value=""/></td>
                     </tr>
                     <tr>
                         <td class="flexCenter">

@@ -11,6 +11,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.CartService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 import pl.onsight.wypozyczalnia.validator.DateValidator;
+import pl.onsight.wypozyczalnia.validator.InputValidator;
 
 import java.text.ParseException;
 
@@ -21,12 +22,15 @@ public class ShopController {
     private ProductService productService;
     private CartService cartService;
     private DateValidator dateValidator;
+    private InputValidator inputValidator;
 
     @Autowired
-    public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator) {
+    public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator,
+                          InputValidator inputValidator) {
         this.productService = productService;
         this.cartService = cartService;
         this.dateValidator = dateValidator;
+        this.inputValidator = inputValidator;
     }
 
     @GetMapping(value = "/shop")
@@ -39,6 +43,10 @@ public class ShopController {
 
         if(!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)){
             modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+            return modelAndView;
+        }
+        if(!prodName.isEmpty() && !inputValidator.isInputValid(prodName)){
+            modelAndView.addObject("info", new Info("Użyto niedozwolonych znaków!", false));
             return modelAndView;
         }
         boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
