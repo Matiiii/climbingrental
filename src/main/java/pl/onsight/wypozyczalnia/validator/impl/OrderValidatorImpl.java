@@ -27,7 +27,7 @@ public class OrderValidatorImpl implements OrderValidator {
     }
     private boolean isOrderAvailableToSave(ProductOrderEntity order){
         List<ProductEntity> products = order.getProducts();
-        List<CountProducts> countProducts = productService.countProductsInProductList(products);
+        List<CountProducts> countProducts = productService.changeProductEntityListToCountProductsList(products);
 
         for (CountProducts countProduct : countProducts) {
             if (productService.countProductsAvailableByNameAndTime(
@@ -36,7 +36,6 @@ public class OrderValidatorImpl implements OrderValidator {
                 return false;
             }
         }
-
         return true;
     }
 

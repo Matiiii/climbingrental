@@ -95,7 +95,7 @@ public class ProductTest {
         productList.add(product2);
 
         //when
-        List<CountProducts> countProducts = productService.countProductsInProductList(productList);
+        List<CountProducts> countProducts = productService.changeProductEntityListToCountProductsList(productList);
 
         //then
         assertThat(countProducts.size()).isEqualTo(2);
