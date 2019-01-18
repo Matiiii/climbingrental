@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
 public class ProductOrderTest {
@@ -70,11 +69,11 @@ public class ProductOrderTest {
         Date dateToCheck5 = new Date("2019/01/24 01:00:00");
 
         //when
-        Integer numberOfProductInOrdersInPeriod = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct.getId(), firstOrderStartDate, firstOrderEndDate);
-        Integer numberOfProductInOrdersInPeriod2 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct.getId(), dateToCheck, dateToCheck2);
-        Integer numberOfProductInOrdersInPeriod3 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct.getId(), dateToCheck3, dateToCheck4);
-        Integer numberOfProductInOrdersInPeriod4 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct.getId(), dateToCheck5, dateToCheck4);
-        Integer numberOfProductInOrdersInPeriod5 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct.getId(), dateToCheck, secondOrderEndDate);
+        Integer numberOfProductInOrdersInPeriod = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct, firstOrderStartDate, firstOrderEndDate);
+        Integer numberOfProductInOrdersInPeriod2 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct, dateToCheck, dateToCheck2);
+        Integer numberOfProductInOrdersInPeriod3 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct, dateToCheck3, dateToCheck4);
+        Integer numberOfProductInOrdersInPeriod4 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct, dateToCheck5, dateToCheck4);
+        Integer numberOfProductInOrdersInPeriod5 = productOrderService.countNumberOfProductInOrdersInPeriod(addedProduct, dateToCheck, secondOrderEndDate);
 
         //then
         assertThat(addedProduct.getProductName()).isEqualTo(productName);

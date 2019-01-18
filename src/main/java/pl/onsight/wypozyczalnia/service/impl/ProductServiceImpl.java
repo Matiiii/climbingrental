@@ -41,10 +41,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer countProductsAvailableByNameAndTime(String name, Date start, Date end) {
         ProductEntity product = productRepository.findByProductName(name);
-        int productCountInOrders = productOrderService.countNumberOfProductInOrdersInPeriod(product.getId(), start, end);
+        int productCountInOrders = productOrderService.countNumberOfProductInOrdersInPeriod(product, start, end);
         int productQuantity = product.getQuantity();
+        int availableProduct = productQuantity - productCountInOrders;
 
-        return productQuantity - productCountInOrders;
+        return availableProduct > 0 ? availableProduct : 0;
     }
 
     @Override

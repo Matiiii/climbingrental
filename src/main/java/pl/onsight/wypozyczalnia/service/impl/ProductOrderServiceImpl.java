@@ -11,7 +11,6 @@ import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -30,22 +29,36 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         productOrderRepository.save(order);
     }
 
-    @Override
+/*    @Override
     public Integer countNumberOfProductInOrdersInPeriod(Long productId, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrderEntity> orders = findProductOrdersByProductId(productId);
         int count = 0;
         for (ProductOrderEntity order : orders) {
-            Date orderStart = order.getOrderStart();
-            Date orderEnd = order.getOrderEnd();
-            if (productOrderStart.before(orderEnd) && productOrderEnd.after(orderStart)) {
+            if (isProductInChosenDate(productOrderStart, productOrderEnd, order)) {
                 count += order.getProducts().stream()
                         .filter(productEntity -> productEntity.getId().equals(productId))
-                        .collect(Collectors.toList())
-                        .size();
+                        .count();
             }
         }
 
         return count;
+    }*/
+
+    @Override
+    public Integer countNumberOfProductInOrdersInPeriod(ProductEntity product, Date productOrderStart, Date productOrderEnd) {
+        List<ProductOrderEntity> orders = findProductOrdersByProductId(product.getId());
+        int[] count = {0};
+        orders.stream()
+                .filter(order -> isProductInChosenDate(productOrderStart, productOrderEnd, order))
+                .map(ProductOrderEntity::getProducts)
+                .forEach(productEntities -> count[0] += productEntities.stream()
+                        .filter(productEntity -> productEntity.equals(product)).count());
+
+        return count[0];
+    }
+
+    private boolean isProductInChosenDate(Date productOrderStart, Date productOrderEnd, ProductOrderEntity order) {
+        return productOrderStart.before(order.getOrderEnd()) && productOrderEnd.after(order.getOrderStart());
     }
 
     private List<ProductOrderEntity> findProductOrdersByProductId(Long productId) {
