@@ -107,7 +107,7 @@ public class CartController {
         return cartPage(cart, modelAndView);
     }
 
-    @PostMapping("/cart/deleteAllProductsOfType/{id}")
+    @PostMapping("/cart/deleteAllProductsOfOneType/{id}")
     public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
                                               @ModelAttribute("cart") Cart cart,
                                               ModelAndView modelAndView) throws ParseException {

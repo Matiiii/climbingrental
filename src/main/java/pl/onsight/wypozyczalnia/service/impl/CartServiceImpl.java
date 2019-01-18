@@ -56,20 +56,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean removeProductFromCart(Cart cart, ProductEntity product) {
-        List<ProductEntity> products = cart.getProducts();
-        if (products.contains(product)) {
-            products.remove(product);
-            cart.setProducts(products);
-            return true;
-        }
-        return false;
+    public void removeProductFromCart(Cart cart, ProductEntity product) {
+            cart.getProducts().remove(product);
     }
 
     @Override
-    public boolean removeProductsOneTypeFromCart(Cart cart, ProductEntity product) {
-        List<ProductEntity> products = cart.getProducts();
-        return products.removeIf(productEntity -> productEntity.equals(product));
+    public void removeProductsOneTypeFromCart(Cart cart, ProductEntity product) {
+        cart.getProducts().removeIf(productEntity -> productEntity.equals(product));
 
     }
 
@@ -82,13 +75,11 @@ public class CartServiceImpl implements CartService {
                         countProduct.getProduct().getProductName(), DateFilter.changeStringToDate(cart.getDate())[0],
                         DateFilter.changeStringToDate(cart.getDate())[1]));
             }
-            return countedProducts;
         } else {
             for (CountProducts countProduct : countedProducts) {
                 countProduct.setCountAvailable(countProduct.getProduct().getQuantity());
             }
-            return countedProducts;
-
         }
+        return countedProducts;
     }
 }

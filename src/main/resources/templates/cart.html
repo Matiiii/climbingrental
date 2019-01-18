@@ -93,7 +93,7 @@
                                     <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
                                 </form>
                                 <form id="deleteAllProducts" method="post"
-                                      th:action="@{'/cart/deleteAllProductsOfType/'+${countCartProduct.getProduct().id}}">
+                                      th:action="@{'/cart/deleteAllProductsOfOneType/'+${countCartProduct.getProduct().id}}">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">X</button>
                                 </form>
                                 <form id="addProduct" method="post"

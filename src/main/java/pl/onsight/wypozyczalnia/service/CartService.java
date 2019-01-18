@@ -18,9 +18,9 @@ public interface CartService {
 
     void removeProductsFromCart(Cart cart);
 
-    boolean removeProductFromCart(Cart cart, ProductEntity product);
+    void removeProductFromCart(Cart cart, ProductEntity product);
 
-    boolean removeProductsOneTypeFromCart(Cart cart, ProductEntity product);
+    void removeProductsOneTypeFromCart(Cart cart, ProductEntity product);
 
     List<CountProducts> getCountedProductsInCartWithAvailable(Cart cart) throws ParseException;
 }
