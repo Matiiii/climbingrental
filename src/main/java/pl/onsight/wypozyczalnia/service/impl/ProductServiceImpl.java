@@ -14,7 +14,6 @@ import pl.onsight.wypozyczalnia.service.ProductService;
 
 import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,15 +35,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductEntity> findAllProducts() {
-        List<ProductEntity> products = new LinkedList<>();
-        productRepository.findAll().forEach(products::add);
-        return products;
+        return productRepository.findAll();
     }
 
     @Override
     public Integer countProductsAvailableByNameAndTime(String name, Date start, Date end) {
         ProductEntity product = productRepository.findByProductName(name);
-        int productCountInOrders = productOrderService.countOrdersProductInPeriod(product.getId(), start, end);
+        int productCountInOrders = productOrderService.countNumberOfProductInOrdersInPeriod(product.getId(), start, end);
         int productQuantity = product.getQuantity();
 
         return productQuantity - productCountInOrders;
@@ -71,17 +68,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<CountProducts> countAllAvailableProductsByName(String date) throws ParseException {
         Date[] dates = DateFilter.changeStringToDate(date);
-        List<ProductEntity> list = findAllProducts();
 
-        return addProductsWithTimeToList(list, dates[0], dates[1]);
+        return addProductsWithTimeToList(findAllProducts(), dates[0], dates[1]);
     }
 
     @Override
     public List<CountProducts> countAllAvailableProductsByNameFiltered(String date, String name) throws ParseException {
         Date[] dates = DateFilter.changeStringToDate(date);
-        List<ProductEntity> products = findAllProductsByProductNameOrTags(name);
 
-        return addProductsWithTimeToList(products, dates[0], dates[1]);
+        return addProductsWithTimeToList(findAllProductsByProductNameOrTags(name), dates[0], dates[1]);
     }
 
     private List<CountProducts> addProductsWithTimeToList(List<ProductEntity> products, Date start, Date end) {

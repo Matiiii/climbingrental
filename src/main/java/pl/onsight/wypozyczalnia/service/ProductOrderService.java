@@ -9,9 +9,7 @@ import java.util.List;
 public interface ProductOrderService {
     void saveOrder(ProductOrderEntity order);
 
-    Integer countOrdersProductInPeriod(Long productId, Date productOrderStart, Date productOrderEnd);
-
-    List<String> getListOfDatesWhenProductIsReserved(Long id);
+    Integer countNumberOfProductInOrdersInPeriod(Long productId, Date productOrderStart, Date productOrderEnd);
 
     List<ProductOrderEntity> findAllProductOrders();
 
