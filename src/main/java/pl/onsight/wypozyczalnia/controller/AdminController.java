@@ -78,20 +78,21 @@ public class AdminController {
                                       BindingResult result, ModelAndView modelAndView) {
         List<ProductEntity> allProducts = productService.findAllProducts();
         List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
-        String tempName=product.getProductName();
+        String tempName = productService.findProductById(id).getProductName();
+        String newName = product.getProductName();
         allNamesOfProducts.remove(tempName);
-        String newName=productService.findProductById(id).getProductName();
         if (result.hasErrors()) {
             product.setId(id);
             modelAndView.setViewName("admin");
             return modelAndView;
         } else if (allNamesOfProducts.contains(newName)) {
             modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
-            return adminPage(modelAndView);
+            adminPage(modelAndView);
         } else {
             productService.addProduct(product);
-            return adminPage(modelAndView);
+            adminPage(modelAndView);
         }
+        return modelAndView;
     }
 }
 
