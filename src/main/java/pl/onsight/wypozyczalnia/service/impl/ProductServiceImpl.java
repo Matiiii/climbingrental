@@ -62,7 +62,8 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(productNameOrTag, productNameOrTag);
     }
 
-    private List<CountProducts> createListOfCountProduct(List<ProductEntity> products) {
+    @Override
+    public List<CountProducts> createListOfCountProduct(List<ProductEntity> products) {
         return products.stream().map(product -> new CountProducts(product, product.getQuantity())).collect(Collectors.toList());
     }
 
@@ -106,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<CountProducts> countProductsInProductList(List<ProductEntity> productList) {
+    public List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
         List<CountProducts> countProducts = new LinkedList<>();
 

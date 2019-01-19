@@ -8,6 +8,13 @@ input {
     margin-bottom: 0.3em;
 
 }
+.green{
+    border:  2px dotted #28a745;
+
+}
+.red{
+    border:  2px dotted tomato;
+}
 .productInfo{
     height:40px;
 }

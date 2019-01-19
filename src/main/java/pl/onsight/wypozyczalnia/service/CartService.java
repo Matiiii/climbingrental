@@ -1,8 +1,10 @@
 package pl.onsight.wypozyczalnia.service;
 
 import pl.onsight.wypozyczalnia.model.Cart;
+import pl.onsight.wypozyczalnia.model.CountProducts;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface CartService {
@@ -15,4 +17,10 @@ public interface CartService {
     List<ProductEntity> getListOfProductsInCart(Cart cart);
 
     void removeProductsFromCart(Cart cart);
+
+    void removeProductFromCart(Cart cart, ProductEntity product);
+
+    void removeProductsOneTypeFromCart(Cart cart, ProductEntity product);
+
+    List<CountProducts> getCountedProductsInCartWithAvailable(Cart cart) throws ParseException;
 }
