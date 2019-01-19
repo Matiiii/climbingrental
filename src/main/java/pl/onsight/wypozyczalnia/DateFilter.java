@@ -9,17 +9,13 @@ public class DateFilter {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        Date firstDate = null;
-        Date secondDate = null;
-
         try {
-            firstDate = sdf.parse(date[0] + " 1:00");
-            secondDate = sdf.parse(date[1] + " 23:59");
+            Date firstDate = sdf.parse(date[0] + " 1:00");
+            Date secondDate = sdf.parse(date[1] + " 23:59");
+            return new Date[]{firstDate, secondDate};
         } catch (Exception e) {
             System.out.println(e);
             return new Date[]{};
         }
-
-        return new Date[]{firstDate, secondDate};
     }
 }

@@ -20,11 +20,11 @@ public class OrderValidatorImpl implements OrderValidator {
         this.productService = productService;
     }
 
-
     @Override
     public boolean isOrderCorrectToSave(ProductOrderEntity order) {
         return hasOrderProductsInCart(order) && isOrderAvailableToSave(order);
     }
+
     private boolean isOrderAvailableToSave(ProductOrderEntity order){
         List<ProductEntity> products = order.getProducts();
         List<CountProducts> countProducts = productService.countProductsInProductList(products);

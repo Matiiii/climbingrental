@@ -29,21 +29,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         productOrderRepository.save(order);
     }
 
-/*    @Override
-    public Integer countNumberOfProductInOrdersInPeriod(Long productId, Date productOrderStart, Date productOrderEnd) {
-        List<ProductOrderEntity> orders = findProductOrdersByProductId(productId);
-        int count = 0;
-        for (ProductOrderEntity order : orders) {
-            if (isProductInChosenDate(productOrderStart, productOrderEnd, order)) {
-                count += order.getProducts().stream()
-                        .filter(productEntity -> productEntity.getId().equals(productId))
-                        .count();
-            }
-        }
-
-        return count;
-    }*/
-
     @Override
     public Integer countNumberOfProductInOrdersInPeriod(ProductEntity product, Date productOrderStart, Date productOrderEnd) {
         List<ProductOrderEntity> orders = findProductOrdersByProductId(product.getId());
