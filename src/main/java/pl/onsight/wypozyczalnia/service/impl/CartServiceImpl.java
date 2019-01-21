@@ -41,11 +41,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addDiscountToCart(Cart cart, double discount) {
-        cart.setDiscount(discount);
-    }
-
-    @Override
     public List<ProductEntity> getListOfProductsInCart(Cart cart) {
         return cart.getProducts();
     }
@@ -63,11 +58,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeProductsOneTypeFromCart(Cart cart, ProductEntity product) {
         cart.getProducts().removeIf(productEntity -> productEntity.equals(product));
-
     }
 
     @Override
-    public List<CountProducts> getCountedProductsInCartWithAvailable(Cart cart) throws ParseException {
+    public List<CountProducts> getCountedProductsInCartWithAvailable(Cart cart)  {
         List<CountProducts> countedProducts = productService.changeProductEntityListToCountProductsList(cart.getProducts());
         if (cart.getDate() != null) {
             for (CountProducts countProduct : countedProducts) {
