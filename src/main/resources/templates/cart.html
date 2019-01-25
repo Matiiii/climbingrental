@@ -17,7 +17,8 @@
 <div class="container">
     <div class="row infoContainer">
         <div class="col-xs-12 col-ms-12 col-md-3 imgBasket">
-            <img class="imgBasket" th:src="@{/images/icon_add_to_cart_740405.png}" src="../static/images/icon_add_to_cart_740405.png"/>
+            <img class="imgBasket" th:src="@{/images/icon_add_to_cart_740405.png}"
+                 src="../static/images/icon_add_to_cart_740405.png"/>
         </div>
 
         <div class="col-xs col-sm col-md-9 info">
@@ -33,13 +34,14 @@
                 <p class="orderPeriod">Termin wypożyczenia: <b th:text="${cart.date}">data</b></p>
                 <form id="orderPeriod" method="post" th:action="@{/changeDate}">
                     <label for="dateFilter">Zmień termin:</label>
-                   <input id="dateFilter" type="text" name="datefilter" autocomplete="off" value="" />
+                    <input pattern="^(0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}[ ][-][ ](0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}$"
+                           id="dateFilter" type="text" name="datefilter" autocomplete="off" value=""/>
                     <button type="submit" class="btn btn-success">Zmień</button>
                 </form>
                 <p>Łączna ilość dni: <b th:text="${cart.getNumberOfDays()}"></b></p>
-                <p>Łączy koszt wypożyczenia: <b th:text="${cart.getCombinedPrice()}">suma</b></p>
-                <p>Wymagana kaucja: <b th:text="${cart.getCombinedDeposit()}">kaucja</b></p>
-                <p>Rabat: <b th:text="'jakiś rabat'">procentowy rabat</b></p>
+                <p>Wymagana kaucja: <b th:text="${cart.getCombinedDeposit()}"></b></p>
+                <p>Rabat: <b th:text="${cart.getDiscount() + '%'}"></b></p>
+                <p>Łączny koszt z rabatem: <b th:text="${cart.getPriceWithDiscount()}"></b></p>
                 <form th:action="@{/createOrder}" method="post">
                     <button class="btn btn-primary" type="submit">Zamow</button>
                 </form>
@@ -53,7 +55,7 @@
 
     <div class="col-md-12">
         <div class="list-group">
-            <table class="table">
+            <table class="table-responsive-sm">
                 <thead>
                 <tr>
                     <th>Produkt</th>
@@ -65,26 +67,44 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div th:each="countProduct: ${products}">
-                    <tr th:attr="product-id=${countProduct.getProduct().id}">
+                <div th:each="countCartProduct: ${products}">
+                    <tr th:attr="product-id=${countCartProduct.getProduct().id}"
+                        th:classappend="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==1}? red">
                         <td>
                             <div class="col-md-4">
 
-                                <img th:src="${countProduct.getProduct().smallImage}"
+                                <img th:src="${countCartProduct.getProduct().smallImage}"
                                      src="../static/images/LINA_DUZA.jpg"
                                      class="img-responsive"
                                      alt=""/>
                             </div>
                         </td>
-                        <td><a href="info.html" th:href="@{'/product/'+${countProduct.getProduct().id}}"><h4 th:text="${countProduct.product.productName}">nazwa produktu</h4></a></td>
-                        <td><p th:text="${countProduct.product.price}">cena</p></td>
-                        <td><p th:text="${countProduct.count}">cena</p></td>
+                        <td><a href="info.html" th:href="@{'/product/'+${countCartProduct.getProduct().id}}"><h4
+                                th:text="${countCartProduct.product.productName}">nazwa produktu</h4></a>
+                            <b th:if="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==1}" class="text-danger"
+                               th:text="'Dostepnych tylko: ' + ${countCartProduct.getCountAvailable()}">Dostepnych
+                                tylko</b></td>
+                        <td><p th:text="${countCartProduct.product.price}">cena</p></td>
+                        <td><p th:text="${countCartProduct.count}">cena</p></td>
                         <td>
+                            <div class="row">
+                                <form id="deleteProduct" method="post"
+                                      th:action="@{'/cart/deleteProduct/'+${countCartProduct.getProduct().id}}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">-</button>
+                                </form>
+                                <form id="deleteAllProducts" method="post"
+                                      th:action="@{'/cart/deleteAllProductsOfOneType/'+${countCartProduct.getProduct().id}}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">X</button>
+                                </form>
+                                <form id="addProduct" method="post"
+                                      th:action="@{'/cart/addProduct/'+${countCartProduct.getProduct().id}}"
+                                      th:if="${countCartProduct.count.compareTo(countCartProduct.countAvailable)==-1}">
+                                    <button type="submit" class="btn btn-outline-success btn-sm">+</button>
+                                </form>
 
-                            <button type="submit" class="btn btn-primary btn-delete">Usuń
-                            </button>
+                            </div>
                         </td>
-                        <td><p th:text="${countProduct.product.price * countProduct.count}">suma</p></td>
+                        <td><p th:text="${countCartProduct.product.price * countCartProduct.count}">suma</p></td>
                     </tr>
                 </div>
                 </tbody>

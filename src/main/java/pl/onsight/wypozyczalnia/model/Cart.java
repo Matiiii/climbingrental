@@ -16,6 +16,7 @@ public class Cart {
 
     private List<ProductEntity> products = new LinkedList<>();
     private String date;
+    private double discount = 0;
 
     public List<ProductEntity> getProducts() {
         return products;
@@ -31,6 +32,14 @@ public class Cart {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public int getNumberOfDays(){
@@ -59,4 +68,17 @@ public class Cart {
     public int getCountOfProductsInCart(ProductEntity product) {
         return Collections.frequency(products, product);
     }
+
+    public double getPriceWithDiscount(){
+        double discount = 1.0 - this.discount/100;
+        double finalPrice = getCombinedPrice() * discount;
+        finalPrice *= 100;
+        finalPrice = Math.round(finalPrice);
+        finalPrice /= 100;
+        return finalPrice;
+    }
+
+
 }
+
+

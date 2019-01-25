@@ -12,6 +12,7 @@ public class UserRoleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String role;
+    private double discount;
 
     public Long getId() {
         return id;
@@ -29,11 +30,11 @@ public class UserRoleEntity {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "UserRoleEntity{" +
-                "id=" + id +
-                ", role='" + role + '\'' +
-                '}';
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 }

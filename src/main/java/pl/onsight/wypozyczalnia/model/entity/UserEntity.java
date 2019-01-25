@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "user")
-public class UserEntity implements Serializable {
-
-    private static final long serialVersionUID = 5749054845744613494L;
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +21,8 @@ public class UserEntity implements Serializable {
     private String phoneNumber;
     private String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<UserRoleEntity> roles = new HashSet<>();
-
-    public Set<UserRoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<UserRoleEntity> roles) {
-        this.roles = roles;
-    }
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private UserRoleEntity role;
 
     public Long getId() {
         return id;
@@ -88,5 +78,13 @@ public class UserEntity implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoleEntity role) {
+        this.role = role;
     }
 }

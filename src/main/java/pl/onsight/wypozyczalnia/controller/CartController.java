@@ -40,10 +40,15 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
+    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
-        modelAndView.addObject("products", productService.countProductsInProductList(cartService.getListOfProductsInCart(cart)));
+        modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
         modelAndView.addObject("order", new ProductOrderEntity());
+        UserEntity user = sessionService.getCurrentUser();
+        if(user != null){
+            cartService.addDiscountToCart(cart, user.getRole().getDiscount());
+        }
+
         return modelAndView;
     }
 
@@ -52,6 +57,7 @@ public class CartController {
                                     @ModelAttribute("cart") Cart cart,
                                     ModelAndView modelAndView) throws ParseException {
         modelAndView.setViewName("cart");
+
         UserEntity user = sessionService.getCurrentUser();
         order.setUser(user);
         order.setProducts(cartService.getListOfProductsInCart(cart));
@@ -64,7 +70,7 @@ public class CartController {
             return cartPage(cart, modelAndView);
         }
 
-         order.setCombinedPrice(cart.getCombinedPrice());
+        order.setCombinedPrice(cart.getPriceWithDiscount());
 
         if (orderValidator.isOrderCorrectToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
@@ -90,6 +96,36 @@ public class CartController {
         cartService.addDateToCart(cart, dateFilter);
         return cartPage(cart, modelAndView);
     }
+
+    @PostMapping("/cart/deleteProduct/{id}")
+    public ModelAndView deleteProductFromCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView) throws ParseException {
+
+        modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
+        cartService.removeProductFromCart(cart, productService.findProductById(id));
+        return cartPage(cart, modelAndView);
+    }
+
+    @PostMapping("/cart/deleteAllProductsOfOneType/{id}")
+    public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView) throws ParseException {
+        modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
+        cartService.removeProductsOneTypeFromCart(cart, productService.findProductById(id));
+        return cartPage(cart, modelAndView);
+    }
+    @PostMapping("/cart/addProduct/{id}")
+    public ModelAndView addProductToCart(@PathVariable Long id,
+                                              @ModelAttribute("cart") Cart cart,
+                                              ModelAndView modelAndView) throws ParseException {
+
+        modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
+        cartService.addProductToCart(cart, productService.findProductById(id), 1);
+
+        return cartPage(cart, modelAndView);
+    }
+
 
     @ModelAttribute("cart")
     public Cart cart() {
