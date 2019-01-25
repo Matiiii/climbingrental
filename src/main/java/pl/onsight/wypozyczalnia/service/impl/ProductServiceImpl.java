@@ -111,6 +111,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void editProduct(ProductEntity product) {
+        productRepository.save(product);
+    }
+
+    @Override
+
     public List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
         List<CountProducts> countProducts = new LinkedList<>();
@@ -118,20 +124,9 @@ public class ProductServiceImpl implements ProductService {
         for (ProductEntity product : setProducts) {
             countProducts.add(new CountProducts(product, Collections.frequency(productList, product)));
         }
-
         return countProducts;
     }
 
-    @Override
-    public void editProduct(ProductEntity product) {
-        ProductEntity editedProduct=new ProductEntity();
-        editedProduct.setProductName(product.getProductName());
-        editedProduct.setPrice(product.getPrice());
-        editedProduct.setBigImage(product.getBigImage());
-        editedProduct.setSmallImage(product.getSmallImage());
-        editedProduct.setDescription(product.getDescription());
-        editedProduct.setTags(product.getTags());
-        editedProduct.setQuantity(product.getQuantity());
-    }
+
 }
 

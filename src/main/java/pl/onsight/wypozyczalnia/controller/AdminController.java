@@ -66,26 +66,22 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView showUpdateForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
+    public ModelAndView showEditForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
         ProductEntity product = productService.findProductById(id);
         modelAndView.addObject("product", product);
         modelAndView.setViewName("updateProduct");
         return modelAndView;
     }
 
-    @PostMapping("/update/{id}")
-    public ModelAndView updateProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
-                                      BindingResult result, ModelAndView modelAndView) {
+    @PostMapping("/edit/{id}")
+    public ModelAndView editProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
+                                    ModelAndView modelAndView) {
         List<ProductEntity> allProducts = productService.findAllProducts();
         List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
         String tempName = productService.findProductById(id).getProductName();
         String newName = product.getProductName();
         allNamesOfProducts.remove(tempName);
-        if (result.hasErrors()) {
-            product.setId(id);
-            modelAndView.setViewName("admin");
-            return modelAndView;
-        } else if (allNamesOfProducts.contains(newName)) {
+        if (allNamesOfProducts.contains(newName)) {
             modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
             adminPage(modelAndView);
         } else {
