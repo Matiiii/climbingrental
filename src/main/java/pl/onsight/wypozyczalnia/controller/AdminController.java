@@ -1,16 +1,19 @@
 package pl.onsight.wypozyczalnia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,8 +46,15 @@ public class AdminController {
 
     @DeleteMapping(path = "/product/{id}")
     @ResponseBody
-    public void removeProduct(@PathVariable Long id) {
-        productService.removeProduct(id);
+    public void removeProduct(@PathVariable Long id, ModelAndView modelAndView) {
+        List<ProductOrderEntity> orders = productOrderService.findAllProductOrders();
+        if (orders.contains(productService.findProductById(id))) {
+            modelAndView.addObject("info", new Info("Produkt, który chcesz usunąć znjaduję sie w zamówieniu!", true));
+        } else {
+            productService.removeProduct(id);
+            modelAndView.addObject("info", new Info("Produkt usunięto poprawnie!", true));
+            adminPage(modelAndView);
+        }
     }
 
 
@@ -69,7 +79,7 @@ public class AdminController {
     public ModelAndView showEditForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
         ProductEntity product = productService.findProductById(id);
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("updateProduct");
+        modelAndView.setViewName("editProduct");
         return modelAndView;
     }
 

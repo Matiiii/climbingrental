@@ -46,74 +46,76 @@
                 <p>
                 <form th:method="delete" th:action="@{'/product/remove/'+${product.id}}">
                     <input type="hidden" name="id" th:value="${product.id}"/>
-                </form>
-                </p>
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-4"><br/>
-                        <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
-                             th:alt="${product.bigImage}"/>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-7">
-                        <br/><br/>
-                        <div align="justify"><p th:text="${product.description}">Lorem ipsum dolor sit amet, mei augue
-                            molestie
-                            disputationi no, pro praesent mnesarchum te. Etiam reprehendunt nam eu. Pri causae omnium
-                            in,
-                            quidam
-                            assueverit ex his. Te dicit elaboraret dissentiunt mea, ut vivendo consequuntur vim, vis
-                            brute
-                            docendi pertinacia te. Ei zril blandit cum. Et sed prima libris, eu sint delicata
-                            delicatissimi
-                            nam,
-                            eu est tibique nominati mediocritatem.</p></div>
-                        <br/><br/><br/>
-                        <div align="center"><p th:text="| tagi produktu: ${product.tags}|">tagi, tagi, tagi</p></div>
-                    </div>
+            </div>
+            </form>
+            </p>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4"><br/>
+                    <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
+                         th:alt="${product.bigImage}"/>
                 </div>
-                <hr/>
-
-
-                <div align="center">
-                    <form id="addToCart"  method="post" th:action="@{'/product/' + ${product.id}}">
-
-                        <div class="productInfo">
-                            <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
-                                    th:text="'W koszyku: '+${cart.getCountOfProductsInCart(product)}"></b>
-                            </div>
-                            <div class="flexAround">
-                                <span class="price left">
-                                Cena: <b th:text="${product.price}">cena</b> zł</span>
-                                <span class="count right">Dostępnych:  <b th:text="${countAvailableProducts.get(0).count}">count</b></span>
-                            </div>
-
-                        </div>
-
-                        <label for="productCount">Wybierz ilość: </label>
-                        <input id="productCount" name="productCount" type="number" min="1" th:default="1"
-                               th:min="1"
-                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}" />
-                        <input id="productName" name="productName" type="hidden" class="form-control" th:value="${product.productName}"/>
-                        <div class="form-group">
-                            <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
-                        </div>
-                    </form>
+                <div class="col-sm-6 col-md-6 col-lg-7">
+                    <br/><br/>
+                    <div align="justify"><p th:text="${product.description}">Lorem ipsum dolor sit amet, mei augue
+                        molestie
+                        disputationi no, pro praesent mnesarchum te. Etiam reprehendunt nam eu. Pri causae omnium
+                        in,
+                        quidam
+                        assueverit ex his. Te dicit elaboraret dissentiunt mea, ut vivendo consequuntur vim, vis
+                        brute
+                        docendi pertinacia te. Ei zril blandit cum. Et sed prima libris, eu sint delicata
+                        delicatissimi
+                        nam,
+                        eu est tibique nominati mediocritatem.</p></div>
+                    <br/><br/><br/>
+                    <div align="center"><p th:text="| tagi produktu: ${product.tags}|">tagi, tagi, tagi</p></div>
                 </div>
             </div>
+            <hr/>
+
+
+            <div align="center">
+                <form id="addToCart" method="post" th:action="@{'/product/' + ${product.id}}">
+
+                    <div class="productInfo">
+                        <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
+                                th:text="'W koszyku: '+${cart.getCountOfProductsInCart(product)}"></b>
+                        </div>
+                        <div class="flexAround">
+                                <span class="price left">
+                                Cena: <b th:text="${product.price}">cena</b> zł</span>
+                            <span class="count right">Dostępnych:  <b th:text="${countAvailableProducts.get(0).count}">count</b></span>
+                        </div>
+
+                    </div>
+
+                    <label for="productCount">Wybierz ilość: </label>
+                    <input id="productCount" name="productCount" type="number" min="1" th:default="1"
+                           th:min="1"
+                           th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}"/>
+                    <input id="productName" name="productName" type="hidden" class="form-control"
+                           th:value="${product.productName}"/>
+                    <div class="form-group">
+                        <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- /.container -->
-
-        <div class="container">
-            <!-- Footer -->
-            <footer>
-                <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-            </footer>
-        </div>
-        <!-- /.container -->
-
-        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
-
     </div>
+
+    <!-- /.container -->
+
+    <div class="container">
+        <!-- Footer -->
+        <footer>
+            <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+        </footer>
+    </div>
+    <!-- /.container -->
+
+    <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+</div>
 </div>
 
 </body>

@@ -111,11 +111,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void editProduct(ProductEntity product) {
-        productRepository.save(product);
-    }
-
-    @Override
 
     public List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
