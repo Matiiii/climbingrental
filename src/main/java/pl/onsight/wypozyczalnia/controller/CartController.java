@@ -44,10 +44,7 @@ public class CartController {
         modelAndView.setViewName("cart");
         modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
         modelAndView.addObject("order", new ProductOrderEntity());
-        UserEntity user = sessionService.getCurrentUser();
-        if(user != null){
-            cartService.addDiscountToCart(cart, user.getRole().getDiscount());
-        }
+        modelAndView.addObject("user", sessionService.getCurrentUser());
 
         return modelAndView;
     }
@@ -70,7 +67,7 @@ public class CartController {
             return cartPage(cart, modelAndView);
         }
 
-        order.setCombinedPrice(cart.getPriceWithDiscount());
+        order.setCombinedPrice(cart.getPriceWithDiscount(user));
 
         if (orderValidator.isOrderCorrectToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));

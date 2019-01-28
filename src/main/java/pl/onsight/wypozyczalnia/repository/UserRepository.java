@@ -7,9 +7,5 @@ import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
-
     UserEntity findUserByEmail(String email);
-
-    UserEntity findUserByFirstNameAndLastName(String firstName, String lastName);
-
 }
