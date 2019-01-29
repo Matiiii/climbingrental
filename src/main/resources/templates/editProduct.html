@@ -2,7 +2,7 @@
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link th:include="fragments/header :: head" th:remove="tag" />
+    <link th:include="fragments/header :: head" th:remove="tag"/>
     <link th:href="@{/css/register.css}" href="../static/CSS/register.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
@@ -10,8 +10,13 @@
 </div>
 <div class="container">
     <form action="#" th:action="@{/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+
+
         <div class="form-group">
-            <h3 align="center">Edytuj produkt</h3>
+            <label class="control-label col-sm-2" for="availability">Dostępność:</label>
+            <div class="col-sm-10">
+                <input type="checkbox" th:field="*{available}" class="form-control" id="availability"/>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Nazwa produktu:</label>
@@ -61,6 +66,7 @@
                 <input type="text" th:field="*{smallImage}" class="form-control" id="smallImage" required="required"/>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10" align="center">
                 <button type="submit" class="btn btn-success ">Edytuj produkt</button>

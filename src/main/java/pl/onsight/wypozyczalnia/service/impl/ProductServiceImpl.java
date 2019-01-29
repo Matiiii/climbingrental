@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<CountProducts> createListOfCountProduct(List<ProductEntity> products) {
-        return products.stream().map(product -> new CountProducts(product, product.getQuantity())).collect(Collectors.toList());
+        return products.stream().filter(productEntity -> productEntity.getAvailable()).map(product -> new CountProducts(product, product.getQuantity())).collect(Collectors.toList());
     }
 
     @Override
@@ -121,6 +121,8 @@ public class ProductServiceImpl implements ProductService {
         }
         return countProducts;
     }
+
+
 
 
 }

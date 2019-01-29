@@ -1,6 +1,7 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity(name = "product")
@@ -18,11 +19,12 @@ public class ProductEntity {
     private String tags;
     private Integer quantity;
     private Double deposit;
+    private Boolean isAvailable;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity, Double deposit) {
+    public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity, Double deposit, Boolean isAvailable) {
         this.productName = productName;
         this.price = price;
         this.description = description;
@@ -31,6 +33,15 @@ public class ProductEntity {
         this.tags = tags;
         this.quantity = quantity;
         this.deposit = deposit;
+        this.isAvailable = isAvailable;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     public Long getId() {
@@ -109,26 +120,21 @@ public class ProductEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        ProductEntity product = (ProductEntity) o;
-
-        if (productName != null ? !productName.equals(product.productName) : product.productName != null) return false;
-        if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        if (description != null ? !description.equals(product.description) : product.description != null) return false;
-        if (smallImage != null ? !smallImage.equals(product.smallImage) : product.smallImage != null) return false;
-        if (bigImage != null ? !bigImage.equals(product.bigImage) : product.bigImage != null) return false;
-        return tags != null ? tags.equals(product.tags) : product.tags == null;
-
+        ProductEntity that = (ProductEntity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(productName, that.productName) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(smallImage, that.smallImage) &&
+                Objects.equals(bigImage, that.bigImage) &&
+                Objects.equals(tags, that.tags) &&
+                Objects.equals(quantity, that.quantity) &&
+                Objects.equals(deposit, that.deposit) &&
+                Objects.equals(isAvailable, that.isAvailable);
     }
 
     @Override
     public int hashCode() {
-        int result = productName != null ? productName.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (smallImage != null ? smallImage.hashCode() : 0);
-        result = 31 * result + (bigImage != null ? bigImage.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
-        return result;
+        return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable);
     }
 }

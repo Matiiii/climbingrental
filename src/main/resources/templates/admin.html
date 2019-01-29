@@ -13,7 +13,8 @@
 <!-- Navigation -->
 <div th:replace="fragments/header :: navbar">
 </div>
-<div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger" align="center">
+<div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger"
+     align="center">
     status dodawania
 </div>
 
@@ -71,10 +72,6 @@
                                         <tr>
                                             <th>Produkt</th>
                                             <th>Opis produktu</th>
-                                            <th>
-                                                <button type="submit" class="btn btn-primary" id="add-btn-product">Dodaj
-                                                </button>
-                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -92,11 +89,11 @@
                                                 </td>
                                                 <td th:text="${products.description}">Jakiś opis</td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary btn-delete">Usuń
-                                                    </button>
+                                                    <span th:if="${products.getAvailable()}">DOSTĘPNY</span>
+                                                    <span th:if="${!products.getAvailable()}">NIEDOSTĘPNY</span>
                                                 </td>
                                                 <td>
-                                                <td><a th:href="@{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
+                                                <td><a th:href=" @{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
                                                 </td>
                                             </tr>
                                         </div>
@@ -112,6 +109,16 @@
 
                                     <form class="form-horizontal" method="post" th:action="@{/admin-page}"
                                           th:object="${addProduct}">
+                                        <div class="form-group">
+                                            <h3 align="center">Dodaj produkt</h3>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="availability">Dostępność:</label>
+                                            <div class="col-sm-10">
+                                                <input type="checkbox" th:field="*{available}" class="form-control"
+                                                       id="availability" required="required"/>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label col-sm-2" for="productName">Nazwa:</label>
                                             <div class="col-sm-10">
@@ -183,6 +190,7 @@
                                                        required="required"/>
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="submit" class="btn btn-success">Dodaj produkt</button>
@@ -236,7 +244,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary btn-usun">Usuń
+                                                    <button type="submit" class="btn btn-primary btn-usun">Edytuj
                                                     </button>
 
                                                 </td>
