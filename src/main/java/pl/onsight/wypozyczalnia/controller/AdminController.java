@@ -61,9 +61,9 @@ public class AdminController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView showEditForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("editProduct");
         ProductEntity product = productService.findProductById(id);
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("editProduct");
         return modelAndView;
     }
 
@@ -82,7 +82,6 @@ public class AdminController {
             productService.addProduct(product);
             adminPage(modelAndView);
             modelAndView.setViewName("redirect:/shop");
-
         }
         return modelAndView;
     }

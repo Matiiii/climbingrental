@@ -111,7 +111,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-
     public List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList) {
         Set<ProductEntity> setProducts = new HashSet<>(productList);
         List<CountProducts> countProducts = new LinkedList<>();

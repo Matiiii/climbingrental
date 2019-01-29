@@ -41,7 +41,7 @@ public class UserRegisterController {
             modelAndView.setViewName("register");
         } else if (registerValidator.isEmailTaken(user)) {
             modelAndView.addObject("emailIsTaken", new Info("Użytkownik o podanym mailu już istniej", true));
-            modelAndView.addObject("emailIsTakenInfo", new Info("Wprowadź inny mail", true));
+            modelAndView.addObject("emailIsTakenInfo", new Info("Wprowadź inny mail", false));
             return registrationPage(modelAndView);
         } else {
             modelAndView.setViewName("redirect:/login");
