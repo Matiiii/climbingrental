@@ -40,12 +40,11 @@ public class UserRegisterController {
         if (bindResult.hasErrors()) {
             modelAndView.setViewName("register");
         } else if (registerValidator.isEmailTaken(user)) {
-            modelAndView.addObject("emailIsTaken", new Info("Użytkownik o podanym mailu już istniej", true));
-            modelAndView.addObject("emailIsTakenInfo", new Info("Wprowadź inny mail", false));
+            modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
             return registrationPage(modelAndView);
         } else {
-            modelAndView.setViewName("redirect:/login");
             userService.saveUser(user);
+            modelAndView.setViewName("redirect:/login");
         }
 
         return modelAndView;
