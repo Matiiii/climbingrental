@@ -53,6 +53,7 @@ public class ProductTest {
         product.setProductName("Karabinek");
         int quantity = 44;
         product.setQuantity(quantity);
+        product.setAvailable(true);
         productService.addProduct(product);
 
         //when
@@ -68,6 +69,7 @@ public class ProductTest {
         //given
         ProductEntity product = new ProductEntity();
         product.setProductName("Buty");
+        product.setAvailable(true);
         productService.addProduct(product);
 
         //when

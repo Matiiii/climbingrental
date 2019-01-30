@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.RegisterValidator;
@@ -39,12 +40,11 @@ public class UserRegisterController {
         if (bindResult.hasErrors()) {
             modelAndView.setViewName("register");
         } else if (registerValidator.isEmailTaken(user)) {
-            modelAndView.addObject("emailIsTaken", "Użytkownik o podanym emailu juz istnieje!");
-            modelAndView.addObject("emailIsTakenInfo", "Wprowadź inny mail lub zaloguj się na istniejące konto!");
+            modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
             return registrationPage(modelAndView);
         } else {
-            modelAndView.setViewName("redirect:/login");
             userService.saveUser(user);
+            modelAndView.setViewName("redirect:/login");
         }
 
         return modelAndView;

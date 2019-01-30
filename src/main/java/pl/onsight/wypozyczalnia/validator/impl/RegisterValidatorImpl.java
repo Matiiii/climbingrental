@@ -7,12 +7,15 @@ import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.RegisterValidator;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
 public class RegisterValidatorImpl implements RegisterValidator {
 
     private UserService userService;
+
 
     @Autowired
     public RegisterValidatorImpl(UserService userService) {
@@ -26,4 +29,6 @@ public class RegisterValidatorImpl implements RegisterValidator {
         List<String> allEmails = allUsers.stream().map(UserEntity::getEmail).collect(Collectors.toList());
         return allEmails.contains(email);
     }
+
+
 }

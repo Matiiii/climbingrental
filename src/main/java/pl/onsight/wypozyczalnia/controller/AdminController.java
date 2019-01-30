@@ -5,22 +5,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.validator.ProductValidator;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
 
     private ProductOrderService productOrderService;
     private ProductService productService;
+    private ProductValidator productValidator;
 
     @Autowired
-    public AdminController(ProductOrderService productOrderService, ProductService productService) {
+    public AdminController(ProductOrderService productOrderService, ProductService productService, ProductValidator productValidator) {
         this.productOrderService = productOrderService;
         this.productService = productService;
+        this.productValidator = productValidator;
     }
 
     @GetMapping("/admin-page")
@@ -32,11 +38,23 @@ public class AdminController {
         return modelAndView;
     }
 
+    @DeleteMapping(path = "/product-order/{id}")
+    @ResponseBody
+    public void removeProductOrder(@PathVariable Long id) {
+        productOrderService.removeProductOrder(id);
+    }
+
+
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
                                    BindingResult bindingResult, ModelAndView modelAndView) {
+        List<ProductEntity> allProducts = productService.findAllProducts();
+        List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin");
+        } else if (allNamesOfProducts.contains(product.getProductName())) {
+            modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
+            return adminPage(modelAndView);
         } else {
             productService.addProduct(product);
             modelAndView.setViewName("redirect:/shop");
@@ -44,17 +62,28 @@ public class AdminController {
         return modelAndView;
     }
 
-    @DeleteMapping(path = "/product-order/{id}")
-    @ResponseBody
-    public void removeProductOrder(@PathVariable Long id) {
-        productOrderService.removeProductOrder(id);
+    @GetMapping("/edit/{id}")
+    public ModelAndView showEditForm(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("editProduct");
+        ProductEntity product = productService.findProductById(id);
+        modelAndView.addObject("product", product);
+        return modelAndView;
     }
 
-    @DeleteMapping(path = "/product/{id}")
-    @ResponseBody
-    public void removeProduct(@PathVariable Long id) {
-        productService.removeProduct(id);
+    @PostMapping("/edit/{id}")
+    public ModelAndView editProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
+                                    ModelAndView modelAndView) {
+
+        if (productValidator.isNameUsed(product)) {
+            modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
+            adminPage(modelAndView);
+        } else {
+            productService.addProduct(product);
+            adminPage(modelAndView);
+            modelAndView.setViewName("redirect:/shop");
+        }
+        return modelAndView;
     }
-
-
 }
+
+

@@ -43,12 +43,7 @@
                 <div class="col">
                     <h4 class="pull-right" th:text="|${product.price} zł / dzień|">2</h4></div>
                 </br>
-                <p>
-                <form th:method="delete" th:action="@{'/product/remove/'+${product.id}}">
-                    <input type="hidden" name="id" th:value="${product.id}"/>
-                    <button class="button u-full-width" type="submit">Usuń</button>
-                </form>
-                </p>
+
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-4"><br/>
                         <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
@@ -75,7 +70,7 @@
 
 
                 <div align="center">
-                    <form id="addToCart"  method="post" th:action="@{'/product/' + ${product.id}}">
+                    <form id="addToCart" method="post" th:action="@{'/product/' + ${product.id}}">
 
                         <div class="productInfo">
                             <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
@@ -84,16 +79,16 @@
                             <div class="flexAround">
                                 <span class="price left">
                                 Cena: <b th:text="${product.price}">cena</b> zł</span>
-                                <span class="count right">Dostępnych:  <b th:text="${countAvailableProducts.get(0).count}">count</b></span>
+                                <span class="count right">Dostępnych:  <b
+                                        th:text="${countAvailableProducts.get(0).count}">count</b></span>
                             </div>
-
                         </div>
-
                         <label for="productCount">Wybierz ilość: </label>
                         <input id="productCount" name="productCount" type="number" min="1" th:default="1"
                                th:min="1"
-                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}" />
-                        <input id="productName" name="productName" type="hidden" class="form-control" th:value="${product.productName}"/>
+                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}"/>
+                        <input id="productName" name="productName" type="hidden" class="form-control"
+                               th:value="${product.productName}"/>
                         <div class="form-group">
                             <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
                         </div>

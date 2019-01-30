@@ -4,8 +4,8 @@
 
 <head>
 
-<link th:include="fragments/header :: head" th:remove="tag" />
-<link th:href="@{/css/register.css}" href="../static/css/register.css" rel="stylesheet" media="screen"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/register.css}" href="../static/css/register.css" rel="stylesheet" media="screen"/>
 
 </head>
 
@@ -15,21 +15,14 @@
 
 <div th:replace="fragments/header :: navbar">
 </div>
-<br/>
-
-
-<section th:if="${emailIsTaken}">
-    <div class="alert alert-danger" role="alert">
-        <h3 th:text="${emailIsTaken}" align="center"></h3>
-        <h5 th:text="${emailIsTakenInfo}" align="center"></h5>
-    </div>
-</section>
 
 <!-- Page Content -->
 
-<br/>
-<div class="container">
 
+<div class="container">
+    <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+        status zamówienia
+    </div>
     <form class="form-horizontal" method="post" th:action="@{/register}" th:object="${user}">
         <div class="form-group">
             <h3 align="center">Załóż konto</h3>
@@ -63,12 +56,10 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="Email">Email:</label>
             <div class="col-sm-10">
-                <p th:errors="*{email}"></p>
-                <input type="text" th:field="*{email}" class="form-control" id="Email"
+                <input type="email" th:field="*{email}" class="form-control" id="Email"
                        placeholder="Wprowadź adres email:"
                        required="required"/>
             </div>
-
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="password">Hasło:</label>
@@ -111,7 +102,6 @@
                        placeholder="Wprowadź kod pocztowy:" required="required"/>
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10" align="center">
                 <button type="submit" class="btn btn-success ">REJESTRUJ</button>
@@ -119,8 +109,6 @@
 
         </div>
     </form>
-
-
 </div>
 <!-- /.container -->
 

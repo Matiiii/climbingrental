@@ -38,12 +38,15 @@ public class ProductController {
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         String dateFilter = "";
 
-        if (dateFilter.isEmpty()) {
+        if (productService.findProductById(id).getAvailable() && dateFilter.isEmpty()) {
             modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
-        } else {
+        }
+        else  if (!dateFilter.isEmpty()){
             modelAndView.addObject("countAvailableProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, productService.findProductById(id).getProductName()));
         }
-
+        else{
+            modelAndView.setViewName("redirect:/shop");
+        }
         return modelAndView;
     }
 
