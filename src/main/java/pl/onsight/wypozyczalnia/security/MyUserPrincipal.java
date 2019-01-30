@@ -14,21 +14,15 @@ public class MyUserPrincipal implements UserDetails {
 
     private UserEntity user;
 
-    public MyUserPrincipal(UserEntity user) {
+    MyUserPrincipal(UserEntity user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new LinkedList<>();
-        //Set<UserRoleEntity> userRoles = user.getRoles();
         UserRoleEntity userRole = user.getRole();
-/*        for (UserRoleEntity role : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRole()));
-        } */
-
         authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
-
 
         return authorities;
     }

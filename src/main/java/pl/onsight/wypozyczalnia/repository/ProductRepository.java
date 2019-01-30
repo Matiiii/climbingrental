@@ -9,15 +9,9 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
-
     ProductEntity findByProductName(String productName);
-
-    List<ProductEntity> findByTags(String tags);
-
-    List<ProductEntity> findByProductNameAndTags(String productName, String Tags);
-
-    //Set<ProductEntity> findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(String productName, String Tags);
 
     List<ProductEntity> findByProductNameIgnoreCaseContainingOrTagsIgnoreCaseContaining(String productName, String Tags);
 
+    List<ProductEntity> findAll();
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ProductOrderRepository extends CrudRepository<ProductOrderEntity, Long> {
-    List<ProductOrderEntity> findByUserId(Long id);
-
     List<ProductOrderEntity> findAllByProductsContaining(ProductEntity product);
 
     List<ProductOrderEntity> findAllByUserId(Long id);
+
+    List<ProductOrderEntity> findAll();
 }

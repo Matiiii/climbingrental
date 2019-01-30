@@ -6,5 +6,5 @@ import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRoleEntity, Long> {
-    UserRoleEntity findByRole(String role);
+
 }

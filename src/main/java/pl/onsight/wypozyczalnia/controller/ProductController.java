@@ -14,7 +14,6 @@ import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
 
 import java.text.ParseException;
-import java.util.List;
 
 @Controller
 @SessionAttributes("cart")
@@ -69,12 +68,6 @@ public class ProductController {
         }
         attributes.addFlashAttribute("cart", cart);
         return productPage(id, modelAndView);
-    }
-
-    @GetMapping("/products-availability/{id}")
-    @ResponseBody
-    public List<String> getAvailabilitiesForProduct(@PathVariable Long id) {
-        return productOrderService.getListOfDatesWhenProductIsReserved(id);
     }
 
     @ModelAttribute("cart")
