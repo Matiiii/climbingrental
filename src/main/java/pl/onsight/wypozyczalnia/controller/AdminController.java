@@ -9,6 +9,7 @@ import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.validator.ProductValidator;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,11 +20,13 @@ public class AdminController {
 
     private ProductOrderService productOrderService;
     private ProductService productService;
+    private ProductValidator productValidator;
 
     @Autowired
-    public AdminController(ProductOrderService productOrderService, ProductService productService) {
+    public AdminController(ProductOrderService productOrderService, ProductService productService, ProductValidator productValidator) {
         this.productOrderService = productOrderService;
         this.productService = productService;
+        this.productValidator = productValidator;
     }
 
     @GetMapping("/admin-page")
@@ -70,12 +73,8 @@ public class AdminController {
     @PostMapping("/edit/{id}")
     public ModelAndView editProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
                                     ModelAndView modelAndView) {
-        List<ProductEntity> allProducts = productService.findAllProducts();
-        List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
-        String tempName = productService.findProductById(id).getProductName();
-        String newName = product.getProductName();
-        allNamesOfProducts.remove(tempName);
-        if (allNamesOfProducts.contains(newName)) {
+
+        if (productValidator.isNameUsed(product)) {
             modelAndView.addObject("info", new Info("Produkt o nazwie " + product.getProductName() + " już istnieje!", false));
             adminPage(modelAndView);
         } else {
