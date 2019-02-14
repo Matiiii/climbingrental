@@ -35,9 +35,6 @@
                         <li>
                             <a href="#twoje-rachunki" data-toggle="pill">Twoje rachunki</a>
                         </li>
-                        <li>
-                            <a href="#trzecia-zakladka" data-toggle="pill">Twoje komentarze</a>
-                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="twoje-zamowienia">
@@ -50,15 +47,19 @@
                                             <th>Zamówione od</th>
                                             <th>Zamówione do</th>
                                             <th>Cena</th>
+                                            <th>Opłacone</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="order : ${orders}">
+                                        <a th:each="order : ${orders}" th:href="@{'/order/' + order.id}">
+                                        <tr >
                                             <td th:text="${order.id}"></td>
-                                            <td th:text="${order.orderStart}"></td>
-                                            <td th:text="${order.orderEnd}"></td>
+                                            <td th:text="${order.orderStart.toString().split(' ')[0]}"></td>
+                                            <td th:text="${order.orderEnd.toString().split(' ')[0]}"></td>
                                             <td th:text="${order.combinedPrice}"></td>
+                                            <td th:text="${order.isPaid()}"></td>
                                         </tr>
+                                        </a>
                                         </tbody>
                                     </table>
                                 </div>
@@ -68,11 +69,6 @@
                             <div class="col-md-8">
                                 <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
                                     massa metus id nunc. </p>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="trzecia-zakladka">
-                            <div class="col-md-8">
-                                <p>trzy </p>
                             </div>
                         </div>
                     </div>

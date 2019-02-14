@@ -22,8 +22,17 @@ public class ProductOrderEntity {
 
     private Date orderStart;
     private Date orderEnd;
-
     private Double combinedPrice;
+    private boolean paid;
+    private String status;
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
 
     public Long getId() {
         return id;
