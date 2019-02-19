@@ -116,8 +116,8 @@ public class DatabaseInitialization implements CommandLineRunner {
                 "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true));
 
         NewsEntity news = new NewsEntity();
-        news.setTitle("Test");
-        news.setDescription("Sprawdzenie czy dodałem newsa");
+        news.setTitle("CICD");
+        news.setDescription("Pierwszy commit CICD !!!!");
         news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news.setTag("lala");
 
