@@ -123,7 +123,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
         NewsEntity news2 = new NewsEntity();
         news2.setTitle("Test2");
-        news2.setDescription("Sprawdzenie czy dodałem newsa2");
+        news2.setDescription("Druga próba");
         news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news2.setTag("looooooo");
 
