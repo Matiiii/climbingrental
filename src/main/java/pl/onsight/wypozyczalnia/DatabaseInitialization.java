@@ -129,7 +129,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
         NewsEntity news3 = new NewsEntity();
         news3.setTitle("Test");
-        news3.setDescription("Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3");
+        news3.setDescription("Sprawdzenie czy dodałem 3 próba CICD");
         news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news3.setTag("looooooo");
 
