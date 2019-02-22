@@ -17,7 +17,7 @@
 
 <!-- Page Content -->
 <div class="container">
-    <div class="row">
+    <div class="flexRow">
         <div class="d-none d-md-block col-md-3">
             <p class="lead">Powiązane produkty:</p>
             <div class="list-group">
@@ -102,12 +102,12 @@
         <div class="container">
             <!-- Footer -->
             <footer>
-                <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+                <div class="flexRow" th:replace="fragments/footer :: footer">static footer</div>
             </footer>
         </div>
         <!-- /.container -->
 
-        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+        <div class="flexRow" th:replace="fragments/footer :: javascript">scripts</div>
 
     </div>
 </div>
