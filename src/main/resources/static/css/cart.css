@@ -1,27 +1,21 @@
-div ul li a {
-    margin-right: 5px;
-}
-
 footer {
     padding-top: 2em;
 }
-.red{
-    border:  2px dotted tomato;
+
+.red {
+    border: 2px dotted tomato;
 }
 
-.btn {
-    margin: 2px;
 
-}
 .btn-cart {
     margin: 2px;
-    width: 20px;
-    max-width: 20px;
+    width: 45px;
+    max-width: 45px;
 
 }
 
 .product {
-    margin: 10px;
+    margin-top: 10px;
 }
 
 .textarea {
@@ -29,11 +23,21 @@ footer {
 }
 
 .infoContainer {
-    padding-top: 2em;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
-.info {
-    margin-left: 5em;
+.imgBasketContainer {
+    text-align: -webkit-center;
+}
+
+.flexCenter {
+    display: flex;
+   align-items: center;
+}
+
+.display-mob {
+ display: none;
 }
 
 .img-responsive {
@@ -44,4 +48,130 @@ footer {
 
 .imgBasket {
     max-width: 150px;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: space-around;
+}
+
+.img {
+    width: 100px;
+}
+
+.productName {
+    font-size: 20px;
+}
+
+.flexAround {
+    display: flex;
+    justify-content: space-around;
+}
+
+.table-head {
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+
+    body {
+        text-align: -webkit-center;
+    }
+
+    .table-head {
+        display: none;
+    }
+
+    .img {
+        width: 90px;
+    }
+
+    .img-responsive {
+        display: flex;
+        justify-content: center;
+        max-width: 90px;
+        max-height: 90px;
+
+    }
+
+    .productName {
+
+        font-size: 15px;
+    }
+
+    .add {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-cart {
+        margin: 3px;
+        width: 30px;
+        max-width: 30px;
+    }
+
+    .imgBasket {
+        max-width: 90px;
+    }
+
+
+}
+
+@media (max-width: 576px) {
+    body {
+        text-align: -webkit-center;
+    }
+
+    .table-head {
+        display: none;
+    }
+
+    .img {
+        width: 200px;
+    }
+
+    .img-responsive {
+
+        max-width: 150px;
+        max-height: 150px;
+
+    }
+
+    .productName {
+        font-size: 25px;
+    }
+
+    .add {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-cart {
+        margin: 5px;
+        width: 45px;
+        max-width: 45px;
+
+    }
+
+    .product {
+        display: flex;
+        justify-content: center;
+        padding-top: 1em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-bottom: 2em;
+        width: 90%;
+    }
+
+    .imgBasketContainer {
+       padding-bottom: 30px;
+    }
+
+    .imgBasket {
+        display: none;
+    }
+    .display-mob {
+        display: inline;
+    }
+
+
 }
