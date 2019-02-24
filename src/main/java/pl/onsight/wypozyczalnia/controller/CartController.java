@@ -49,6 +49,13 @@ public class CartController {
         return modelAndView;
     }
 
+    @PostMapping("secure.payu.com/pl/standard/user/oauth/authorize")
+    public void getPayUToken(){
+
+    }
+
+
+
     @PostMapping("/createOrder")
     public ModelAndView createOrder(@ModelAttribute("order") ProductOrderEntity order,
                                     @ModelAttribute("cart") Cart cart,
