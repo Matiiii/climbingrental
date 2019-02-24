@@ -29,7 +29,9 @@ public class PayUServiceTest {
 
     @Test
     public void shouldCreateOrder(){
-        payUService.createOrder();
+        Response response = payUService.createOrder();
+
+        assertThat(response.getStatus()).isEqualTo(302);
     }
 
 }
