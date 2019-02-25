@@ -27,6 +27,7 @@ public class OrderController {
     public ModelAndView getOrder(@PathVariable Long id, ModelAndView modelAndView) {
 
         modelAndView.setViewName("order");
+        modelAndView.addObject("user", sessionService.getCurrentUser());
         if(productOrderService.isUserHavePermissionToSeeThisOrder(sessionService.getCurrentUser().getId(), id)){
             modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
         }else {

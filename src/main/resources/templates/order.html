@@ -41,9 +41,8 @@
                 <p class="orderPeriod">Termin wypożyczenia: <b th:text="|${productOrder.getOrderStart()}' - '${productOrder.getOrderEnd()} |">data</b></p>
                 <p>Łączna ilość dni: <b th:text="${productOrder.getNumberOfDays()}"></b></p>
                 <p>Wymagana kaucja: <b th:text="${productOrder.getDeposit()}"></b></p>
-                <p>Rabat: <b th:if="${user != null}" th:text="${user.getRole().getDiscount() + '%'}"></b></p>
-                <p>Łączny koszt z rabatem: <b
-                        th:text="(${user != null} ? ${cart.getPriceWithDiscount(user)} : ${cart.getCombinedPrice()})"></b>
+                <p>Rabat: <b th:if="${user != null}" th:text="${productOrder.getCombinedDiscount() + '%'}"></b></p>
+                <p>Łączny koszt z rabatem: <b th:text="(${user != null} ? ${productOrder.getCombinedPrice()})"></b>
                 </p>
             </div>
         </div>

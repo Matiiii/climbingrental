@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
@@ -56,18 +55,13 @@ public class CartController {
         modelAndView.setViewName("cart");
 
         UserEntity user = sessionService.getCurrentUser();
-        order.setUser(user);
-        order.setProducts(cartService.getListOfProductsInCart(cart));
 
         if (dateValidator.isDateValid(cart.getDate())) {
-            order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
-            order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+            order.buildOrder(user, cart);
         } else {
             modelAndView.addObject("info", new Info("Data niepoprawna!", false));
             return cartPage(cart, modelAndView);
         }
-
-        order.setCombinedPrice(cart.getPriceWithDiscount(user));
 
         if (orderValidator.isOrderCorrectToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
