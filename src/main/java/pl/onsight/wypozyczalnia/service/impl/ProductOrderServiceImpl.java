@@ -3,8 +3,11 @@ package pl.onsight.wypozyczalnia.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.onsight.wypozyczalnia.DateFilter;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
+import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
@@ -18,13 +21,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository productOrderRepository;
     private ProductRepository productRepository;
-    private UserService userService;
+
 
     @Autowired
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository, UserService userService) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -74,15 +76,20 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return productOrderRepository.findOne(id);
     }
 
-
     @Override
-    public boolean isUserHavePermissionToSeeThisOrder(Long userId, Long orderId) {
+    public ProductOrderEntity buildOrder(UserEntity user, Cart cart) {
+        ProductOrderEntity order = new ProductOrderEntity();
 
-        if (userService.getUserById(userId).getRole().equals("Admin")) {
-            return true;
-        } else {
-            return findUserOrders(userId).stream().anyMatch(order -> order.getId().equals(orderId));
-        }
+        order.setUser(user);
+        order.setProducts(cart.getProducts());
+        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+        order.setCombinedPrice(cart.getPriceWithDiscount(user));
+        order.setDeposit(cart.getCombinedDeposit());
+        order.setCombinedDiscount(user.getRole().getDiscount());
+        order.createOldPricesHashMap(cart);
+
+        return order;
     }
 
 }

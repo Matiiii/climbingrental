@@ -1,7 +1,9 @@
 package pl.onsight.wypozyczalnia.service;
 
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
+import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -20,6 +22,5 @@ public interface ProductOrderService {
 
     ProductOrderEntity getOrderById(Long id);
 
-    boolean isUserHavePermissionToSeeThisOrder(Long userId, Long orderId);
-
+    ProductOrderEntity buildOrder(UserEntity user, Cart cart);
 }

@@ -82,7 +82,7 @@ public class ProductOrderEntity {
         return combinedPrice;
     }
 
-    private void setCombinedPrice(Double combinedPrice) {
+    public void setCombinedPrice(Double combinedPrice) {
         this.combinedPrice = combinedPrice;
     }
 
@@ -90,7 +90,7 @@ public class ProductOrderEntity {
         return deposit;
     }
 
-    private void setDeposit(Double deposit) {
+    public void setDeposit(Double deposit) {
         this.deposit = deposit;
     }
 
@@ -106,7 +106,7 @@ public class ProductOrderEntity {
         return combinedDiscount;
     }
 
-    private void setCombinedDiscount(Double combinedDiscount) {
+    public void setCombinedDiscount(Double combinedDiscount) {
         this.combinedDiscount = combinedDiscount;
     }
 
@@ -142,7 +142,7 @@ public class ProductOrderEntity {
     public int getNumberOfDays() {
         return (orderStart != null && orderEnd != null) ? Days.daysBetween(new DateTime(orderStart), new DateTime(orderEnd)).getDays() + 1 : 0;
     }
-    private void createOldPricesHashMap(Cart cart) {
+    public void createOldPricesHashMap(Cart cart) {
         for (ProductEntity product : cart.getProducts()) {
             oldPrices.put(product.getId(), product.getPrice());
         }
@@ -151,19 +151,6 @@ public class ProductOrderEntity {
     public int countNumberOfProduct(ProductEntity product){
         return Collections.frequency(products, product);
 
-    }
-
-    public void buildOrder(UserEntity user, Cart cart) {
-
-
-        this.setUser(user);
-        this.setProducts(cart.getProducts());
-        this.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
-        this.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
-        this.setCombinedPrice(cart.getPriceWithDiscount(user));
-        this.setDeposit(cart.getCombinedDeposit());
-        this.setCombinedDiscount(user.getRole().getDiscount());
-        this.createOldPricesHashMap(cart);
     }
 
     @Override
