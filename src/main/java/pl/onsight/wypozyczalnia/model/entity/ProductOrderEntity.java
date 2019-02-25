@@ -1,15 +1,13 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 @Entity(name = "product_order")
@@ -25,6 +23,11 @@ public class ProductOrderEntity {
     @ManyToMany
     @Column(name = "product_id")
     private List<ProductEntity> products = new LinkedList<>();
+
+    @Type(
+            type = "org.hibernate.type.SerializableToBlobType",
+            parameters = { @org.hibernate.annotations.Parameter( name = "classname", value = "java.util.HashMap" ) }
+    )
     private HashMap<Long, Double> oldPrices = new HashMap<>();
 
     private Date orderStart;
@@ -79,7 +82,7 @@ public class ProductOrderEntity {
         return combinedPrice;
     }
 
-    public void setCombinedPrice(Double combinedPrice) {
+    private void setCombinedPrice(Double combinedPrice) {
         this.combinedPrice = combinedPrice;
     }
 
@@ -87,7 +90,7 @@ public class ProductOrderEntity {
         return deposit;
     }
 
-    public void setDeposit(Double deposit) {
+    private void setDeposit(Double deposit) {
         this.deposit = deposit;
     }
 
@@ -103,7 +106,7 @@ public class ProductOrderEntity {
         return combinedDiscount;
     }
 
-    public void setCombinedDiscount(Double combinedDiscount) {
+    private void setCombinedDiscount(Double combinedDiscount) {
         this.combinedDiscount = combinedDiscount;
     }
 
@@ -145,17 +148,38 @@ public class ProductOrderEntity {
         }
     }
 
+    public int countNumberOfProduct(ProductEntity product){
+        return Collections.frequency(products, product);
+
+    }
+
     public void buildOrder(UserEntity user, Cart cart) {
-        ProductOrderEntity order = new ProductOrderEntity();
 
-        order.setUser(user);
-        order.setProducts(cart.getProducts());
-        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
-        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
-        order.setCombinedPrice(cart.getPriceWithDiscount(user));
-        order.setDeposit(cart.getCombinedDeposit());
-        order.setCombinedDiscount(user.getRole().getDiscount());
-        order.createOldPricesHashMap(cart);
 
+        this.setUser(user);
+        this.setProducts(cart.getProducts());
+        this.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+        this.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+        this.setCombinedPrice(cart.getPriceWithDiscount(user));
+        this.setDeposit(cart.getCombinedDeposit());
+        this.setCombinedDiscount(user.getRole().getDiscount());
+        this.createOldPricesHashMap(cart);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductOrderEntity{" +
+                "id=" + id +
+                ", user=" + user +
+                ", products=" + products +
+                ", oldPrices=" + oldPrices +
+                ", orderStart=" + orderStart +
+                ", orderEnd=" + orderEnd +
+                ", combinedPrice=" + combinedPrice +
+                ", deposit=" + deposit +
+                ", paid=" + paid +
+                ", status='" + status + '\'' +
+                ", combinedDiscount=" + combinedDiscount +
+                '}';
     }
 }

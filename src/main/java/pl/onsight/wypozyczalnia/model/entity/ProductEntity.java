@@ -137,4 +137,20 @@ public class ProductEntity {
     public int hashCode() {
         return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable);
     }
+
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", smallImage='" + smallImage + '\'' +
+                ", bigImage='" + bigImage + '\'' +
+                ", tags='" + tags + '\'' +
+                ", quantity=" + quantity +
+                ", deposit=" + deposit +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 }

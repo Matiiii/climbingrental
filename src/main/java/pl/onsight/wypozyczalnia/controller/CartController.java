@@ -55,14 +55,17 @@ public class CartController {
         modelAndView.setViewName("cart");
 
         UserEntity user = sessionService.getCurrentUser();
-
+        System.out.println(user.toString());
+        System.out.println("+++++++++++++++++++++++++++++");
+        System.out.println(cart.toString());
         if (dateValidator.isDateValid(cart.getDate())) {
             order.buildOrder(user, cart);
         } else {
             modelAndView.addObject("info", new Info("Data niepoprawna!", false));
             return cartPage(cart, modelAndView);
         }
-
+        System.out.println("==================================");
+        System.out.println(order.toString());
         if (orderValidator.isOrderCorrectToSave(order)) {
             modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
             productOrderService.saveOrder(order);

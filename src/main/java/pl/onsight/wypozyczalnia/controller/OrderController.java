@@ -10,6 +10,8 @@ import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 
+import java.util.HashSet;
+
 @Controller
 public class OrderController {
 
@@ -30,6 +32,7 @@ public class OrderController {
         modelAndView.addObject("user", sessionService.getCurrentUser());
         if(productOrderService.isUserHavePermissionToSeeThisOrder(sessionService.getCurrentUser().getId(), id)){
             modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
+            modelAndView.addObject("productsHashList",  new HashSet<>(productOrderService.getOrderById(id).getProducts()));
         }else {
             modelAndView.addObject("info", new Info("Nie masz upranień by zobaczyć to zamówienie", false));
         }
