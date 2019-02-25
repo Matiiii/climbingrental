@@ -1,5 +1,9 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import pl.onsight.wypozyczalnia.DateFilter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.LinkedList;
@@ -23,8 +27,10 @@ public class ProductOrderEntity {
     private Date orderStart;
     private Date orderEnd;
     private Double combinedPrice;
+    private Double deposit;
     private boolean paid;
     private String status;
+    private Double combinedDiscount;
 
     public boolean isPaid() {
         return paid;
@@ -74,6 +80,30 @@ public class ProductOrderEntity {
         this.combinedPrice = combinedPrice;
     }
 
+    public Double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getCombinedDiscount() {
+        return combinedDiscount;
+    }
+
+    public void setCombinedDiscount(Double combinedDiscount) {
+        this.combinedDiscount = combinedDiscount;
+    }
+
     public ProductOrderEntity() {
     }
 
@@ -93,5 +123,9 @@ public class ProductOrderEntity {
 
     public ProductOrderEntity(List<ProductEntity> products) {
         this.products = products;
+    }
+
+    public int getNumberOfDays() {
+        return (orderStart != null && orderEnd != null) ? Days.daysBetween(new DateTime(orderStart), new DateTime(orderEnd)).getDays() + 1 : 0;
     }
 }

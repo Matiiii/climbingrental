@@ -17,4 +17,9 @@ public interface ProductOrderService {
     List<ProductOrderEntity> findUserOrders(Long id);
 
     void removeProductOrder(Long id);
+
+    ProductOrderEntity getOrderById(Long id);
+
+    boolean isUserHavePermissionToSeeThisOrder(Long userId, Long orderId);
+
 }

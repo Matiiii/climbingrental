@@ -8,6 +8,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -17,11 +18,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository productOrderRepository;
     private ProductRepository productRepository;
+    private UserService userService;
 
     @Autowired
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository, UserService userService) {
         this.productOrderRepository = productOrderRepository;
         this.productRepository = productRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -65,4 +68,21 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
+
+    @Override
+    public ProductOrderEntity getOrderById(Long id) {
+        return productOrderRepository.findOne(id);
+    }
+
+
+    @Override
+    public boolean isUserHavePermissionToSeeThisOrder(Long userId, Long orderId) {
+
+        if (userService.getUserById(userId).getRole().equals("Admin")) {
+            return true;
+        } else {
+            return findUserOrders(userId).stream().anyMatch(order -> order.getId().equals(orderId));
+        }
+    }
+
 }
