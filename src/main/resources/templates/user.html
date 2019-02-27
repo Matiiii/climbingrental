@@ -51,15 +51,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <a th:each="order : ${orders}" th:href="@{'/order/' + order.id}">
-                                        <tr >
-                                            <td th:text="${order.id}"></td>
+                                        <tr th:each="order : ${orders}">
+                                            <td><a th:href="@{'/order/' + ${order.id}}"><b th:text="${order.id}"></b></a></td>
                                             <td th:text="${order.orderStart.toString().split(' ')[0]}"></td>
                                             <td th:text="${order.orderEnd.toString().split(' ')[0]}"></td>
                                             <td th:text="${order.combinedPrice}"></td>
                                             <td th:text="${order.isPaid()}"></td>
                                         </tr>
-                                        </a>
                                         </tbody>
                                     </table>
                                 </div>

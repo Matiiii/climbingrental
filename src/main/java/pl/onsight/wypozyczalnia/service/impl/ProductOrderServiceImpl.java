@@ -3,11 +3,15 @@ package pl.onsight.wypozyczalnia.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.onsight.wypozyczalnia.DateFilter;
+import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
+import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
+import pl.onsight.wypozyczalnia.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +21,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository productOrderRepository;
     private ProductRepository productRepository;
+
 
     @Autowired
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
@@ -65,4 +70,26 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public void removeProductOrder(Long id) {
         productOrderRepository.delete(id);
     }
+
+    @Override
+    public ProductOrderEntity getOrderById(Long id) {
+        return productOrderRepository.findOne(id);
+    }
+
+    @Override
+    public ProductOrderEntity buildOrder(UserEntity user, Cart cart) {
+        ProductOrderEntity order = new ProductOrderEntity();
+
+        order.setUser(user);
+        order.setProducts(cart.getProducts());
+        order.setOrderStart(DateFilter.changeStringToDate(cart.getDate())[0]);
+        order.setOrderEnd(DateFilter.changeStringToDate(cart.getDate())[1]);
+        order.setCombinedPrice(cart.getPriceWithDiscount(user));
+        order.setDeposit(cart.getCombinedDeposit());
+        order.setCombinedDiscount(user.getRole().getDiscount());
+        order.createOldPricesHashMap(cart);
+
+        return order;
+    }
+
 }
