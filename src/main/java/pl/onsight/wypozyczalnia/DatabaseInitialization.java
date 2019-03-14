@@ -136,6 +136,7 @@ public class DatabaseInitialization implements CommandLineRunner {
         newsRepository.save(news);
         newsRepository.save(news2);
         newsRepository.save(news3);
+        newsRepository.save(news4);
 
         ProductOrderEntity order1 = new ProductOrderEntity();
         order1.setUser(userService.getUserById(1L));
