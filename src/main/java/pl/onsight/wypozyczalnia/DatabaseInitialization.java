@@ -133,9 +133,16 @@ public class DatabaseInitialization implements CommandLineRunner {
         news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news3.setTag("looooooo");
 
+        NewsEntity news4 = new NewsEntity();
+        news4.setTitle("Test");
+        news4.setDescription("test");
+        news4.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news4.setTag("lsdf");
+
         newsRepository.save(news);
         newsRepository.save(news2);
         newsRepository.save(news3);
+        newsRepository.save(news4);
 
         ProductOrderEntity order1 = new ProductOrderEntity();
         order1.setUser(userService.getUserById(1L));
