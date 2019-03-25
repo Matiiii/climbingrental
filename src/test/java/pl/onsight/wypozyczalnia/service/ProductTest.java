@@ -29,13 +29,12 @@ public class ProductTest {
 
   @Autowired
   private ProductService productService;
-  private SessionService sessionService;
   private int sizeOfDatabase;
-  private UserService userService;
 
   @Before
   public void ini() {
     sizeOfDatabase = productService.findAllProducts().size();
+
   }
 
   @Test
@@ -126,43 +125,5 @@ public class ProductTest {
     assertThat(setOfFoundLinks.size()).isEqualTo(2);
   }
 
-  @Test
-  @Transactional
-  public void shouldFindProductsForAdmin (){
-    //given
-    UserEntity u1 = new UserEntity();
-    u1.setFirstName("Andrzej");
-    u1.setLastName("Kowalski");
-    u1.setEmail("email");
-    u1.setPassword("haslo");
-    u1.setPhoneNumber("666 746 666");
 
-    UserRoleEntity adminRole = new UserRoleEntity();
-    adminRole.setRole("ROLE_ADMIN");
-    adminRole.setDiscount(90);
-    u1.setRole(adminRole);
-    userService.saveUser(u1);
-
-    ProductEntity product = new ProductEntity();
-    product.setProductName("snieg");
-    product.setStaffMember(false);
-    product.setAvailable(false);
-    productService.addProduct(product);
-
-    ProductEntity product2 = new ProductEntity();
-    product2.setProductName("Kask");
-    product2.setStaffMember(false);
-    product2.setAvailable(false);
-    productService.addProduct(product2);
-
-    List<ProductEntity> productList = new LinkedList<>();
-    productList.add(product);
-    productList.add(product);
-    productList.add(product2);
-    //when
-    List<CountProducts> countProductsForAdmin=productService.countAllProductsByName();
-    //then
-    assertThat(countProductsForAdmin.size()).isEqualTo(2);
-
-  }
 }
