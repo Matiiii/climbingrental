@@ -69,7 +69,7 @@ public class DatabaseInitialization implements CommandLineRunner {
         u2.setPhoneNumber("123 456 789");
 
         UserRoleEntity userRole = new UserRoleEntity();
-        userRole.setRole("ROLE_USER");
+        userRole.setRole("ROLE_STAFF");
         userRole.setDiscount(0);
         u2.setRole(userRole);
 

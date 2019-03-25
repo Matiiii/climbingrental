@@ -10,22 +10,24 @@ import pl.onsight.wypozyczalnia.repository.UserRepository;
 @Service
 public class SessionServiceImpl implements SessionService {
 
-    private UserRepository userRepository;
+  private UserRepository userRepository;
 
-    @Autowired
-    public SessionServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+  @Autowired
+  public SessionServiceImpl(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  @Override
+  public UserEntity getCurrentUser() {
+    if (SecurityContextHolder.getContext().getAuthentication() != null ) {
+      if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepository.findUserByEmail(email);
+        return user;
+      }
     }
 
-    @Override
-    public UserEntity getCurrentUser() {
-        if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
-            String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            UserEntity user = userRepository.findUserByEmail(email);
-            return user;
-        }
-
-        return null;
-    }
+    return null;
+  }
 
 }

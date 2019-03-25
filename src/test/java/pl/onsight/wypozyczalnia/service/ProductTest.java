@@ -12,6 +12,7 @@ import pl.onsight.wypozyczalnia.model.entity.AddressEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
+import pl.onsight.wypozyczalnia.security.MyUserDetailService;
 
 import javax.mail.Session;
 import javax.management.relation.Role;
@@ -30,6 +31,8 @@ public class ProductTest {
   @Autowired
   private ProductService productService;
   private int sizeOfDatabase;
+  private MyUserDetailService myUserDetailService;
+  private UserService userService;
 
   @Before
   public void ini() {
@@ -123,6 +126,40 @@ public class ProductTest {
 
     //then
     assertThat(setOfFoundLinks.size()).isEqualTo(2);
+  }
+
+  @Test
+  @Transactional
+  public void shouldFindProductsForAdmin() {
+    //given
+    UserEntity u1 = new UserEntity();
+    AddressEntity address1 = new AddressEntity();
+    address1.setCity("Poznan");
+    address1.setZipcode("61-142");
+    address1.setFlatNumber("15");
+    address1.setStreet("Maltanska");
+    u1.setAddress(address1);
+
+    u1.setFirstName("Andrzej");
+    u1.setLastName("Kowalski");
+    u1.setEmail("email");
+    u1.setPassword("haslo");
+    u1.setPhoneNumber("666 746 666");
+
+    UserRoleEntity adminRole = new UserRoleEntity();
+    adminRole.setRole("ROLE_ADMIN");
+    adminRole.setDiscount(90);
+    u1.setRole(adminRole);
+
+    userService.saveUser(u1);
+
+    myUserDetailService.loadUserByUsername(u1.getEmail());
+
+    //when
+    List<CountProducts> productsForAdmin = productService.countAllProductsByName();
+    //then
+    assertThat(productsForAdmin.size()).isEqualTo(5);
+
   }
 
 
