@@ -69,6 +69,14 @@ public class Cart {
         finalPrice /= 100;
         return finalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "products=" + products +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }
 
 

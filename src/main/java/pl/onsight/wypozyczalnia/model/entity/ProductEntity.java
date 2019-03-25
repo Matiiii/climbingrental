@@ -148,4 +148,5 @@ public class ProductEntity {
   public int hashCode() {
     return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable, isStaffMember);
   }
+
 }

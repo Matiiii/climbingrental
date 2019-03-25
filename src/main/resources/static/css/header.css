@@ -1,18 +1,13 @@
 body {
-    padding-top: 54px;
+    padding-top: 25px;
 }
 @media (min-width: 992px) {
     body {
-        padding-top: 56px;
+        padding-top: 25px;
     }
 }
 #wyloguj {
     margin-top: 8px;
     margin-bottom: auto;
-}
-
-.btn {
-    margin: 2px;
-    min-width: 80px;
 }
 

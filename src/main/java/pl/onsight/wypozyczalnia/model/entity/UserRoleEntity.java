@@ -37,4 +37,13 @@ public class UserRoleEntity {
     public void setDiscount(double discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "UserRoleEntity{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                ", discount=" + discount +
+                '}';
+    }
 }

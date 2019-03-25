@@ -4,4 +4,5 @@ import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 
 public interface OrderValidator {
     boolean isOrderCorrectToSave(ProductOrderEntity order);
+
 }

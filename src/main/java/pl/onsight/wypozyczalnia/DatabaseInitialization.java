@@ -116,26 +116,33 @@ public class DatabaseInitialization implements CommandLineRunner {
 
 
         NewsEntity news = new NewsEntity();
-        news.setTitle("Test");
-        news.setDescription("Sprawdzenie czy dodałem newsa");
+        news.setTitle("CICD");
+        news.setDescription("Pierwszy commit CICD !!!!");
         news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news.setTag("lala");
 
         NewsEntity news2 = new NewsEntity();
         news2.setTitle("Test2");
-        news2.setDescription("Sprawdzenie czy dodałem newsa2");
+        news2.setDescription("Druga próba");
         news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news2.setTag("looooooo");
 
         NewsEntity news3 = new NewsEntity();
         news3.setTitle("Test");
-        news3.setDescription("Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3Sprawdzenie czy dodałem newsafsgdsfdsfsdfdsfdsffdsfdsgfsggfgfdfasdgfrhgthjtjrtjytjgfhfnjfnfnjgfngfnhdshdfdbfdx3");
+        news3.setDescription("Sprawdzenie czy dodałem 3 próba CICD");
         news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
         news3.setTag("looooooo");
+
+        NewsEntity news4 = new NewsEntity();
+        news4.setTitle("Test");
+        news4.setDescription("test");
+        news4.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news4.setTag("lsdf");
 
         newsRepository.save(news);
         newsRepository.save(news2);
         newsRepository.save(news3);
+        newsRepository.save(news4);
 
         ProductOrderEntity order1 = new ProductOrderEntity();
         order1.setUser(userService.getUserById(1L));

@@ -1,9 +1,13 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import pl.onsight.wypozyczalnia.DateFilter;
+import pl.onsight.wypozyczalnia.model.Cart;
+
 import javax.persistence.*;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 @Entity(name = "product_order")
@@ -20,10 +24,27 @@ public class ProductOrderEntity {
     @Column(name = "product_id")
     private List<ProductEntity> products = new LinkedList<>();
 
+    @Type(
+            type = "org.hibernate.type.SerializableToBlobType",
+            parameters = { @org.hibernate.annotations.Parameter( name = "classname", value = "java.util.HashMap" ) }
+    )
+    private HashMap<Long, Double> oldPrices = new HashMap<>();
+
     private Date orderStart;
     private Date orderEnd;
-
     private Double combinedPrice;
+    private Double deposit;
+    private boolean paid;
+    private String status;
+    private Double combinedDiscount;
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
 
     public Long getId() {
         return id;
@@ -65,6 +86,38 @@ public class ProductOrderEntity {
         this.combinedPrice = combinedPrice;
     }
 
+    public Double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getCombinedDiscount() {
+        return combinedDiscount;
+    }
+
+    public void setCombinedDiscount(Double combinedDiscount) {
+        this.combinedDiscount = combinedDiscount;
+    }
+
+    public HashMap<Long, Double> getOldPrices() {
+        return oldPrices;
+    }
+
+    public void setOldPrices(HashMap<Long, Double> oldPrices) {
+        this.oldPrices = oldPrices;
+    }
+
     public ProductOrderEntity() {
     }
 
@@ -84,5 +137,36 @@ public class ProductOrderEntity {
 
     public ProductOrderEntity(List<ProductEntity> products) {
         this.products = products;
+    }
+
+    public int getNumberOfDays() {
+        return (orderStart != null && orderEnd != null) ? Days.daysBetween(new DateTime(orderStart), new DateTime(orderEnd)).getDays() + 1 : 0;
+    }
+    public void createOldPricesHashMap(Cart cart) {
+        for (ProductEntity product : cart.getProducts()) {
+            oldPrices.put(product.getId(), product.getPrice());
+        }
+    }
+
+    public int countNumberOfProduct(ProductEntity product){
+        return Collections.frequency(products, product);
+
+    }
+
+    @Override
+    public String toString() {
+        return "ProductOrderEntity{" +
+                "id=" + id +
+                ", user=" + user +
+                ", products=" + products +
+                ", oldPrices=" + oldPrices +
+                ", orderStart=" + orderStart +
+                ", orderEnd=" + orderEnd +
+                ", combinedPrice=" + combinedPrice +
+                ", deposit=" + deposit +
+                ", paid=" + paid +
+                ", status='" + status + '\'' +
+                ", combinedDiscount=" + combinedDiscount +
+                '}';
     }
 }
