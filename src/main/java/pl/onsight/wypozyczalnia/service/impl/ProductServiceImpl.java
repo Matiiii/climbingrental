@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
       if (sessionService.getCurrentUser().getRole().getRole().equals("ROLE_ADMIN") || sessionService.getCurrentUser().getRole().equals("ROLE_STAFF")) {
         return products.stream().map(productEntity -> new CountProducts(productEntity, productEntity.getQuantity())).collect(Collectors.toList());
       } else if (sessionService.getCurrentUser().getRole().getRole().equals("ROLE_MEMBER")) {
-        return products.stream().filter(productEntity -> productEntity.getStaffMember()).map(productEntity -> new CountProducts(productEntity, productEntity.getQuantity())).collect(Collectors.toList());
+        return products.stream().filter(productEntity -> productEntity.getMember()).map(productEntity -> new CountProducts(productEntity, productEntity.getQuantity())).collect(Collectors.toList());
       }
     }
     return products.stream().filter(productEntity -> productEntity.getAvailable()).map(product -> new CountProducts(product, product.getQuantity())).collect(Collectors.toList());

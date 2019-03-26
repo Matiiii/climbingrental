@@ -20,12 +20,12 @@ public class ProductEntity {
   private Integer quantity;
   private Double deposit;
   private Boolean isAvailable;
-  private Boolean isStaffMember;
+  private Boolean isMember;
 
   public ProductEntity() {
   }
 
-  public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity, Double deposit, Boolean isAvailable, Boolean isStaffMember) {
+  public ProductEntity(String productName, Double price, String description, String smallImage, String bigImage, String tags, Integer quantity, Double deposit, Boolean isAvailable, Boolean isMember) {
     this.productName = productName;
     this.price = price;
     this.description = description;
@@ -35,7 +35,7 @@ public class ProductEntity {
     this.quantity = quantity;
     this.deposit = deposit;
     this.isAvailable = isAvailable;
-    this.isStaffMember = isStaffMember;
+    this.isMember = isMember;
   }
 
   public Long getId() {
@@ -118,12 +118,12 @@ public class ProductEntity {
     isAvailable = available;
   }
 
-  public Boolean getStaffMember() {
-    return isStaffMember;
+  public Boolean getMember() {
+    return isMember;
   }
 
-  public void setStaffMember(Boolean staffMember) {
-    isStaffMember = staffMember;
+  public void setMember(Boolean staffMember) {
+    isMember = staffMember;
   }
 
   @Override
@@ -141,12 +141,12 @@ public class ProductEntity {
       Objects.equals(quantity, that.quantity) &&
       Objects.equals(deposit, that.deposit) &&
       Objects.equals(isAvailable, that.isAvailable) &&
-      Objects.equals(isStaffMember, that.isStaffMember);
+      Objects.equals(isMember, that.isMember);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable, isStaffMember);
+    return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable, isMember);
   }
 
 }
