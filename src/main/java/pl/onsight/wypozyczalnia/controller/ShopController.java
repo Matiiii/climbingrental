@@ -26,16 +26,14 @@ public class ShopController {
   private CartService cartService;
   private DateValidator dateValidator;
   private InputValidator inputValidator;
-  private UserRepository userRepository;
 
   @Autowired
-  public ShopController(ProductService productService, CartService cartService, UserRepository userRepository, DateValidator dateValidator,
+  public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator,
                         InputValidator inputValidator) {
     this.productService = productService;
     this.cartService = cartService;
     this.dateValidator = dateValidator;
     this.inputValidator = inputValidator;
-    this.userRepository = userRepository;
   }
 
   @GetMapping(value = "/shop")

@@ -69,9 +69,9 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public List<CountProducts> createListOfCountProduct(List<ProductEntity> products) {
     if (sessionService.getCurrentUser() != null) {
-      if (sessionService.getCurrentUser().getRole().equals("ROLE_ADMIN") && sessionService.getCurrentUser().getRole().equals("ROLE_STAFF")) {
+      if (sessionService.getCurrentUser().getRole().getRole().equals("ROLE_ADMIN") || sessionService.getCurrentUser().getRole().equals("ROLE_STAFF")) {
         return products.stream().map(productEntity -> new CountProducts(productEntity, productEntity.getQuantity())).collect(Collectors.toList());
-      } else if (sessionService.getCurrentUser().getRole().equals("ROLE_MEMBER")) {
+      } else if (sessionService.getCurrentUser().getRole().getRole().equals("ROLE_MEMBER")) {
         return products.stream().filter(productEntity -> productEntity.getStaffMember()).map(productEntity -> new CountProducts(productEntity, productEntity.getQuantity())).collect(Collectors.toList());
       }
     }

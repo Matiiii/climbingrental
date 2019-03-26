@@ -11,7 +11,6 @@ import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
-import pl.onsight.wypozyczalnia.service.UserService;
 
 import java.util.Date;
 import java.util.List;
