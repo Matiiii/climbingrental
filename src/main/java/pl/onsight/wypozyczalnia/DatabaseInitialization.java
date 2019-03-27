@@ -114,7 +114,7 @@ public class DatabaseInitialization implements CommandLineRunner {
       productRepository.save(new ProductEntity("Lina 60m Tendon 10,0 (cze/nie)", 20.00, "Klasyk w nowej odsłonie: Prezentowany na zdjęciu oplot jest nowym wzorem oplotu zastrzeżonym na terenie Polski. Od 2014 roku tylko liny z tym wzorem oplotu będą objęte gwarancją polskiego importera.\n" +
         "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true,true));
 
-
+/*
         NewsEntity news = new NewsEntity();
         news.setTitle("CICD");
         news.setDescription("Pierwszy commit CICD !!!!");
@@ -142,7 +142,7 @@ public class DatabaseInitialization implements CommandLineRunner {
         newsRepository.save(news);
         newsRepository.save(news2);
         newsRepository.save(news3);
-        newsRepository.save(news4);
+        newsRepository.save(news4);*/
 
         ProductOrderEntity order1 = new ProductOrderEntity();
         order1.setUser(userService.getUserById(1L));

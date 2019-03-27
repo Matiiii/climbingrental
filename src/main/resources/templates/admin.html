@@ -41,11 +41,13 @@
               <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
             </li>
             <li>
+              <a href="#dodaj-news" data-toggle="tab">Dodaj news</a>
+            </li>
+            <li>
               <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
             </li>
           </ul>
           <div class="tab-content">
-
             <div class="tab-pane active" id="newsy">
               <div class="col-md-12">
                 <form class="form-horizontal">
@@ -63,7 +65,49 @@
                 </form>
               </div>
             </div>
-
+            <div class="tab-pane fade" id="dodaj-news">
+              <div>
+                <div>
+                  <form class="form-horizontal" method="post" th:action="@{/addNews}"
+                        th:object="${news}">
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Title">Title:</label>
+                      <div class="col-sm-10">
+                        <p th:errors="*{title}"></p>
+                        <input class="form-control" type="text" th:field="*{title}" id="Title" placeholder="Enter title:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Description">Description:</label>
+                      <div class="col-sm-10">
+                        <p th:errors="*{description}"></p>
+                        <textarea class="form-control" id="Description" placeholder="Enter description:" th:field="*{description}"
+                                  required="required"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="link">Link:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{link}" class="form-control" id="link" placeholder="Enter link:"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Tag">Tag:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{tag}" class="form-control" id="Tag" placeholder="Enter tag:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-success" value="Dodaj newsa"/>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
             <div class="tab-pane fade" id="produkty">
               <div class="col-md-12">
                 <div class="list-group">
@@ -93,8 +137,8 @@
                           <span th:if="${!products.getAvailable()}">NIEDOSTĘPNY</span>
                         </td>
                         <td>
-                          <span th:if="${products.getStaffMember()}">Obsługa ścianki</span>
-                          <span th:if="${!products.getStaffMember()}">Admin</span>
+                          <span th:if="${products.getMember()}">Obsługa ścianki</span>
+                          <span th:if="${!products.getMember()}">Admin</span>
                         </td>
                         <td>
                         <td><a th:href=" @{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
@@ -110,7 +154,6 @@
             <div class="tab-pane fade" id="dodaj-produkt">
               <div class="col-md-12">
                 <div class="container product">
-
                   <form class="form-horizontal" method="post" th:action="@{/admin-page}"
                         th:object="${addProduct}">
                     <div class="form-group">
@@ -126,7 +169,7 @@
                     <div class="form-group">
                       <label class="control-label col-sm-2" for="staffMember">Obsługa ścianki:</label>
                       <div class="col-sm-10">
-                        <input type="checkbox" th:field="*{staffMember}" class="form-control"
+                        <input type="checkbox" th:field="*{member}" class="form-control"
                                id="staffMember" required="required"/>
                       </div>
                     </div>
@@ -208,11 +251,9 @@
                       </div>
                     </div>
                   </form>
-
                 </div>
               </div>
             </div>
-
             <div class="tab-pane fade" id="aktualne-zamowienia">
               <div class="col-md-12">
                 <div class="list-group">
