@@ -33,7 +33,6 @@
       <div class="container">
         <div class="navigation">
           <ul class="nav nav-tabs head-menu">
-            <li class="active"><a href="#newsy" data-toggle="tab">Newsy</a></li>
             <li>
               <a href="#produkty" data-toggle="tab">Produkty</a>
             </li>
@@ -48,23 +47,7 @@
             </li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="newsy">
-              <div class="col-md-12">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <div class="col-sm-12 col-sm-10">
-                      <h3>Dodaj newsa:</h3>
-                    </div>
-                    <div class="col-sm-12 col-sm-10">
-                      <textarea class="form-control textarea"></textarea>
-                    </div>
-                    <div class="col-sm-12 col-sm-10">
-                      <button type="submit" class="btn btn-primary">Dodaj</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
+
             <div class="tab-pane fade" id="dodaj-news">
               <div>
                 <div>
@@ -74,7 +57,8 @@
                       <label class="control-label col-sm-2" for="Title">Title:</label>
                       <div class="col-sm-10">
                         <p th:errors="*{title}"></p>
-                        <input class="form-control" type="text" th:field="*{title}" id="Title" placeholder="Enter title:"
+                        <input class="form-control" type="text" th:field="*{title}" id="Title"
+                               placeholder="Enter title:"
                                required="required"/>
                       </div>
                     </div>
@@ -82,7 +66,8 @@
                       <label class="control-label col-sm-2" for="Description">Description:</label>
                       <div class="col-sm-10">
                         <p th:errors="*{description}"></p>
-                        <textarea class="form-control" id="Description" placeholder="Enter description:" th:field="*{description}"
+                        <textarea class="form-control" id="Description" placeholder="Enter description:"
+                                  th:field="*{description}"
                                   required="required"></textarea>
                       </div>
                     </div>
@@ -108,7 +93,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="produkty">
+            <div class="tab-pane active" id="produkty">
               <div class="col-md-12">
                 <div class="list-group">
                   <table class="table table-hover">
