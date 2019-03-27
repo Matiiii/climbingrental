@@ -71,4 +71,9 @@ public class NewsServiceImpl implements NewsService {
     public void addNews(NewsEntity news) {
         newsRepository.save(news);
     }
+
+    @Override
+    public void removeNews(Long id) {
+        newsRepository.delete(id);
+    }
 }
