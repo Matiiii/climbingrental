@@ -34,7 +34,7 @@
                             <form sec:authorize="hasRole('ADMIN')" th:method="delete"
                                   th:action="@{'/news/remove/'+${oneNews.id}}">
                                 <input type="hidden" name="id" th:value="${oneNews.id}"/>
-                                <button class="button u-full-width" type="submit">Delete</button>
+                                <button class="btn alert-danger" type="submit">Usuń news</button>
                             </form>
 
                             <p th:text=" 'Tagi: '+'#' + ${oneNews.tag}"/>
