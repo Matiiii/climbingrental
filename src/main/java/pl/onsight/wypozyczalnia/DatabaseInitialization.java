@@ -114,35 +114,23 @@ public class DatabaseInitialization implements CommandLineRunner {
       productRepository.save(new ProductEntity("Lina 60m Tendon 10,0 (cze/nie)", 20.00, "Klasyk w nowej odsłonie: Prezentowany na zdjęciu oplot jest nowym wzorem oplotu zastrzeżonym na terenie Polski. Od 2014 roku tylko liny z tym wzorem oplotu będą objęte gwarancją polskiego importera.\n" +
         "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true,true));
 
-/*
+
         NewsEntity news = new NewsEntity();
-        news.setTitle("CICD");
-        news.setDescription("Pierwszy commit CICD !!!!");
+        news.setTitle("1");
+        news.setDescription("Pierwsza proba pozdrawiam serdecznie");
         news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-        news.setTag("lala");
+        news.setTag("1");
 
         NewsEntity news2 = new NewsEntity();
-        news2.setTitle("Test2");
-        news2.setDescription("Druga próba");
+        news2.setTitle("2");
+        news2.setDescription("Druga próba pozdrawiam serdecznie");
         news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-        news2.setTag("looooooo");
+        news2.setTag("2");
 
-        NewsEntity news3 = new NewsEntity();
-        news3.setTitle("Test");
-        news3.setDescription("Sprawdzenie czy dodałem 3 próba CICD");
-        news3.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-        news3.setTag("looooooo");
-
-        NewsEntity news4 = new NewsEntity();
-        news4.setTitle("Test");
-        news4.setDescription("test");
-        news4.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-        news4.setTag("lsdf");
 
         newsRepository.save(news);
         newsRepository.save(news2);
-        newsRepository.save(news3);
-        newsRepository.save(news4);*/
+
 
         ProductOrderEntity order1 = new ProductOrderEntity();
         order1.setUser(userService.getUserById(1L));
