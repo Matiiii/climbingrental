@@ -19,13 +19,7 @@
                        th:href="${link.link}" class="list-group-item">Category</a>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="card-body">
-              <h5 class="card-title" th:text="${oneNews.title}"/>
-              <p class="card-text" th:text="${oneNews.description}"></p>
-              <a href="#!" class="btn btn-primary" th:href="'/news/' + ${oneNews.id}">Więcej...</a>
-              <p th:text=" 'Tagi: '+'#' + ${oneNews.tag}"/>
-=======
+
             <div class="col-md-6">
                 <p class="lead">Posty</p>
                 <div th:each="oneNews: ${news}">
@@ -48,7 +42,6 @@
                         </div>
                     </div>
                 </div>
->>>>>>> d6fb6c3ef4042119e8790b359e5044a4d66d8dd8
             </div>
 
 
