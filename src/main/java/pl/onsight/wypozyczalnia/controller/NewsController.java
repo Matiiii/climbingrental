@@ -38,9 +38,16 @@ public class NewsController {
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         NewsEntity news = newsService.findNewsById(id);
         modelAndView.addObject("news", news);
-
         return modelAndView;
     }
+
+    @DeleteMapping("/news/remove/{id}")
+    public ModelAndView deleteNews(@PathVariable Long id, ModelAndView modelAndView) {
+        newsService.removeNews(id);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
 
     @GetMapping(value = "/", params = {"tag"})
     public ModelAndView foundNews(@RequestParam(value = "tag", defaultValue = "") String tag, ModelAndView modelAndView, @RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
@@ -49,7 +56,7 @@ public class NewsController {
         modelAndView.addObject("news", newsService.findNewsByTag(tag));
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
-
+        modelAndView.addObject("currentUser", sessionService.getCurrentUser());
         return modelAndView;
     }
 
