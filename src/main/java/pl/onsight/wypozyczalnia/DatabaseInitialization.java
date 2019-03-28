@@ -64,7 +64,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
         u2.setFirstName("Janina");
         u2.setLastName("Nowak");
-        u2.setEmail("janina@gmail.com");
+        u2.setEmail("janina");
         u2.setPassword("haslo");
         u2.setPhoneNumber("123 456 789");
 

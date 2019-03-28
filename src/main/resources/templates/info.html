@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
   <link th:include="fragments/header :: head" th:remove="tag"/>
@@ -30,7 +30,6 @@
               <h5 class="card-title" th:text="${oneNews.title}"/>
               <p class="card-text" th:text="${oneNews.description}"></p>
               <a href="#!" class="btn btn-primary" th:href="'/news/' + ${oneNews.id}">Więcej...</a>
-
               <p th:text=" 'Tagi: '+'#' + ${oneNews.tag}"/>
             </div>
           </div>

@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.model.entity.NewsEntity;
+import pl.onsight.wypozyczalnia.service.SessionService;
 
 @Controller
 public class NewsController {
 
     private NewsService newsService;
+    private SessionService sessionService;
 
     @Autowired
-    public NewsController(NewsService newsService) {
+    public NewsController(NewsService newsService,SessionService sessionService ) {
         this.newsService = newsService;
+        this.sessionService=sessionService;
     }
 
     @GetMapping(value = "/")
@@ -25,6 +28,7 @@ public class NewsController {
         modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         modelAndView.addObject("page", pageIndex);
+        modelAndView.addObject("adminRole", sessionService.getCurrentUser());
         return modelAndView;
     }
 
