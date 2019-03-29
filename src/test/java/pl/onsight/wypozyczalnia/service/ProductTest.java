@@ -5,22 +5,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.onsight.wypozyczalnia.model.CountProducts;
-import pl.onsight.wypozyczalnia.model.Link;
-import pl.onsight.wypozyczalnia.model.entity.AddressEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
-import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
-import pl.onsight.wypozyczalnia.security.MyUserDetailService;
 
-import javax.mail.Session;
-import javax.management.relation.Role;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,8 +25,10 @@ public class ProductTest {
   @Autowired
   private ProductService productService;
   private int sizeOfDatabase;
-  private MyUserDetailService myUserDetailService;
-  private UserService userService;
+
+  @Autowired
+  private SessionService sessionService;
+
 
   @Before
   public void ini() {
@@ -113,6 +109,38 @@ public class ProductTest {
   }
 
 
+  @Test
+  @Transactional
+  public void shouldReturnListOfProductForAdminAndStaff() {
+    //given
+    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("email", "admin"));
+    UserEntity currentUser = sessionService.getCurrentUser();
+    List<ProductEntity> allProducts = productService.findAllProducts();
+    //when
+    List<CountProducts> allProductsForAdmin = productService.createListOfCountProduct(allProducts);
+    //then
+    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_ADMIN");
+    assertThat(allProductsForAdmin).isNotNull();
+    assertThat(allProducts.size()).isNotEqualTo(allProductsForAdmin);
+
+  }
+
+
+  @Test
+  @Transactional
+  public void shouldReturnListOfProductForStaff() {
+    //given
+    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("nowak", "nowak"));
+    UserEntity currentUser = sessionService.getCurrentUser();
+    List<ProductEntity> allProducts = productService.findAllProducts();
+    //when
+    List<CountProducts> allProductsForAdmin = productService.createListOfCountProduct(allProducts);
+    //then
+    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_STAFF");
+    assertThat(allProductsForAdmin).isNotNull();
+    assertThat(allProducts.size()).isNotEqualTo(allProductsForAdmin);
+
+  }
 
 
 }

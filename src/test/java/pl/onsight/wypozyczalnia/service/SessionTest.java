@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
+import javax.transaction.Transactional;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 
@@ -20,6 +22,7 @@ public class SessionTest {
   private SessionService sessionService;
 
   @Test
+  @Transactional
   public void shouldReturnAdmin() {
 
     //given
@@ -33,11 +36,13 @@ public class SessionTest {
   }
 
   @Test
+  @Transactional
   public void shouldReturnStaff() {
 
     //given
     SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("nowak", "nowak"));
     //when
+
     UserEntity currentUser = sessionService.getCurrentUser();
     //then
     assertThat(currentUser).isNotNull();
@@ -46,6 +51,7 @@ public class SessionTest {
   }
 
   @Test
+  @Transactional
   public void shouldReturnOrdinaryUser() {
 
     //given
