@@ -46,7 +46,7 @@ public class NewsTest {
 
     //then
     assertThat(newsBeforeReverse.size()).isEqualTo(2);
-    assertThat(newsBeforeReverse.get(newsBeforeReverse.size() - 1).getTitle()).isEqualTo("1");
+    assertThat(newsBeforeReverse.get(newsBeforeReverse.size() - 1).getTitle()).isEqualTo("2");
   }
 
 

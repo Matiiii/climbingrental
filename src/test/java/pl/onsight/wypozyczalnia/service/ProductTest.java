@@ -112,7 +112,7 @@ public class ProductTest {
     assertThat(countProducts.size()).isEqualTo(2);
   }
 
-  @Test
+/*  @Test
   @Transactional
   public void shouldFound2Links() {
     //given
@@ -126,7 +126,7 @@ public class ProductTest {
 
     //then
     assertThat(setOfFoundLinks.size()).isEqualTo(2);
-  }
+  }*/
 
 
 
