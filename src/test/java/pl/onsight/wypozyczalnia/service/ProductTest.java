@@ -112,22 +112,6 @@ public class ProductTest {
     assertThat(countProducts.size()).isEqualTo(2);
   }
 
-/*  @Test
-  @Transactional
-  public void shouldFound2Links() {
-    //given
-    ProductEntity product = new ProductEntity();
-    product.setProductName("snieg");
-    product.setTags("woda,ogien,zima");
-    productService.addProduct(product);
-
-    //when
-    Set<Link> setOfFoundLinks = productService.findRelatedProducts(productService.findProductById((long) (sizeOfDatabase + 2)));
-
-    //then
-    assertThat(setOfFoundLinks.size()).isEqualTo(2);
-  }*/
-
 
 
 
