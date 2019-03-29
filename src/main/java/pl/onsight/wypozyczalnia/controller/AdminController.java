@@ -8,9 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.NewsEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
+import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.ProductService;
+import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.ProductValidator;
 
 import javax.validation.Valid;
@@ -24,13 +26,15 @@ public class AdminController {
   private ProductService productService;
   private ProductValidator productValidator;
   private NewsService newsService;
+  private UserService userService;
 
   @Autowired
-  public AdminController(ProductOrderService productOrderService, ProductService productService, ProductValidator productValidator, NewsService newsService) {
+  public AdminController(ProductOrderService productOrderService, ProductService productService, ProductValidator productValidator, NewsService newsService, UserService userService) {
     this.productOrderService = productOrderService;
     this.productService = productService;
     this.productValidator = productValidator;
     this.newsService = newsService;
+    this.userService = userService;
   }
 
   @GetMapping("/admin-page")
@@ -38,6 +42,7 @@ public class AdminController {
     modelAndView.setViewName("admin");
     modelAndView.addObject("orderList", productOrderService.findAllProductOrders());
     modelAndView.addObject("productList", productService.findAllProducts());
+    modelAndView.addObject("usersList", userService.findAllUsers());
     modelAndView.addObject("addProduct", new ProductEntity());
     modelAndView.addObject("news", new NewsEntity());
     return modelAndView;
@@ -75,7 +80,6 @@ public class AdminController {
     return modelAndView;
   }
 
-
   @PostMapping("/edit/{id}")
   public ModelAndView editProduct(@PathVariable("id") Long id, @Valid ProductEntity product,
                                   ModelAndView modelAndView) {
@@ -87,6 +91,23 @@ public class AdminController {
       adminPage(modelAndView);
       modelAndView.setViewName("redirect:/shop");
     }
+    return modelAndView;
+  }
+
+  @GetMapping("/editUsers/{id}")
+  public ModelAndView showEditFormForUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
+    modelAndView.setViewName("editUser");
+    UserEntity user = userService.getUserById(id);
+    modelAndView.addObject("user", user);
+    return modelAndView;
+  }
+
+  @PostMapping("/editUsers/{id}")
+  public ModelAndView editUser(@PathVariable("id") Long id, @Valid UserEntity user,
+                               ModelAndView modelAndView) {
+    userService.saveUser(user);
+    adminPage(modelAndView);
+    modelAndView.setViewName("redirect:/shop");
     return modelAndView;
   }
 

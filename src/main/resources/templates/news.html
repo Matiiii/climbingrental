@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
   <link th:include="fragments/header :: head" th:remove="tag"/>
@@ -25,23 +25,19 @@
     </div>
 
     <div class="col-md-9">
-
-      <div class="thumbnail">
-        <!--<img class="img-responsive" th:src="${product.bigImage.path}" src="http://placehold.it/800x300" th:alt="${product.bigImage.altText}" alt=""/>-->
-        <div class="caption-full">
-          <!--<h4 class="pull-right" th:text="${product.price}">$24.99</h4>-->
-          <h4><a href="#" th:text="${news.title}">Product Name</a>
-          </h4>
-
-          <p th:text="${news.description}">See more snippets like these online store reviews at <a target="_blank"
-                                                                                                   href="http://bootsnipp.com">Bootsnipp
-            - http://bootsnipp.com</a>.</p>
-          <a th:href="${news.link}" href="#" text="Rozszerzona wersja">Rozszerzona wersja</a>
+      <p class="lead" th:text="'News z dnia: '+ ${news.createdTime}">News</p>
+      <div class="card">
+        <div th:if="${news.updateTime != null}" class="card-header">
+          <p class="card-header" th:text="'Data edycji: '+${news.updateTime}"></p>
         </div>
-        <div class="ratings">
-
-          <h5><a href="#" th:text=" '#' + ${news.tag}">#Tags</a></h5>
-
+        <div class="card-body">
+          <h5 class="card-title" th:text="${news.title}"/>
+          <p class="card-text" th:text="${news.description}"></p>
+          <form sec:authorize="hasRole('ADMIN')" th:method="delete"
+                th:action="@{'/news/remove/'+${news.id}}">
+            <button class="btn alert-danger" type="submit">Usuń news</button>
+          </form>
+          <p th:text=" 'Tagi: '+'#' + ${news.tag}"/>
         </div>
       </div>
 

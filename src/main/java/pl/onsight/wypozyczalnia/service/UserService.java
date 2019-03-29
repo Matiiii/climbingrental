@@ -1,5 +1,6 @@
 package pl.onsight.wypozyczalnia.service;
 
+import org.hsqldb.rights.User;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface UserService {
     UserEntity getUserById (Long id);
 
     List<UserEntity> findAllUsers();
+
+
 }
