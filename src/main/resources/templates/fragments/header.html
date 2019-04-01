@@ -59,6 +59,10 @@
                     <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}"
                        th:text="Admin">About</a>
                 </li>
+              <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_STAFF')" href=" #" th:href="@{/staff}"
+                   th:text="Obsługa">About</a>
+              </li>
             </ul>
 
             <ul class="navbar-nav ml-auto my-sm-0">

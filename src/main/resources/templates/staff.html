@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+  <link th:include="fragments/header :: head" th:remove="tag"/>
+  <link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+
+<!-- Navigation -->
+<div th:replace="fragments/header :: navbar">
+</div>
+
+
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="container">
+        <div class="navigation">
+          <ul class="nav nav-tabs head-menu">
+            <li>
+              <a href="#produkty" data-toggle="tab">Produkty</a>
+            </li>
+            <li>
+              <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
+            </li>
+            <li>
+              <a href="#dodaj-news" data-toggle="tab">Dodaj news</a>
+            </li>
+            <li>
+              <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
+            </li>
+            <li>
+              <a href="#uzytkownicy" data-toggle="tab">Użytkownicy</a>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="col-md-8">
+
+</div>
+
+<!-- /.container -->
+
+<div class="container">
+  <!-- Footer -->
+  <footer>
+    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+  </footer>
+</div>
+
+
+<!-- /.container -->
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+<script th:src="@{/js/admin.js}"></script>
+
+</body>
+
+</html>
