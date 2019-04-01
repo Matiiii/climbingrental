@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.model.entity.NewsEntity;
+import pl.onsight.wypozyczalnia.service.SessionService;
 
 @Controller
 public class NewsController {
 
     private NewsService newsService;
+    private SessionService sessionService;
 
     @Autowired
-    public NewsController(NewsService newsService) {
+    public NewsController(NewsService newsService,SessionService sessionService ) {
         this.newsService = newsService;
+        this.sessionService=sessionService;
     }
 
     @GetMapping(value = "/")
@@ -25,6 +28,7 @@ public class NewsController {
         modelAndView.addObject("news", newsService.findFiveNews(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         modelAndView.addObject("page", pageIndex);
+        modelAndView.addObject("adminRole", sessionService.getCurrentUser());
         return modelAndView;
     }
 
@@ -34,9 +38,16 @@ public class NewsController {
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
         NewsEntity news = newsService.findNewsById(id);
         modelAndView.addObject("news", news);
-
         return modelAndView;
     }
+
+    @DeleteMapping("/news/remove/{id}")
+    public ModelAndView deleteNews(@PathVariable Long id, ModelAndView modelAndView) {
+        newsService.removeNews(id);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
 
     @GetMapping(value = "/", params = {"tag"})
     public ModelAndView foundNews(@RequestParam(value = "tag", defaultValue = "") String tag, ModelAndView modelAndView, @RequestParam(value = "page", defaultValue = "1", required = false) Integer pageIndex) {
@@ -45,7 +56,7 @@ public class NewsController {
         modelAndView.addObject("news", newsService.findNewsByTag(tag));
         modelAndView.addObject("pagination", newsService.getPaginationForPage(pageIndex));
         modelAndView.addObject("tagsLinks", newsService.findAllTag());
-
+        modelAndView.addObject("currentUser", sessionService.getCurrentUser());
         return modelAndView;
     }
 

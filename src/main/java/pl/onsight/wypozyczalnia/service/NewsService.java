@@ -21,4 +21,6 @@ public interface NewsService {
     List<NewsEntity> findNewsByTag(String tag);
 
     void addNews(NewsEntity news);
+
+    void removeNews(Long id);
 }

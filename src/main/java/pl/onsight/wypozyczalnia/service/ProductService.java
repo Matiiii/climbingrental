@@ -10,29 +10,29 @@ import java.util.List;
 import java.util.Set;
 
 public interface ProductService {
-    ProductEntity findProductById(Long id);
+  ProductEntity findProductById(Long id);
 
-    List<ProductEntity> findAllProducts();
+  List<ProductEntity> findAllProducts();
 
-    Integer countProductsAvailableByNameAndTime(String name, Date start, Date end);
+  Integer countProductsAvailableByNameAndTime(String name, Date start, Date end);
 
-    List<CountProducts> countAllProductsByName();
+  List<CountProducts> countAllProductsByName();
 
-    List<CountProducts> countAllProductsByNameFiltered(String name);
+  List<CountProducts> countAllProductsByNameFiltered(String name);
 
-    List<CountProducts> createListOfCountProduct(List<ProductEntity> products);
+  List<CountProducts> createListOfCountProduct(List<ProductEntity> products);
 
-    List<CountProducts> countAllAvailableProductsByName(String dateFilter) throws ParseException;
+  List<CountProducts> countAllAvailableProductsByName(String dateFilter) throws ParseException;
 
-    List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFiltered, String name) throws ParseException;
+  List<CountProducts> countAllAvailableProductsByNameFiltered(String dateFiltered, String name) throws ParseException;
 
-    Set<Link> findRelatedProducts(ProductEntity product);
+  Set<Link> findRelatedProducts(ProductEntity product);
 
-    void removeProduct(Long id);
+  void removeProduct(Long id);
 
-    void addProduct(ProductEntity product);
+  void addProduct(ProductEntity product);
 
-    List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList);
+  List<CountProducts> changeProductEntityListToCountProductsList(List<ProductEntity> productList);
 
 
 }

@@ -1,14 +1,15 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.onsight.wypozyczalnia.model.listeners.InsertListener;
+import pl.onsight.wypozyczalnia.model.listeners.UpdateListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "news")
-public class NewsEntity {
+@EntityListeners({ UpdateListener.class, InsertListener.class })
+public class NewsEntity extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

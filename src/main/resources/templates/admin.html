@@ -3,8 +3,8 @@
 
 
 <head>
-    <link th:include="fragments/header :: head" th:remove="tag"/>
-    <link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
+  <link th:include="fragments/header :: head" th:remove="tag"/>
+  <link th:href="@{/css/admin.css}" href="../static/css/admin.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -15,253 +15,328 @@
 </div>
 <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger"
      align="center">
-    status dodawania
+  status dodawania
 </div>
 
 <!-- Page Content -->
 <div class="container">
 
-    <div class="row">
+  <div class="row">
 
-    </div>
+  </div>
 
-    <div class="row">
+  <div class="row">
 
-        <div class="col-md-12">
+    <div class="col-md-12">
 
 
-            <div class="container">
-                <div class="navigation">
-                    <ul class="nav nav-tabs head-menu">
-                        <li class="active"><a href="#newsy" data-toggle="tab">Newsy</a></li>
-                        <li>
-                            <a href="#produkty" data-toggle="tab">Produkty</a>
-                        </li>
-                        <li>
-                            <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
-                        </li>
-                        <li>
-                            <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
+      <div class="container">
+        <div class="navigation">
+          <ul class="nav nav-tabs head-menu">
+            <li>
+              <a href="#produkty" data-toggle="tab">Produkty</a>
+            </li>
+            <li>
+              <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
+            </li>
+            <li>
+              <a href="#dodaj-news" data-toggle="tab">Dodaj news</a>
+            </li>
+            <li>
+              <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
+            </li>
+            <li>
+              <a href="#uzytkownicy" data-toggle="tab">Użytkownicy</a>
+            </li>
+          </ul>
+          <div class="tab-content">
 
-                        <div class="tab-pane active" id="newsy">
-                            <div class="col-md-12">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <div class="col-sm-12 col-sm-10">
-                                            <h3>Dodaj newsa:</h3>
-                                        </div>
-                                        <div class="col-sm-12 col-sm-10">
-                                            <textarea class="form-control textarea"></textarea>
-                                        </div>
-                                        <div class="col-sm-12 col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Dodaj</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+            <div class="tab-pane fade" id="dodaj-news">
+              <div>
+                <div>
+                  <form class="form-horizontal" method="post" th:action="@{/newsForm}"
+                        th:object="${news}">
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Title">Title:</label>
+                      <div class="col-sm-10">
+                        <p th:errors="*{title}"></p>
+                        <input class="form-control" type="text" th:field="*{title}" id="Title"
+                               placeholder="Enter title:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Description">Description:</label>
+                      <div class="col-sm-10">
+                        <p th:errors="*{description}"></p>
+                        <textarea class="form-control" id="Description" placeholder="Enter description:"
+                                  th:field="*{description}"
+                                  required="required"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="link">Link:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{link}" class="form-control" id="link" placeholder="Enter link:"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="Tag">Tag:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{tag}" class="form-control" id="Tag" placeholder="Enter tag:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-success" value="Dodaj newsa"/>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
 
-                        <div class="tab-pane fade" id="produkty">
-                            <div class="col-md-12">
-                                <div class="list-group">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Produkt</th>
-                                            <th>Opis produktu</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <div th:each="products: ${productList}">
-                                            <tr th:attr="product-id=${products.id}">
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${products.productName}">dsa</p>
-                                                        <p th:text="${products.id}">rew</p>
-                                                        <img th:src="${products.smallImage}"
-                                                             src="../static/images/LINA_DUZA.jpg"
-                                                             class="img-responsive"
-                                                             alt=""/>
-                                                    </div>
-                                                </td>
-                                                <td th:text="${products.description}">Jakiś opis</td>
-                                                <td>
-                                                    <span th:if="${products.getAvailable()}">DOSTĘPNY</span>
-                                                    <span th:if="${!products.getAvailable()}">NIEDOSTĘPNY</span>
-                                                </td>
-                                                <td>
-                                                <td><a th:href=" @{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+            <div class="tab-pane active" id="produkty">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Produkt</th>
+                      <th>Opis produktu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="products: ${productList}">
+                      <tr th:attr="product-id=${products.id}">
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${products.productName}">dsa</p>
+                            <p th:text="${products.id}">rew</p>
+                            <img th:src="${products.smallImage}"
+                                 src="../static/images/LINA_DUZA.jpg"
+                                 class="img-responsive"
+                                 alt=""/>
+                          </div>
+                        </td>
+                        <td th:text="${products.description}">Jakiś opis</td>
+                        <td>
+                          <span th:if="${products.getAvailable()}">DOSTĘPNY</span>
+                          <span th:if="${!products.getAvailable()}">NIEDOSTĘPNY</span>
+                        </td>
+                        <td>
+                          <span th:if="${products.getMember()}">Obsługa ścianki</span>
+                          <span th:if="${!products.getMember()}">Admin</span>
+                        </td>
+                        <td>
+                        <td><a th:href=" @{/edit/{id}(id=${products.getId()})}">Edytuj</a></td>
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-                        <div class="tab-pane fade" id="dodaj-produkt">
-                            <div class="col-md-12">
-                                <div class="container product">
+            <div class="tab-pane active" id="uzytkownicy">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Użytkownicy</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="user: ${usersList}">
+                      <tr th:attr="user-id=${user.id}">
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${user.id}">dsa</p>
+                          </div>
+                        </td>
+                        <td th:text="${user.firstName}"/>
+                        <td th:text="${user.lastName}"/>
+                        <td th:text="${user.email}"/>
+                        <td th:text="${user.role.role}"/>
+                        <td>
+                        <td><a th:href=" @{/editUsers/{id}(id=${user.getId()})}">Edytuj</a></td>
 
-                                    <form class="form-horizontal" method="post" th:action="@{/admin-page}"
-                                          th:object="${addProduct}">
-                                        <div class="form-group">
-                                            <h3 align="center">Dodaj produkt</h3>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="availability">Dostępność:</label>
-                                            <div class="col-sm-10">
-                                                <input type="checkbox" th:field="*{available}" class="form-control"
-                                                       id="availability" required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="productName">Nazwa:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{productName}" class="form-control"
-                                                       id="productName" placeholder="Wprowadź nazwę produktu:"
-                                                       required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="price">Cena:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{price}" class="form-control" id="price"
-                                                       placeholder="Wprowadź cenę produktu:"
-                                                       required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="deposit">Kaucja:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{deposit}" class="form-control"
-                                                       id="deposit"
-                                                       placeholder="Wprowadź kaucje produktu"
-                                                       required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="description">Opis:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{description}" class="form-control"
-                                                       id="description"
-                                                       placeholder="Wprowadź opis:" required="required"/>
-                                            </div>
-                                        </div>
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="bigImage">Duży obraz:</label>
-                                            <div class="col-sm-10">
 
-                                                <input type="text" th:field="*{bigImage}" class="form-control"
-                                                       id="bigImage" placeholder="Wprowadź link do obrazu:"
-                                                       required="required"/>
-                                            </div>
+            <div class="tab-pane fade" id="dodaj-produkt">
+              <div class="col-md-12">
+                <div class="container product">
+                  <form class="form-horizontal" method="post" th:action="@{/admin-page}"
+                        th:object="${addProduct}">
+                    <div class="form-group">
+                      <h3 align="center">Dodaj produkt</h3>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="availability">Dostępność:</label>
+                      <div class="col-sm-10">
+                        <input type="checkbox" th:field="*{available}" class="form-control"
+                               id="availability" required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="staffMember">Obsługa ścianki:</label>
+                      <div class="col-sm-10">
+                        <input type="checkbox" th:field="*{member}" class="form-control"
+                               id="staffMember" required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="productName">Nazwa:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{productName}" class="form-control"
+                               id="productName" placeholder="Wprowadź nazwę produktu:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="price">Cena:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{price}" class="form-control" id="price"
+                               placeholder="Wprowadź cenę produktu:"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="deposit">Kaucja:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{deposit}" class="form-control"
+                               id="deposit"
+                               placeholder="Wprowadź kaucje produktu"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="description">Opis:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{description}" class="form-control"
+                               id="description"
+                               placeholder="Wprowadź opis:" required="required"/>
+                      </div>
+                    </div>
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="bigImage">Mały obraz:</label>
-                                            <div class="col-sm-10">
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="bigImage">Duży obraz:</label>
+                      <div class="col-sm-10">
 
-                                                <input type="text" th:field="*{smallImage}" class="form-control"
-                                                       id="smallImage" placeholder="Wprowadź link do obrazu:"
-                                                       required="required"/>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="tags">Tagi:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{tags}" class="form-control" id="tags"
-                                                       placeholder="Wprowadź tagi do produktu"
-                                                       required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-2" for="tags">Ilość:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" th:field="*{quantity}" class="form-control"
-                                                       id="quantity"
-                                                       placeholder="Wprowadź ilość produktu"
-                                                       required="required"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="submit" class="btn btn-success">Dodaj produkt</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="aktualne-zamowienia">
-                            <div class="col-md-12">
-                                <div class="list-group">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Zamówienie</th>
-                                            <th>Imię i nazwisko użytkownika</th>
-                                            <th>Zamówione od</th>
-                                            <th>Zamówione do</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <div th:each="order: ${orderList}">
-                                            <tr th:attr="order-id=${order.id}">
-                                                <td>
-                                                    <div class="col-md-4">
-
-                                                        <p th:text="'Nr: '+${order.getId()}">Order id</p>
-
-                                                        <p th:text="'Kwota: '+${order.combinedPrice}+' zł'">price</p>
-
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${order.orderStart.toLocaleString().split(' ')[0]}"></p>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="col-md-4">
-                                                        <p th:text="${order.orderEnd.toLocaleString().split(' ')[0]}"></p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary btn-usun">Edytuj
-                                                    </button>
-
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
+                        <input type="text" th:field="*{bigImage}" class="form-control"
+                               id="bigImage" placeholder="Wprowadź link do obrazu:"
+                               required="required"/>
+                      </div>
 
                     </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="bigImage">Mały obraz:</label>
+                      <div class="col-sm-10">
+
+                        <input type="text" th:field="*{smallImage}" class="form-control"
+                               id="smallImage" placeholder="Wprowadź link do obrazu:"
+                               required="required"/>
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="tags">Tagi:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{tags}" class="form-control" id="tags"
+                               placeholder="Wprowadź tagi do produktu"
+                               required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="tags">Ilość:</label>
+                      <div class="col-sm-10">
+                        <input type="text" th:field="*{quantity}" class="form-control"
+                               id="quantity"
+                               placeholder="Wprowadź ilość produktu"
+                               required="required"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Dodaj produkt</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
+              </div>
             </div>
+            <div class="tab-pane fade" id="aktualne-zamowienia">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Zamówienie</th>
+                      <th>Imię i nazwisko użytkownika</th>
+                      <th>Zamówione od</th>
+                      <th>Zamówione do</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="order: ${orderList}">
+                      <tr th:attr="order-id=${order.id}">
+                        <td>
+                          <div class="col-md-4">
+
+                            <p th:text="'Nr: '+${order.getId()}">Order id</p>
+
+                            <p th:text="'Kwota: '+${order.combinedPrice}+' zł'">price</p>
+
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.orderStart.toLocaleString().split(' ')[0]}"></p>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.orderEnd.toLocaleString().split(' ')[0]}"></p>
+                          </div>
+                        </td>
+                        <td>
+                          <button type="submit" class="btn btn-primary btn-usun">Edytuj
+                          </button>
+
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
 </div>
 <div class="col-md-8">
@@ -272,10 +347,10 @@
 <!-- /.container -->
 
 <div class="container">
-    <!-- Footer -->
-    <footer>
-        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+  </footer>
 </div>
 
 

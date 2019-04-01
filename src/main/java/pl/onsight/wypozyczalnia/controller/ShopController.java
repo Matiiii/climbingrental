@@ -19,96 +19,95 @@ import java.text.ParseException;
 @SessionAttributes("cart")
 public class ShopController {
 
-    private ProductService productService;
-    private CartService cartService;
-    private DateValidator dateValidator;
-    private InputValidator inputValidator;
+  private ProductService productService;
+  private CartService cartService;
+  private DateValidator dateValidator;
+  private InputValidator inputValidator;
 
-    @Autowired
-    public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator,
-                          InputValidator inputValidator) {
-        this.productService = productService;
-        this.cartService = cartService;
-        this.dateValidator = dateValidator;
-        this.inputValidator = inputValidator;
+  @Autowired
+  public ShopController(ProductService productService, CartService cartService, DateValidator dateValidator,
+                        InputValidator inputValidator) {
+    this.productService = productService;
+    this.cartService = cartService;
+    this.dateValidator = dateValidator;
+    this.inputValidator = inputValidator;
+  }
+
+  @GetMapping(value = "/shop")
+  public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
+                                    @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                    @ModelAttribute("cart") Cart cart,
+                                    ModelAndView modelAndView) throws ParseException {
+    modelAndView.setViewName("shop");
+
+    if (!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)) {
+      modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+      return modelAndView;
+    }
+    if (!prodName.isEmpty() && !inputValidator.isInputValid(prodName)) {
+      modelAndView.addObject("info", new Info("Użyto niedozwolonych znaków!", false));
+      return modelAndView;
+    }
+    boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+    boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
+    boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
+
+    if (hasNoParameters) {
+      modelAndView.addObject("countProducts", productService.countAllProductsByName());
+    } else if (hasOnlyProductName) {
+      modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
+      if (productService.countAllProductsByNameFiltered(prodName).size() > 0) {
+        modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
+      } else {
+        modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
+      }
+    } else if (hasOnlyDates) {
+      if (dateFilter.isEmpty()) {
+        dateFilter = cart.getDate();
+      }
+      modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
+      modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
+    } else {
+      if (dateFilter.isEmpty()) {
+        dateFilter = cart.getDate();
+      }
+      modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
+      if (productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName).size() > 0) {
+        modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
+      } else {
+        modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
+      }
     }
 
-    @GetMapping(value = "/shop")
-    public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
-                                      @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
-                                      @ModelAttribute("cart") Cart cart,
-                                      ModelAndView modelAndView) throws ParseException {
-        modelAndView.setViewName("shop");
+    cartService.addDateToCart(cart, dateFilter);
+    return modelAndView;
+  }
 
+  @PostMapping("/shop/{id}")
+  public ModelAndView addProductToCart(@PathVariable Long id,
+                                       @RequestParam(value = "productCount") Integer productCount,
+                                       @ModelAttribute("cart") Cart cart,
+                                       RedirectAttributes attributes,
+                                       ModelAndView modelAndView) throws ParseException {
+    modelAndView.setViewName("info");
+    ProductEntity productById = productService.findProductById(id);
 
-        if (!dateFilter.isEmpty() && !dateValidator.isDateValid(dateFilter)) {
-            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
-            return modelAndView;
-        }
-        if (!prodName.isEmpty() && !inputValidator.isInputValid(prodName)) {
-            modelAndView.addObject("info", new Info("Użyto niedozwolonych znaków!", false));
-            return modelAndView;
-        }
-        boolean hasNoParameters = prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
-        boolean hasOnlyProductName = !prodName.equals("") && dateFilter.equals("") && cart.getDate() == null;
-        boolean hasOnlyDates = prodName.equals("") && (!dateFilter.equals("") || cart.getDate() != null);
-
-        if (hasNoParameters) {
-            modelAndView.addObject("countProducts", productService.countAllProductsByName());
-        } else if (hasOnlyProductName) {
-            modelAndView.addObject("countProducts", productService.countAllProductsByNameFiltered(prodName));
-            if (productService.countAllProductsByNameFiltered(prodName).size() > 0) {
-                modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b>", true));
-            } else {
-                modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
-            }
-        } else if (hasOnlyDates) {
-            if (dateFilter.isEmpty()) {
-                dateFilter = cart.getDate();
-            }
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByName(dateFilter));
-            modelAndView.addObject("info", new Info("Produkty dostępne: <b>" + dateFilter + "</b>", true));
-        } else {
-            if (dateFilter.isEmpty()) {
-                dateFilter = cart.getDate();
-            }
-            modelAndView.addObject("countProducts", productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName));
-            if (productService.countAllAvailableProductsByNameFiltered(dateFilter, prodName).size() > 0) {
-                modelAndView.addObject("info", new Info("Produkty zawierające frazę: <b>" + prodName + "</b> dostępne: <b>" + dateFilter + "</b>", true));
-            } else {
-                modelAndView.addObject("info", new Info("Nie znaleziono produktów zawierających frazę: <b>" + prodName + "</b>", false));
-            }
-        }
-
-        cartService.addDateToCart(cart, dateFilter);
-        return modelAndView;
+    if (productCount == null || productCount < 1) {
+      modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
+    } else {
+      modelAndView.addObject("info", new Info("Dodano do koszyka <b>" + productCount + " x " + productById.getProductName() + "</b>", true));
+      cartService.addProductToCart(cart, productById, productCount);
     }
+    attributes.addFlashAttribute("cart", cart);
 
-    @PostMapping("/shop/{id}")
-    public ModelAndView addProductToCart(@PathVariable Long id,
-                                         @RequestParam(value = "productCount") Integer productCount,
-                                         @ModelAttribute("cart") Cart cart,
-                                         RedirectAttributes attributes,
-                                         ModelAndView modelAndView) throws ParseException {
-        modelAndView.setViewName("info");
-        ProductEntity productById = productService.findProductById(id);
-
-        if (productCount == null || productCount < 1) {
-            modelAndView.addObject("info", new Info("Nieprawidłowa ilość ", false));
-        } else {
-            modelAndView.addObject("info", new Info("Dodano do koszyka <b>" + productCount + " x " + productById.getProductName() + "</b>", true));
-            cartService.addProductToCart(cart, productById, productCount);
-        }
-        attributes.addFlashAttribute("cart", cart);
-
-        if (cart.getDate() != null) {
-            return foundProducts("", cart.getDate(), cart, modelAndView);
-        }
-        return foundProducts("", "", cart, modelAndView);
+    if (cart.getDate() != null) {
+      return foundProducts("", cart.getDate(), cart, modelAndView);
     }
+    return foundProducts("", "", cart, modelAndView);
+  }
 
-    @ModelAttribute("cart")
-    public Cart cart() {
-        return new Cart();
-    }
+  @ModelAttribute("cart")
+  public Cart cart() {
+    return new Cart();
+  }
 }
