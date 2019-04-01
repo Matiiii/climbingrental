@@ -8,11 +8,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
-import pl.onsight.wypozyczalnia.model.entity.UserEntity;
-import pl.onsight.wypozyczalnia.repository.UserRepository;
 import pl.onsight.wypozyczalnia.service.CartService;
 import pl.onsight.wypozyczalnia.service.ProductService;
-import pl.onsight.wypozyczalnia.service.impl.SessionServiceImpl;
 import pl.onsight.wypozyczalnia.validator.DateValidator;
 import pl.onsight.wypozyczalnia.validator.InputValidator;
 

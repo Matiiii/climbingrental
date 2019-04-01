@@ -1,8 +1,6 @@
 package pl.onsight.wypozyczalnia.service.impl;
 
 
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.onsight.wypozyczalnia.DateFilter;
@@ -14,11 +12,6 @@ import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
-import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditListener;
-import javax.swing.text.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.List;
 

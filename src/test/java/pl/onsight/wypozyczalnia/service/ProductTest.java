@@ -13,6 +13,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -142,5 +143,47 @@ public class ProductTest {
 
   }
 
+  @Test
+  @Transactional
+  public void shouldReturnListOfProductForMember() {
+    //given
+    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("ewa", "ewa"));
+    UserEntity currentUser = sessionService.getCurrentUser();
+    List<ProductEntity> allProducts = productService.findAllProducts();
+    //when
+    List<CountProducts> allProductsForAdmin = productService.createListOfCountProduct(allProducts);
+    //then
+    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_MEMBER");
+    assertThat(allProductsForAdmin).isNotNull();
+    assertThat(allProducts.size()).isNotEqualTo(allProductsForAdmin);
+
+  }
+
+  @Test
+  @Transactional
+  public void shouldCountProductAvaiableByNameAndDate() {
+    //given
+    ProductEntity product1 = new ProductEntity();
+    product1.setAvailable(true);
+    product1.setQuantity(10);
+    product1.setProductName("Piłka");
+    product1.setPrice(10.0);
+
+    ProductEntity product2 = new ProductEntity();
+    product2.setAvailable(true);
+    product2.setQuantity(10);
+    product2.setProductName("Bramka");
+    product2.setPrice(20.0);
+    productService.addProduct(product1);
+    productService.addProduct(product2);
+
+    Date dateStart = new Date("2019/10/10 12:00");
+    Date dateEnd = new Date("2019/10/15 12:00");
+    //when
+    Integer countOfProductWithName = productService.countProductsAvailableByNameAndTime("Piłka", dateStart, dateEnd);
+    //then
+    assertThat(countOfProductWithName).isGreaterThan(0);
+
+  }
 
 }

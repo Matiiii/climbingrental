@@ -10,7 +10,6 @@ import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
