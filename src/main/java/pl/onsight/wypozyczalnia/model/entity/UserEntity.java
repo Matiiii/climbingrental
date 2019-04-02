@@ -1,104 +1,121 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
+
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity(name = "user")
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private AddressEntity address;
+  @OneToOne(cascade = CascadeType.PERSIST)
+  private AddressEntity address;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String password;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String phoneNumber;
+  private String password;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private UserRoleEntity role;
+  @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+  @JoinColumn(name = "role", nullable = false)
+  private UserRoleEntity role;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public UserEntity() {
+  }
 
-    public AddressEntity getAddress() {
-        return address;
-    }
 
-    public void setAddress(AddressEntity address) {
-        this.address = address;
-    }
+  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, UserRoleEntity role) {
+    this.address = address;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.role = role;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public AddressEntity getAddress() {
+    return address;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setAddress(AddressEntity address) {
+    this.address = address;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public UserRoleEntity getRole() {
-        return role;
-    }
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 
-    public void setRole(UserRoleEntity role) {
-        this.role = role;
-    }
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", address=" + address +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                '}';
-    }
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public UserRoleEntity getRole() {
+    return role;
+  }
+
+  public void setRole(UserRoleEntity role) {
+    this.role = role;
+  }
+
+
+  @Override
+  public String toString() {
+    return "UserEntity{" +
+      "id=" + id +
+      ", address=" + address +
+      ", firstName='" + firstName + '\'' +
+      ", lastName='" + lastName + '\'' +
+      ", email='" + email + '\'' +
+      ", phoneNumber='" + phoneNumber + '\'' +
+      ", password='" + password + '\'' +
+      ", role=" + role +
+      '}';
+  }
 }
+
+

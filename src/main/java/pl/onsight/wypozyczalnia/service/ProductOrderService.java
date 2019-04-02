@@ -5,23 +5,28 @@ import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 public interface ProductOrderService {
-    void saveOrder(ProductOrderEntity order);
+  void saveOrder(ProductOrderEntity order);
 
-    Integer countNumberOfProductInOrdersInPeriod(ProductEntity product, Date productOrderStart, Date productOrderEnd);
+  Integer countNumberOfProductInOrdersInPeriod(ProductEntity product, Date productOrderStart, Date productOrderEnd);
 
-    List<ProductOrderEntity> findAllProductOrders();
+  List<ProductOrderEntity> findAllProductOrders();
 
-    List<ProductOrderEntity> findUserOrders(Long id);
+  List<ProductOrderEntity> findUserOrders(Long id);
 
-    void removeProductOrder(Long id);
+  void removeProductOrder(Long id);
 
-    ProductOrderEntity getOrderById(Long id);
+  ProductOrderEntity getOrderById(Long id);
 
-    ProductOrderEntity buildOrder(UserEntity user, Cart cart);
+  ProductOrderEntity buildOrder(UserEntity user, Cart cart);
+
+
 
 }

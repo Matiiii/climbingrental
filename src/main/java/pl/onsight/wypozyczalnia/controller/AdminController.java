@@ -105,7 +105,7 @@ public class AdminController {
   @PostMapping("/editUsers/{id}")
   public ModelAndView editUser(@PathVariable("id") Long id, @Valid UserEntity user,
                                ModelAndView modelAndView) {
-    userService.saveUser(user);
+    userService.editUser(user);
     adminPage(modelAndView);
     modelAndView.setViewName("redirect:/shop");
     return modelAndView;

@@ -16,5 +16,7 @@ public interface UserService {
 
     List<UserEntity> findAllUsers();
 
+    void editUser(UserEntity user);
+
 
 }

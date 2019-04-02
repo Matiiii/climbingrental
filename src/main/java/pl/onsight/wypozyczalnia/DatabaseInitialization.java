@@ -7,6 +7,7 @@ import pl.onsight.wypozyczalnia.model.entity.*;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
+import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
 import java.util.ArrayList;
@@ -20,18 +21,42 @@ public class DatabaseInitialization implements CommandLineRunner {
   private NewsRepository newsRepository;
   private ProductRepository productRepository;
   private ProductOrderRepository productOrderRepository;
+  private RoleService roleService;
 
   @Autowired
-  public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository) {
+  public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, RoleService roleService) {
     this.userService = userService;
     this.newsRepository = newsRepository;
     this.productRepository = productRepository;
     this.productOrderRepository = productOrderRepository;
+    this.roleService = roleService;
   }
 
   @Override
   public void run(String... strings) throws Exception {
     List<UserEntity> mockUsers = new ArrayList<>();
+    //Role for users
+    //adminRole
+    UserRoleEntity adminRole = new UserRoleEntity();
+    adminRole.setRole("ROLE_ADMIN");
+    adminRole.setDiscount(90);
+    roleService.saveRole(adminRole);
+    //staffRole
+    UserRoleEntity staffRole = new UserRoleEntity();
+    staffRole.setRole("ROLE_STAFF");
+    staffRole.setDiscount(30);
+    roleService.saveRole(staffRole);
+    //userRole
+    UserRoleEntity userRole = new UserRoleEntity();
+    userRole.setRole("ROLE_USER");
+    userRole.setDiscount(0);
+    roleService.saveRole(userRole);
+    //memberRole
+    UserRoleEntity memberRole = new UserRoleEntity();
+    memberRole.setRole("ROLE_MEMBER");
+    memberRole.setDiscount(20);
+    roleService.saveRole(memberRole);
+
 
     UserEntity u1 = new UserEntity();
     AddressEntity address1 = new AddressEntity();
@@ -46,12 +71,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     u1.setEmail("email");
     u1.setPassword("haslo");
     u1.setPhoneNumber("666 746 666");
-
-    UserRoleEntity adminRole = new UserRoleEntity();
-    adminRole.setRole("ROLE_ADMIN");
-    adminRole.setDiscount(90);
     u1.setRole(adminRole);
-
     mockUsers.add(u1);
 
     UserEntity u2 = new UserEntity();
@@ -67,12 +87,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     u2.setEmail("nowak");
     u2.setPassword("nowak");
     u2.setPhoneNumber("123 456 789");
-
-    UserRoleEntity userRole = new UserRoleEntity();
-    userRole.setRole("ROLE_STAFF");
-    userRole.setDiscount(0);
-    u2.setRole(userRole);
-
+    u2.setRole(staffRole);
     mockUsers.add(u2);
 
     UserEntity u3 = new UserEntity();
@@ -88,13 +103,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     u3.setEmail("adam");
     u3.setPassword("adam");
     u3.setPhoneNumber("123 456 789");
-
-    UserRoleEntity userRole2 = new UserRoleEntity();
-    userRole2.setRole("ROLE_USER");
-    userRole2.setDiscount(0);
-    u3.setRole(userRole2);
-
+    u3.setRole(adminRole);
     mockUsers.add(u3);
+
 
     UserEntity u4 = new UserEntity();
     AddressEntity address3 = new AddressEntity();
@@ -109,13 +120,10 @@ public class DatabaseInitialization implements CommandLineRunner {
     u4.setEmail("ewa");
     u4.setPassword("ewa");
     u4.setPhoneNumber("123 456 789");
-
-    UserRoleEntity memberRole = new UserRoleEntity();
-    memberRole.setRole("ROLE_MEMBER");
-    memberRole.setDiscount(0);
     u4.setRole(memberRole);
-
     mockUsers.add(u4);
+
+
     userService.saveUsers(mockUsers);
     productRepository.save(new ProductEntity("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask,asekuracja,wspinaczka", 4, 1D, false
       , false));
