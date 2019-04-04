@@ -2,76 +2,76 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link th:include="fragments/header :: head" th:remove="tag"/>
+  <link th:include="fragments/header :: head" th:remove="tag"/>
 </head>
 <body>
 <div>
-    <div th:replace="fragments/header :: navbar"/>
+  <div th:replace="fragments/header :: navbar"/>
 
-    <div class="container">
+  <div class="container">
 
-        <div class="row">
+    <div class="row">
 
-            <div class="col-md-3">
-                <p class="lead">Tags</p>
-                <div class="list-group">
-                    <a th:each="link : ${tagsLinks}" th:text=" '#' + ${link.name}"
-                       th:href="${link.link}" class="list-group-item">Category</a>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <p class="lead">Posty</p>
-                <div th:each="oneNews: ${news}">
-                    <div class="card">
-                        <div class="card-header">
-                            <p class="card-header" th:text="'Data utworzenia: '+${oneNews.createdTime}"></p>
-                        </div>
-                      <div th:if="${oneNews.updateTime != null}" class="card-header">
-                        <p class="card-header" th:text="'Data edycji: '+${oneNews.updateTime}"></p>
-                      </div>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${oneNews.title}"/>
-                            <p class="card-text" th:text="${oneNews.description}"></p>
-                            <a href="#!" class="btn btn-primary" th:href="'/news/' + ${oneNews.id}">Więcej...</a>
-                            <form sec:authorize="hasRole('ADMIN')" th:method="delete"
-                                  th:action="@{'/news/remove/'+${oneNews.id}}">
-                                <button class="btn alert-danger" type="submit">Usuń news</button>
-                            </form>
-                            <p th:text=" 'Tagi: '+'#' + ${oneNews.tag}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-2">
-                <p class="lead">Nawigacja</p>
-                <nav aria-label="...">
-                    <ul class="pager nav-list-pagination">
-                        <li class="previous" id="prev" th:classappend="${pagination.previousPage ? '' : 'disabled'}"><a
-                                th:href="'/?page='+${pagination.page-1}"
-                                th:classappend="${pagination.previousPage ? '' : 'disabled' }" href=""><span
-                                aria-hidden="true">&larr;</span>
-                            Older</a></li>
-                        <li class="next" id="next" th:classappend="${pagination.nextPage ? '' : 'disabled'}"><a
-                                th:href="'/?page='+${pagination.page+1}"
-                                th:classappend="${pagination.nextPage ? '' : 'disabled' }" href="">Newer <span
-                                aria-hidden="true">&rarr;</span></a></li>
-                    </ul>
-                </nav>
-            </div>
+      <div class="col-md-3">
+        <p class="lead">Tags</p>
+        <div class="list-group">
+          <a th:each="link : ${tagsLinks}" th:text=" '#' + ${link.name}"
+             th:href="${link.link}" class="list-group-item">Category</a>
         </div>
+      </div>
 
-        <div class="navbar navbar-default navbar-fixed-bottom ">
-            <div>
-                <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+      <div class="col-md-6">
+        <p class="lead">Posty</p>
+        <div th:each="oneNews: ${news}">
+          <div class="card">
+            <div class="card-header">
+              <p class="card-header" th:text="'Data utworzenia: '+${oneNews.createdTime}"></p>
             </div>
+            <div th:if="${oneNews.updateTime != null}" class="card-header">
+              <p class="card-header" th:text="'Data edycji: '+${oneNews.updateTime}"></p>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title" th:text="${oneNews.title}"/>
+              <p class="card-text" th:text="${oneNews.description}"></p>
+              <a href="#!" class="btn btn-primary" th:href="'/news/' + ${oneNews.id}">Więcej...</a>
+              <form sec:authorize="hasRole('ADMIN')" th:method="delete"
+                    th:action="@{'/news/remove/'+${oneNews.id}}">
+                <button class="btn alert-danger" type="submit">Usuń news</button>
+              </form>
+              <p th:text=" 'Tagi: '+'#' + ${oneNews.tag}"/>
+            </div>
+          </div>
         </div>
+      </div>
 
 
-        <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+      <div class="col-md-2">
+        <p class="lead">Nawigacja</p>
+        <nav aria-label="...">
+          <ul class="pager nav-list-pagination">
+            <li class="previous" id="prev" th:classappend="${pagination.previousPage ? '' : 'disabled'}"><a
+              th:href="'/?page='+${pagination.page-1}"
+              th:classappend="${pagination.previousPage ? '' : 'disabled' }" href=""><span
+              aria-hidden="true">&larr;</span>
+              Older</a></li>
+            <li class="next" id="next" th:classappend="${pagination.nextPage ? '' : 'disabled'}"><a
+              th:href="'/?page='+${pagination.page+1}"
+              th:classappend="${pagination.nextPage ? '' : 'disabled' }" href="">Newer <span
+              aria-hidden="true">&rarr;</span></a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
+  </div>
 </div>
+
+<div class="navbar navbar-default navbar-fixed-bottom ">
+  <div>
+    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+  </div>
+</div>
+
+
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
 </body>
 </html>

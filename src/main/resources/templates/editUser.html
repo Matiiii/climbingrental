@@ -10,8 +10,6 @@
 </div>
 <div class="container">
   <form action="#" th:action="@{/editUsers/{id}(id=${user.id})}" th:object="${user}" method="post">
-
-
     <div class="form-group">
       <label class="control-label col-sm-2" for="firstName">Imie:</label>
       <div class="col-sm-10">
@@ -62,6 +60,7 @@
 
   </form>
 </div>
+
 <div class="container">
   <footer>
     <div class="row" th:replace="fragments/footer :: footer">static footer</div>

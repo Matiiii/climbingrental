@@ -57,7 +57,7 @@
         status produktu
       </div>
 
-      <div  class="row">
+      <div class="row">
 
         <div th:each="countProduct: ${countProducts}" class="col-xs col-sm col-lg-4 col-md-6 product">
           <div class="thumbnail" th:classappend="${cart.getProducts().contains(countProduct.product)}? green"
@@ -99,24 +99,23 @@
           </div>
         </div>
       </div>
-        <!-- /.container -->
-
-      <div class="container">
-        <!-- Footer -->
-        <footer>
-          <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-        </footer>
-      </div>
-      <!-- /.container -->
-
-      <div class="row" th:replace="fragments/footer :: javascript">scripts</div>
-
-      <script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
-      <script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
-      <script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
-
     </div>
   </div>
 </div>
+<!-- /.container -->
+
+<div class="container">
+  <!-- Footer -->
+  <footer>
+    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+  </footer>
+</div>
+<!-- /.container -->
+
+<div class="row" th:replace="fragments/footer :: javascript">scripts</div>
+
+<script th:src="@{/js/moment.min.js}" src="../static/js/moment.min.js"></script>
+<script th:src="@{/js/daterangepicker.js}" src="../static/js/daterangepicker.js"></script>
+<script th:src="@{/js/shopProducts.js}" src="../static/js/shopProducts.js"></script>
 </body>
 </html>

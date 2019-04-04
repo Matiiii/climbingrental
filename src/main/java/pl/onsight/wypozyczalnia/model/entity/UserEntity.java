@@ -1,10 +1,15 @@
 package pl.onsight.wypozyczalnia.model.entity;
 
 
+import pl.onsight.wypozyczalnia.model.listeners.InsertListener;
+import pl.onsight.wypozyczalnia.model.listeners.UpdateListener;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "user")
-public class UserEntity {
+@EntityListeners({UpdateListener.class, InsertListener.class})
+public class UserEntity extends AbstractEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
