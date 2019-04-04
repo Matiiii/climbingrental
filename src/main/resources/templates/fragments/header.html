@@ -32,7 +32,10 @@
 
 <span class="hello" sec:authorize="isAuthenticated()">
     Zalogowany na: <b sec:authentication="principal.username"></b> jako <b sec:authorize="hasRole('ADMIN')">admin</b>
-    <b sec:authorize="hasRole('USER')">klient</b><b sec:authorize="hasRole('KLUBOWICZ')">klubowicz</b>
+      <b sec:authorize="hasRole('STAFF')">obsługa</b>
+
+    <b sec:authorize="hasRole('USER')">klient</b>
+  <b sec:authorize="hasRole('KLUBOWICZ')">klubowicz</b>
             		</span>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">On-Sight</a>

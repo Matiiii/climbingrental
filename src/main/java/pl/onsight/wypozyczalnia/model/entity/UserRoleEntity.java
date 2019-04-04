@@ -11,18 +11,16 @@ public class UserRoleEntity {
   private Long id;
   private String role;
   private double discount;
-  @OneToMany(mappedBy = "role")
-  private List<UserEntity> users;
+
 
 
   public UserRoleEntity() {
   }
 
 
-  public UserRoleEntity(String role, double discount, List<UserEntity> users) {
+  public UserRoleEntity(String role, double discount) {
     this.role = role;
     this.discount = discount;
-    this.users = users;
   }
 
   public Long getId() {
@@ -49,13 +47,6 @@ public class UserRoleEntity {
     this.discount = discount;
   }
 
-  public List<UserEntity> getUsers() {
-    return users;
-  }
-
-  public void setUsers(List<UserEntity> users) {
-    this.users = users;
-  }
 
   @Override
   public String toString() {
@@ -63,7 +54,6 @@ public class UserRoleEntity {
       "id=" + id +
       ", role='" + role + '\'' +
       ", discount=" + discount +
-      ", users=" + users +
       '}';
   }
 }

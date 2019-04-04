@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.model.entity.*;
+import pl.onsight.wypozyczalnia.model.enums.Status;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
@@ -186,14 +187,18 @@ public class DatabaseInitialization implements CommandLineRunner {
     order1.setUser(userService.getUserById(1L));
     order1.setOrderStart(new Date());
     order1.setOrderEnd(new Date());
-
+    order1.setStatusOfOrder(Status.REALIZACJA);
+    order1.setProducts(productRepository.findAll());
     productOrderRepository.save(order1);
 
     ProductOrderEntity order2 = new ProductOrderEntity();
     order2.setUser(userService.getUserById(2L));
     order2.setOrderStart(new Date());
     order2.setOrderEnd(new Date());
-
+    List<ProductEntity> productEntities = new ArrayList<>();
+    productEntities.add(productRepository.findOne(1L));
+    productEntities.add(productRepository.findOne(3L));
+    order1.setProducts(productEntities);
     productOrderRepository.save(order2);
   }
 }

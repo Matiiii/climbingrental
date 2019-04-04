@@ -13,7 +13,10 @@
 <!-- Navigation -->
 <div th:replace="fragments/header :: navbar">
 </div>
-
+<div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger"
+     align="center">
+  status dodawania
+</div>
 
 <!-- Page Content -->
 <div class="container">
@@ -32,30 +35,165 @@
               <a href="#produkty" data-toggle="tab">Produkty</a>
             </li>
             <li>
-              <a href="#dodaj-produkt" data-toggle="tab">Dodaj produkt</a>
-            </li>
-            <li>
-              <a href="#dodaj-news" data-toggle="tab">Dodaj news</a>
-            </li>
-            <li>
               <a href="#aktualne-zamowienia" data-toggle="tab">Aktualne zamówienia</a>
             </li>
             <li>
               <a href="#uzytkownicy" data-toggle="tab">Użytkownicy</a>
             </li>
           </ul>
+          <div class="tab-content">
+
+            <div class="tab-pane active" id="produkty">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Produkt</th>
+                      <th>Opis produktu</th>
+                      <th>Dostepność</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="products: ${productList}">
+                      <tr th:attr="product-id=${products.id}">
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${products.productName}">dsa</p>
+                            <p th:text="${products.id}">rew</p>
+                            <img th:src="${products.smallImage}"
+                                 src="../static/images/LINA_DUZA.jpg"
+                                 class="img-responsive"
+                                 alt=""/>
+                          </div>
+                        </td>
+                        <td th:text="${products.description}">Jakiś opis</td>
+                        <td>
+                          <span th:if="${products.getAvailable()}">DOSTĘPNY</span>
+                          <span th:if="${!products.getAvailable()}">NIEDOSTĘPNY</span>
+                        </td>
+                        <td>
+                          <span th:if="${products.getMember()}">Obsługa ścianki</span>
+                          <span th:if="${!products.getMember()}">Admin</span>
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" id="uzytkownicy">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Użytkownicy</th>
+                      <th>Imię</th>
+                      <th>Nazwisko</th>
+                      <th>Mail</th>
+                      <th>Rola</th>
+                      <th>Data dołączenia</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="user: ${usersList}">
+                      <tr th:attr="user-id=${user.id}">
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${user.id}">dsa</p>
+                          </div>
+                        </td>
+                        <td th:text="${user.firstName}"/>
+                        <td th:text="${user.lastName}"/>
+                        <td th:text="${user.email}"/>
+                        <td th:text="${user.role.role}"/>
+                        <td th:text="${user.createdTime}"/>
+                        <td>
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="aktualne-zamowienia">
+              <div class="col-md-12">
+                <div class="list-group">
+                  <table class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Zamówienie</th>
+                      <th>Imię i nazwisko użytkownika</th>
+                      <th>Zamówione od</th>
+                      <th>Zamówione do</th>
+                      <th>Komentarz</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="order: ${orderList}">
+                      <tr th:attr="order-id=${order.id}">
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="'Nr: '+${order.getId()}">Order id</p>
+                            <p th:text="'Kwota: '+${order.combinedPrice}+' zł'">price</p>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.user.firstName}+' '+${order.user.lastName}"></p>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.orderStart.toLocaleString().split(' ')[0]}"></p>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.orderEnd.toLocaleString().split(' ')[0]}"></p>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-4">
+                            <p th:text="${order.statusOfOrder}"></p>
+                          </div>
+                        </td>
+                        <td>
+                          <button type="submit" class="btn btn-primary btn-usun">Edytuj
+                          </button>
+                        </td>
+                      </tr>
+                    </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="col-md-8">
+
+</div>
+
+
+<!-- /.container -->
+
 <div class="container">
   <!-- Footer -->
   <footer>
     <div class="row" th:replace="fragments/footer :: footer">static footer</div>
   </footer>
 </div>
-
 
 <!-- /.container -->
 <div class="row" th:replace="fragments/footer :: javascript">scripts</div>

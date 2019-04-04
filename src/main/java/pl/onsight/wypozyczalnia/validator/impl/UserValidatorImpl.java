@@ -21,7 +21,7 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public boolean isUserHavePermissionToSeeThisOrder(Long userId, Long orderId) {
 
-        if (userService.getUserById(userId).getRole().equals("Admin")) {
+        if (userService.getUserById(userId).getRole().getRole().equals("ROLE_ADMIN")) {
             return true;
         } else {
             return productOrderService.findUserOrders(userId).stream().anyMatch(order -> order.getId().equals(orderId));
