@@ -1,9 +1,11 @@
 package pl.onsight.wypozyczalnia.service.impl;
 
 import org.glassfish.jersey.client.ClientProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.onsight.wypozyczalnia.service.PayUService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -13,7 +15,12 @@ import javax.ws.rs.core.Response;
 @Service
 public class PayUServiceImpl implements PayUService {
 
+    private HttpServletRequest request;
+
     private String token = getToken().readEntity(String.class).substring(17, 53);
+    private static final String CLIENT_ID = "352643";
+    private static final String CLIENT_SECRET = "f15e8ffa7a663cee2b910a44ba607f36";
+
 
     @Override
     public Response getToken() {
@@ -22,7 +29,7 @@ public class PayUServiceImpl implements PayUService {
         //testowy sklep na sandboxie
         Entity<String> payload = Entity.text("grant_type=client_credentials&client_id=352643&client_secret=f15e8ffa7a663cee2b910a44ba607f36");
 
-        Response response = client.target("https://secure.snd.payu.com/pl/standard/user/oauth/authorize?grant_type=client_credentials&client_id=352643&client_secret=f15e8ffa7a663cee2b910a44ba607f36")
+        Response response = client.target("https://secure.snd.payu.com/pl/standard/user/oauth/authorize?grant_type=client_credentials&client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET)
                         .request(MediaType.APPLICATION_JSON_TYPE)
                         .post(payload);
 
@@ -37,7 +44,7 @@ public class PayUServiceImpl implements PayUService {
     public Response createOrder() {
         Client client = ClientBuilder.newClient().property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
         Entity payload = Entity.json("{  \"notifyUrl\": \"https://asd.pl/notify\"," +
-                "  \"customerIp\": \"127.0.0.1\"," +
+                "  \"customerIp\": \"" + getIp() + "\"," +
                 "  \"merchantPosId\": \"352643\"," +
                 "  \"description\": \"RTV market\"," +
                 "  \"currencyCode\": \"PLN\"," +
@@ -66,6 +73,7 @@ public class PayUServiceImpl implements PayUService {
                         .header("Authorization", "Bearer " + token)
                         .post(payload);
 
+
         System.out.println("status: " + response.getStatus());
         System.out.println("headers: " + response.getHeaders());
         System.out.println("body:" + response.readEntity(String.class));
@@ -73,5 +81,12 @@ public class PayUServiceImpl implements PayUService {
         return response;
     }
 
+    @Autowired
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
+    private String getIp(){
+        return request.getRemoteAddr();
+    }
 }
