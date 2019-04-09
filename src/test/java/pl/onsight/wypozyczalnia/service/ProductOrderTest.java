@@ -10,6 +10,7 @@ import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,4 +84,5 @@ public class ProductOrderTest {
         assertThat(numberOfProductInOrdersInPeriod4).isEqualTo(0);
         assertThat(numberOfProductInOrdersInPeriod5).isEqualTo(5);
     }
+
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.model.Info;
-import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 import pl.onsight.wypozyczalnia.validator.UserValidator;
@@ -39,13 +38,5 @@ public class OrderController {
     }
     return modelAndView;
   }
-
-/*  @GetMapping("/editUsers/{id}")
-  public ModelAndView showEditFormForUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
-    modelAndView.setViewName("editUser");
-    UserEntity user = userService.getUserById(id);
-    modelAndView.addObject("user", user);
-    return modelAndView;
-  }*/
 
 }

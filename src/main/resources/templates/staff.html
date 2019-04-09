@@ -13,11 +13,6 @@
 <!-- Navigation -->
 <div th:replace="fragments/header :: navbar">
 </div>
-<div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger"
-     align="center">
-  status dodawania
-</div>
-
 <!-- Page Content -->
 <div class="container">
 
@@ -165,8 +160,7 @@
                           </div>
                         </td>
                         <td>
-                          <button type="submit" class="btn btn-primary btn-usun">Edytuj
-                          </button>
+                         <a th:href=" @{/order/{id}(id=${order.getId()})}">Szczegóły</a>
                         </td>
                       </tr>
                     </div>

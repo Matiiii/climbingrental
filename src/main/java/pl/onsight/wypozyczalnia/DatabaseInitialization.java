@@ -11,9 +11,7 @@ import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class DatabaseInitialization implements CommandLineRunner {
@@ -178,27 +176,27 @@ public class DatabaseInitialization implements CommandLineRunner {
     news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
     news2.setTag("2");
 
-
     newsRepository.save(news);
     newsRepository.save(news2);
 
+    HashMap<Long, Double> oldPrices = new HashMap<>();
+    oldPrices.put(1L, 15.0);
+    oldPrices.put(2L, 12.0);
 
     ProductOrderEntity order1 = new ProductOrderEntity();
+    order1.setCombinedPrice(25.0);
+    order1.setCombinedDiscount(12.0);
+    order1.setDeposit(2.0);
+    Date dateStart = new Date("2019/01/10 01:00:00");
+    order1.setOrderStart(dateStart);
+    order1.setOrderEnd(dateStart);
     order1.setUser(userService.getUserById(1L));
     order1.setOrderStart(new Date());
     order1.setOrderEnd(new Date());
     order1.setStatusOfOrder(Status.REALIZACJA);
     order1.setProducts(productRepository.findAll());
+    order1.setOldPrices(oldPrices);
     productOrderRepository.save(order1);
 
-    ProductOrderEntity order2 = new ProductOrderEntity();
-    order2.setUser(userService.getUserById(2L));
-    order2.setOrderStart(new Date());
-    order2.setOrderEnd(new Date());
-    List<ProductEntity> productEntities = new ArrayList<>();
-    productEntities.add(productRepository.findOne(1L));
-    productEntities.add(productRepository.findOne(3L));
-    order1.setProducts(productEntities);
-    productOrderRepository.save(order2);
   }
 }
