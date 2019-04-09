@@ -14,4 +14,6 @@ public interface ProductOrderRepository extends CrudRepository<ProductOrderEntit
     List<ProductOrderEntity> findAllByUserId(Long id);
 
     List<ProductOrderEntity> findAll();
+
+
 }

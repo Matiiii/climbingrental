@@ -24,6 +24,7 @@ public interface ProductOrderService {
 
   ProductOrderEntity buildOrder(UserEntity user, Cart cart);
 
+  void changeStatusOfUnpaidOrder();
 
 
 }
