@@ -14,7 +14,7 @@ public class ScheduledTask {
     this.productOrderService = productOrderService;
   }
 
-  @Scheduled
+  @Scheduled(fixedRate = /*60*60**/1000)
   public void excecuteTask() {
     productOrderService.changeStatusOfUnpaidOrder();
   }

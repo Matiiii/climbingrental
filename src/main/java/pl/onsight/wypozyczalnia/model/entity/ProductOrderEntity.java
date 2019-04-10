@@ -29,6 +29,7 @@ public class ProductOrderEntity {
     type = "org.hibernate.type.SerializableToBlobType",
     parameters = {@org.hibernate.annotations.Parameter(name = "classname", value = "java.util.HashMap")}
   )
+
   private HashMap<Long, Double> oldPrices = new HashMap<>();
 
   private Date orderStart;

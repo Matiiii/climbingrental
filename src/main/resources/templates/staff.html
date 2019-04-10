@@ -125,8 +125,8 @@
                       <th>Imię i nazwisko użytkownika</th>
                       <th>Zamówione od</th>
                       <th>Zamówione do</th>
-                      <th>Komentarz</th>
-                      <th></th>
+                      <th>Status</th>
+                      <th>Płatność</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -160,7 +160,13 @@
                           </div>
                         </td>
                         <td>
-                         <a th:href=" @{/order/{id}(id=${order.getId()})}">Szczegóły</a>
+                          <div class="col-md-4">
+                            <p th:if="${order.paid}">Opłacone</p>
+                            <p th:if="${!order.paid}">Nieopłacone</p>
+                          </div>
+                        </td>
+                        <td>
+                          <a th:href=" @{/order/{id}(id=${order.getId()})}">Szczegóły</a>
                         </td>
                       </tr>
                     </div>

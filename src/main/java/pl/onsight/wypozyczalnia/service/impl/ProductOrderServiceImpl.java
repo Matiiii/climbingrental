@@ -3,6 +3,8 @@ package pl.onsight.wypozyczalnia.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
@@ -13,21 +15,15 @@ import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
 
   private ProductOrderRepository productOrderRepository;
   private ProductRepository productRepository;
-  private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-
 
   @Autowired
   public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
@@ -98,40 +94,28 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     return order;
   }
 
-  @Override
-  public void changeStatusOfUnpaidOrder() {
-    List<ProductOrderEntity> allOrders = productOrderRepository.findAll();
-    List<ProductOrderEntity> unpaidOrders = new ArrayList<>();
-    Date date = new Date();
-
-    for (ProductOrderEntity order : allOrders) {
-      if (!order.isPaid() && order.getOrderStart().after(date)) {
-        unpaidOrders.add(order);
-      }
-    }
-    for (ProductOrderEntity orderAfter : unpaidOrders) {
-      orderAfter.setStatusOfOrder(Status.NIEZAPŁACONE);
-    }
-
+  private Date addHoursToCurrentOrderDate(Date date, int minutes) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.MINUTE, minutes);
+    //calendar.add(Calendar.HOUR_OF_DAY, hours);
+    return calendar.getTime();
   }
 
-
-
- /* @Override
-  public void removeUnpaidOrder(Long orderId) {
-    ProductOrderEntity orderEntity = productOrderRepository.findOne(orderId);
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
+  public void changeStatusOfUnpaidOrder() {
+    List<ProductOrderEntity> allOrders = findAllProductOrders();
     Date date = new Date();
-    *//*String pattern = "yyyy-MM-dd";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    simpleDateFormat.format(date);*//*
-    Date dateToCheck = orderEntity.getOrderStart();
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(dateToCheck);
-    calendar.add(Calendar.DATE, 3);
-    if (dateToCheck.after(date) && !orderEntity.isPaid()) {
-      orderEntity.setStatusOfOrder(Status.NIEZAPŁACONE);
+    for (ProductOrderEntity order : allOrders) {
+      Date dateToCheck = addHoursToCurrentOrderDate(order.getOrderStart(), 1);
+      if (!order.isPaid() && dateToCheck.after(date)) {
+        order.setStatusOfOrder(Status.CANCELED_DUE_TO_NON_PAYMENT);
+        System.out.println(order.getStatusOfOrder());
+        productOrderRepository.save(order);
+        System.out.println("zostal zapisany");
+      }
     }
-  }*/
-
+  }
 
 }

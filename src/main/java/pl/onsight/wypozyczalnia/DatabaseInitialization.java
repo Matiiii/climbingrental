@@ -187,16 +187,34 @@ public class DatabaseInitialization implements CommandLineRunner {
     order1.setCombinedPrice(25.0);
     order1.setCombinedDiscount(12.0);
     order1.setDeposit(2.0);
-    Date dateStart = new Date("2019/01/10 01:00:00");
+   /* Date dateStart = new Date("2019/01/01 01:00:00");
     order1.setOrderStart(dateStart);
-    order1.setOrderEnd(dateStart);
+    order1.setOrderEnd(dateStart);*/
     order1.setUser(userService.getUserById(1L));
     order1.setOrderStart(new Date());
     order1.setOrderEnd(new Date());
-    order1.setStatusOfOrder(Status.REALIZACJA);
+    order1.setStatusOfOrder(Status.ORDERED);
     order1.setProducts(productRepository.findAll());
     order1.setOldPrices(oldPrices);
+    order1.setPaid(false);
     productOrderRepository.save(order1);
+
+    ProductOrderEntity order2 = new ProductOrderEntity();
+    order2.setCombinedPrice(25.0);
+    order2.setCombinedDiscount(12.0);
+    order2.setDeposit(2.0);
+   /* Date dateStart = new Date("2019/01/01 01:00:00");
+    order2.setOrderStart(dateStart);
+    order2.setOrderEnd(dateStart);*/
+    order2.setUser(userService.getUserById(1L));
+    order2.setOrderStart(new Date());
+    order2.setOrderEnd(new Date());
+    order2.setStatusOfOrder(Status.ORDERED);
+    order2.setProducts(productRepository.findAll());
+    order2.setOldPrices(oldPrices);
+    order2.setPaid(true);
+
+    productOrderRepository.save(order2);
 
   }
 }
