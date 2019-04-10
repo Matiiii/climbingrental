@@ -15,6 +15,7 @@ import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -94,26 +95,22 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     return order;
   }
 
-  private Date addHoursToCurrentOrderDate(Date date, int minutes) {
+  private Date addHoursToCurrentOrderDate(Date date, int hours) {
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
-    calendar.add(Calendar.MINUTE, minutes);
-    //calendar.add(Calendar.HOUR_OF_DAY, hours);
+    calendar.add(Calendar.HOUR_OF_DAY, hours);
     return calendar.getTime();
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
   public void changeStatusOfUnpaidOrder() {
     List<ProductOrderEntity> allOrders = findAllProductOrders();
     Date date = new Date();
     for (ProductOrderEntity order : allOrders) {
-      Date dateToCheck = addHoursToCurrentOrderDate(order.getOrderStart(), 1);
-      if (!order.isPaid() && dateToCheck.after(date)) {
+      Date dateToCheck = addHoursToCurrentOrderDate(order.getOrderStart(), 24);
+      if (!order.isPaid() && date.after(dateToCheck)) {
         order.setStatusOfOrder(Status.CANCELED_DUE_TO_NON_PAYMENT);
-        System.out.println(order.getStatusOfOrder());
         productOrderRepository.save(order);
-        System.out.println("zostal zapisany");
       }
     }
   }
