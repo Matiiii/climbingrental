@@ -103,7 +103,7 @@ public class AdminController {
   }
 
   @PostMapping("/editUsers/{id}")
-  public ModelAndView editUser(@PathVariable("id") Long id, @Valid UserEntity user,
+  public ModelAndView editUser(@Valid UserEntity user,
                                ModelAndView modelAndView) {
     userService.editUser(user);
     adminPage(modelAndView);

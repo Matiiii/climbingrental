@@ -102,7 +102,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     u3.setEmail("adam");
     u3.setPassword("adam");
     u3.setPhoneNumber("123 456 789");
-    u3.setRole(adminRole);
+    u3.setRole(userRole);
     mockUsers.add(u3);
 
 

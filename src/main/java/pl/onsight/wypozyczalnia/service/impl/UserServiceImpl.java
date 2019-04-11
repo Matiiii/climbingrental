@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
 import pl.onsight.wypozyczalnia.repository.UserRepository;
+import pl.onsight.wypozyczalnia.repository.UserRoleRepository;
 import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
@@ -21,17 +22,31 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepository;
   private RoleService roleService;
   private PasswordEncoder passwordEncoder;
+  private UserRoleRepository userRoleRepository;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
+  public UserServiceImpl(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
     this.userRepository = userRepository;
+    this.roleService = roleService;
     this.passwordEncoder = passwordEncoder;
-    this.roleService=roleService;
+    this.userRoleRepository = userRoleRepository;
   }
+
 
   @Override
   public void saveUser(UserEntity user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    userRepository.save(user);
+  }
+
+  @Override
+  public void saveUserByRegistration(UserEntity user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    UserRoleEntity userRoleEntity = new UserRoleEntity();
+    userRoleEntity.setDiscount(0);
+    userRoleEntity.setRole("ROLE_USER");
+    userRoleRepository.save(userRoleEntity);
+    user.setRole(userRoleEntity);
     userRepository.save(user);
   }
 

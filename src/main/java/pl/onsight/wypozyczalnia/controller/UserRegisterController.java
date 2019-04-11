@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.onsight.wypozyczalnia.model.Info;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
+import pl.onsight.wypozyczalnia.model.entity.UserRoleEntity;
+import pl.onsight.wypozyczalnia.repository.UserRoleRepository;
 import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.RegisterValidator;
 
@@ -18,35 +20,36 @@ import javax.validation.Valid;
 @Controller
 public class UserRegisterController {
 
-    private UserService userService;
-    private RegisterValidator registerValidator;
+  private UserService userService;
+  private RegisterValidator registerValidator;
 
-    @Autowired
-    public UserRegisterController(UserService userService, RegisterValidator registerValidator) {
-        this.userService = userService;
-        this.registerValidator = registerValidator;
+  @Autowired
+  public UserRegisterController(UserService userService, RegisterValidator registerValidator) {
+    this.userService = userService;
+    this.registerValidator = registerValidator;
+  }
+
+
+  @GetMapping("/register")
+  public ModelAndView registrationPage(ModelAndView modelAndView) {
+    modelAndView.setViewName("register");
+    modelAndView.addObject("user", new UserEntity());
+    return modelAndView;
+  }
+
+  @PostMapping("/register")
+  public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
+                              BindingResult bindResult, ModelAndView modelAndView) {
+    if (bindResult.hasErrors()) {
+      modelAndView.setViewName("register");
+    } else if (registerValidator.isEmailTaken(user)) {
+      modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
+      return registrationPage(modelAndView);
+    } else {
+      userService.saveUserByRegistration(user);
+      modelAndView.setViewName("redirect:/login");
     }
 
-    @GetMapping("/register")
-    public ModelAndView registrationPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("register");
-        modelAndView.addObject("user", new UserEntity());
-        return modelAndView;
-    }
-
-    @PostMapping("/register")
-    public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
-                                BindingResult bindResult, ModelAndView modelAndView) {
-        if (bindResult.hasErrors()) {
-            modelAndView.setViewName("register");
-        } else if (registerValidator.isEmailTaken(user)) {
-            modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
-            return registrationPage(modelAndView);
-        } else {
-            userService.saveUser(user);
-            modelAndView.setViewName("redirect:/login");
-        }
-
-        return modelAndView;
-    }
+    return modelAndView;
+  }
 }
