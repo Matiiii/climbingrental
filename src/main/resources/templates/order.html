@@ -50,6 +50,10 @@
     </div>
   </div>
 
+  <form th:action="@{/printOrder/{id} (id=${productOrder.id})}" th:object="${productOrder}" method="post">
+    <button>Drukuj</button>
+  </form>
+
   <div class="col-xs col-sm">
     <div class=" table-head row col-xs-12 col-sm-12 col-md-12">
       <div class="col-xs-12 col-sm-12 col-md-2 img">Produkt</div>
@@ -88,7 +92,7 @@
       <div class="add col-xs-12 col-sm-3 col-md-3">
         <p th:text="${'Coś tam'}"></p>
       </div>
-     <div class="sumPrice col-xs-12 col-sm-1 col-md-1">
+      <div class="sumPrice col-xs-12 col-sm-1 col-md-1">
         <span class="display-mob">Suma za dzień: </span> <span
         th:text="${productOrder.getOldPrices().get(product.getId()) * productOrder.countNumberOfProduct(product)}">suma</span>
       </div>

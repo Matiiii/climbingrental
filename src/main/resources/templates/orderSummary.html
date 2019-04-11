@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<h2 align="center">Zamówienie</h2>
+<h3>Dane wynajmującego</h3>
+<p th:text="'Imię: ' + ${firstName} "/>
+<p th:text="'Nazwisko: ' + ${lastName} "/>
+<p th:text="'Telefon: ' + ${phone} "/>
+<h3>Okres wynajmu</h3>
+<p th:text="'Date start: ' + ${dateStart} "/>
+<p th:text="'Date start: ' + ${dateEnd} "/>
+<h3>Cena końcowa</h3>
+<p th:text="'Do zapłaty: ' + ${price} "/>
+</body>
+</html>
+

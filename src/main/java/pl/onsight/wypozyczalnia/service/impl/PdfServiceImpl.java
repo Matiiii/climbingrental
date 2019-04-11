@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 
 @Service
 public class PdfServiceImpl implements PdfService {
@@ -22,15 +21,16 @@ public class PdfServiceImpl implements PdfService {
     PdfWriter writer = null;
     try {
       writer = PdfWriter.getInstance(document,
-        new FileOutputStream("src/output/orderNumber" + new Date() + ".pdf"));
+        new FileOutputStream("src/main/resources/ordersPDF/orderNr" + orderId + ".pdf"));
     } catch (DocumentException e) {
       e.printStackTrace();
     } catch (FileNotFoundException e) {
+
       e.printStackTrace();
     }
     document.open();
     XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-      new FileInputStream("order.html"));
+      new FileInputStream("src/main/resources/templates/order.html"));
     document.close();
   }
 }
