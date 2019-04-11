@@ -60,7 +60,7 @@ public class SessionTest {
     UserEntity currentUser = sessionService.getCurrentUser();
     //then
     assertThat(currentUser).isNotNull();
-    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_ADMIN");
+    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_USER");
 
   }
 
