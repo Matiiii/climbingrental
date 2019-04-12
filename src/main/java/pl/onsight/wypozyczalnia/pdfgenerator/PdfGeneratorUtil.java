@@ -1,20 +1,16 @@
-package pl.onsight.wypozyczalnia.service;
+package pl.onsight.wypozyczalnia.pdfgenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 
 @Component
 public class PdfGeneratorUtil {
@@ -22,7 +18,13 @@ public class PdfGeneratorUtil {
   @Autowired
   private TemplateEngine templateEngine;
 
-  public void createPdf(String templateName, Map<String, String> map, Long orderId) throws Exception {
+  public void createPdf(String templateName, Map<String, Object> map, Long orderId) throws Exception {
+    File directory = new File("C://orders");
+
+    if (!directory.exists()) {
+      new File("C://orders").mkdir();
+    }
+
     Context ctx = new Context();
     Iterator itMap = map.entrySet().iterator();
     while (itMap.hasNext()) {
@@ -32,8 +34,7 @@ public class PdfGeneratorUtil {
 
     String processedHtml = templateEngine.process(templateName, ctx);
     FileOutputStream os = null;
-    String fileName = "ordernumber";
-    File directory = new File("C:/Users/aszaniaw/Desktop/ordersPDF");
+    String fileName = "order" + orderId.shortValue();
     try {
       final File outputFile = File.createTempFile(fileName, ".pdf", directory);
       os = new FileOutputStream(outputFile);
@@ -52,5 +53,6 @@ public class PdfGeneratorUtil {
       }
     }
   }
-
 }
+
+

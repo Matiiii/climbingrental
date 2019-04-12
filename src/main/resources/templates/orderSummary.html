@@ -1,18 +1,49 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 <body>
-<h2 align="center">Zamówienie</h2>
-<h3>Dane wynajmującego</h3>
-<p th:text="'Imię: ' + ${firstName} "/>
-<p th:text="'Nazwisko: ' + ${lastName} "/>
-<p th:text="'Telefon: ' + ${phone} "/>
-<h3>Okres wynajmu</h3>
-<p th:text="'Date start: ' + ${dateStart} "/>
-<p th:text="'Date start: ' + ${dateEnd} "/>
-<h3>Cena końcowa</h3>
-<p th:text="'Do zapłaty: ' + ${price} "/>
+<div class="accordion">
+  <p th:text="'Poznan, '+${date}" align="right"></p>
+  <div>
+    <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center "
+        th:text="'ZAMÓWIENIE NR '+${orderId}"></h3>
+    <h4>Zamowienie na sprzet wspinaczkowy.</h4>
+    <p>Klient zobowiazuje sie zwrocic sprzet w nienaruszonym stanie w terminie podanym na zamowieniu. W razie
+      uszkodzenia lub zagubienia sprzetu na Klienta zostanie nalozona kara pieniezna w kwocie rownowartosci nowego
+      sprzetu.</p>
+  </div>
+  <div class="alert alert-heading">
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Dane
+        wynajmujacego</h3>
+      <p th:text="'Imie: ' + ${firstName} "/>
+      <p th:text="'Nazwisko: ' + ${lastName} "/>
+      <p th:text="'Telefon: ' + ${phone} "/>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Okres
+        wynajmu</h3>
+      <p th:text="'Date wypozyczenia: ' + ${dateStart} "/>
+      <p th:text="'Date zwrotu: ' + ${dateEnd} "/>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Produkty</h3>
+      <p th:text="${products} "/>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Cena koncowa</h3>
+      <p th:text="'Do zapłaty: ' + ${price}+'zl za '+${days}+' dni' "/>
+    </div>
+    <div>
+      <h4 align="left">............................................</h4>
+      <p align="left">podpis Klienta</p>
+      <h4 align="right">............................................</h4>
+      <p align="right">podpis Wynajmujacego</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 

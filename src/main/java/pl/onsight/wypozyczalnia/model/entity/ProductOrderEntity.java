@@ -3,7 +3,6 @@ package pl.onsight.wypozyczalnia.model.entity;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.enums.Status;
 
