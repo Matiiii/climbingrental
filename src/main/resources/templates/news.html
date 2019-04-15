@@ -27,20 +27,22 @@
     <div class="col-md-9">
       <p class="lead" th:text="'News z dnia: '+ ${news.createdTime}">News</p>
       <div class="card">
-        <div th:if="${news.updateTime != null}" class="card-header">
-          <p class="card-header" th:text="'Data edycji: '+${news.updateTime}"></p>
+        <div class="row">
+          <div th:if="${news.updateTime != null}" class="card-header">
+            <p class="card-header" th:text="'Data edycji: '+${news.updateTime}"></p>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title" th:text="${news.title}"/>
+            <p class="card-text" th:text="${news.description}"></p>
+            <form sec:authorize="hasRole('ADMIN')" th:method="delete"
+                  th:action="@{'/news/remove/'+${news.id}}">
+              <button class="btn alert-danger" type="submit">Usuń news</button>
+            </form>
+            <p th:text=" 'Tagi: '+'#' + ${news.tag}"/>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title" th:text="${news.title}"/>
-          <p class="card-text" th:text="${news.description}"></p>
-          <form sec:authorize="hasRole('ADMIN')" th:method="delete"
-                th:action="@{'/news/remove/'+${news.id}}">
-            <button class="btn alert-danger" type="submit">Usuń news</button>
-          </form>
-          <p th:text=" 'Tagi: '+'#' + ${news.tag}"/>
-        </div>
-      </div>
 
+      </div>
 
     </div>
 

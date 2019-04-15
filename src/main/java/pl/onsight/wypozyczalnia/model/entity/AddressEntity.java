@@ -68,13 +68,12 @@ public class AddressEntity {
 
   @Override
   public String toString() {
-    return "AddressEntity{" +
-      "id=" + id +
-      ", city='" + city + '\'' +
-      ", street='" + street + '\'' +
-      ", flatNumber='" + flatNumber + '\'' +
-      ", zipcode='" + zipcode + '\'' +
-      '}';
+    return "Addres: " +
+      "miasto: " + city +
+      ", ulica: " + street +
+      ", numer mieszkania: " + flatNumber +
+      ", kod pocztowy:" + zipcode;
+
   }
 }
 

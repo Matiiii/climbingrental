@@ -21,104 +21,104 @@ import java.text.ParseException;
 @SessionAttributes("cart")
 public class CartController {
 
-    private CartService cartService;
-    private ProductOrderService productOrderService;
-    private SessionService sessionService;
-    private ProductService productService;
-    private OrderValidator orderValidator;
-    private DateValidator dateValidator;
+  private CartService cartService;
+  private ProductOrderService productOrderService;
+  private SessionService sessionService;
+  private ProductService productService;
+  private OrderValidator orderValidator;
+  private DateValidator dateValidator;
 
-    @Autowired
-    public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator, DateValidator dateValidator) {
-        this.cartService = cartService;
-        this.productOrderService = productOrderService;
-        this.sessionService = sessionService;
-        this.productService = productService;
-        this.orderValidator = orderValidator;
-        this.dateValidator = dateValidator;
+  @Autowired
+  public CartController(CartService cartService, ProductOrderService productOrderService, SessionService sessionService, ProductService productService, OrderValidator orderValidator, DateValidator dateValidator) {
+    this.cartService = cartService;
+    this.productOrderService = productOrderService;
+    this.sessionService = sessionService;
+    this.productService = productService;
+    this.orderValidator = orderValidator;
+    this.dateValidator = dateValidator;
+  }
+
+  @GetMapping("/cart")
+  public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) throws ParseException {
+    modelAndView.setViewName("cart");
+    modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
+    modelAndView.addObject("order", new ProductOrderEntity());
+    modelAndView.addObject("user", sessionService.getCurrentUser());
+
+    return modelAndView;
+  }
+
+  @PostMapping("/createOrder")
+  public ModelAndView createOrder(@ModelAttribute("cart") Cart cart,
+                                  ModelAndView modelAndView) throws ParseException {
+    modelAndView.setViewName("cart");
+    ProductOrderEntity order;
+    UserEntity user = sessionService.getCurrentUser();
+    if (dateValidator.isDateValid(cart.getDate())) {
+      order = productOrderService.buildOrder(user, cart);
+    } else {
+      modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+      return cartPage(cart, modelAndView);
+    }
+    if (orderValidator.isOrderCorrectToSave(order)) {
+      modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
+      productOrderService.saveOrder(order);
+      cartService.removeProductsFromCart(cart);
+    } else {
+      modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
     }
 
-    @GetMapping("/cart")
-    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) throws ParseException {
-        modelAndView.setViewName("cart");
-        modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
-        modelAndView.addObject("order", new ProductOrderEntity());
-        modelAndView.addObject("user", sessionService.getCurrentUser());
+    return cartPage(cart, modelAndView);
+  }
 
-        return modelAndView;
+  @PostMapping("/changeDate")
+  public ModelAndView changeDate(@ModelAttribute("cart") Cart cart,
+                                 @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
+                                 ModelAndView modelAndView) throws ParseException {
+
+    if (!dateValidator.isDateValid(dateFilter)) {
+      modelAndView.addObject("info", new Info("Data niepoprawna!", false));
+      return cartPage(cart, modelAndView);
     }
 
-    @PostMapping("/createOrder")
-    public ModelAndView createOrder(@ModelAttribute("cart") Cart cart,
-                                    ModelAndView modelAndView) throws ParseException {
-        modelAndView.setViewName("cart");
-        ProductOrderEntity order;
-        UserEntity user = sessionService.getCurrentUser();
-        if (dateValidator.isDateValid(cart.getDate())) {
-            order = productOrderService.buildOrder(user, cart);
-        } else {
-            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
-            return cartPage(cart, modelAndView);
-        }
-        if (orderValidator.isOrderCorrectToSave(order)) {
-            modelAndView.addObject("info", new Info("Zamówienie dodane poprawnie!", true));
-            productOrderService.saveOrder(order);
-            cartService.removeProductsFromCart(cart);
-        } else {
-            modelAndView.addObject("info", new Info("Zamówienie niepoprawne", false));
-        }
+    cartService.addDateToCart(cart, dateFilter);
+    return cartPage(cart, modelAndView);
+  }
 
-        return cartPage(cart, modelAndView);
-    }
+  @PostMapping("/cart/deleteProduct/{id}")
+  public ModelAndView deleteProductFromCart(@PathVariable Long id,
+                                            @ModelAttribute("cart") Cart cart,
+                                            ModelAndView modelAndView) throws ParseException {
 
-    @PostMapping("/changeDate")
-    public ModelAndView changeDate(@ModelAttribute("cart") Cart cart,
-                                   @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
-                                   ModelAndView modelAndView) throws ParseException {
+    modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
+    cartService.removeProductFromCart(cart, productService.findProductById(id));
+    return cartPage(cart, modelAndView);
+  }
 
-        if (!dateValidator.isDateValid(dateFilter)) {
-            modelAndView.addObject("info", new Info("Data niepoprawna!", false));
-            return cartPage(cart, modelAndView);
-        }
+  @PostMapping("/cart/deleteAllProductsOfOneType/{id}")
+  public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
+                                                    @ModelAttribute("cart") Cart cart,
+                                                    ModelAndView modelAndView) throws ParseException {
+    modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
+    cartService.removeProductsOneTypeFromCart(cart, productService.findProductById(id));
+    return cartPage(cart, modelAndView);
+  }
 
-        cartService.addDateToCart(cart, dateFilter);
-        return cartPage(cart, modelAndView);
-    }
+  @PostMapping("/cart/addProduct/{id}")
+  public ModelAndView addProductToCart(@PathVariable Long id,
+                                       @ModelAttribute("cart") Cart cart,
+                                       ModelAndView modelAndView) throws ParseException {
 
-    @PostMapping("/cart/deleteProduct/{id}")
-    public ModelAndView deleteProductFromCart(@PathVariable Long id,
-                                              @ModelAttribute("cart") Cart cart,
-                                              ModelAndView modelAndView) throws ParseException {
+    modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
+    cartService.addProductToCart(cart, productService.findProductById(id), 1);
 
-        modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
-        cartService.removeProductFromCart(cart, productService.findProductById(id));
-        return cartPage(cart, modelAndView);
-    }
-
-    @PostMapping("/cart/deleteAllProductsOfOneType/{id}")
-    public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
-                                                      @ModelAttribute("cart") Cart cart,
-                                                      ModelAndView modelAndView) throws ParseException {
-        modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
-        cartService.removeProductsOneTypeFromCart(cart, productService.findProductById(id));
-        return cartPage(cart, modelAndView);
-    }
-
-    @PostMapping("/cart/addProduct/{id}")
-    public ModelAndView addProductToCart(@PathVariable Long id,
-                                         @ModelAttribute("cart") Cart cart,
-                                         ModelAndView modelAndView) throws ParseException {
-
-        modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
-        cartService.addProductToCart(cart, productService.findProductById(id), 1);
-
-        return cartPage(cart, modelAndView);
-    }
+    return cartPage(cart, modelAndView);
+  }
 
 
-    @ModelAttribute("cart")
-    public Cart cart() {
-        return new Cart();
-    }
+  @ModelAttribute("cart")
+  public Cart cart() {
+    return new Cart();
+  }
 }
 

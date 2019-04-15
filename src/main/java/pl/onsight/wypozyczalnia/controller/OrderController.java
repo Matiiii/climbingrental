@@ -71,8 +71,9 @@ public class OrderController {
     data.put("lastName", order.getUser().getLastName());
     data.put("email", order.getUser().getEmail());
     data.put("phone", order.getUser().getPhoneNumber());
+    data.put("adress", order.getUser().getAddress());
     data.put("price", order.getCombinedPrice());
-    data.put("products", order.getProducts().toString());
+    data.put("products", order.getProducts());
     data.put("days", order.getNumberOfDays());
     pdfGeneratorUtil.createPdf("orderSummary", data, id);
 
