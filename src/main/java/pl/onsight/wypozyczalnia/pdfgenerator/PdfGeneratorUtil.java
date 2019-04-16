@@ -6,7 +6,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class PdfGeneratorUtil {
 
     String processedHtml = templateEngine.process(templateName, ctx);
     FileOutputStream os = null;
-    String fileName = "orderNR"+ orderId+ "ID_" ;
+    String fileName = "orderNR" + orderId + "ID_";
 
     try {
 
@@ -47,12 +48,11 @@ public class PdfGeneratorUtil {
 
     } finally {
       if (os != null) {
-        try {
-          os.close();
-        } catch (IOException e) { /*ignore*/ }
+
       }
     }
   }
 }
+
 
 
