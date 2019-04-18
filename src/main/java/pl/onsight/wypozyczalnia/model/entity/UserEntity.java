@@ -23,6 +23,8 @@ public class UserEntity extends AbstractEntity implements Serializable {
   private String email;
   private String phoneNumber;
   private String password;
+  private String confirmPassword;
+  private String confirmEmail;
 
   @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @JoinColumn(name = "role", nullable = false)
@@ -32,14 +34,15 @@ public class UserEntity extends AbstractEntity implements Serializable {
   public UserEntity() {
   }
 
-
-  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, UserRoleEntity role) {
+  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, String confirmPassword, String confirmEmail, UserRoleEntity role) {
     this.address = address;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    this.confirmPassword = confirmPassword;
+    this.confirmEmail = confirmEmail;
     this.role = role;
   }
 
@@ -107,6 +110,21 @@ public class UserEntity extends AbstractEntity implements Serializable {
     this.role = role;
   }
 
+  public String getConfirmPassword() {
+    return confirmPassword;
+  }
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
+  }
+
+  public String getConfirmEmail() {
+    return confirmEmail;
+  }
+
+  public void setConfirmEmail(String confirmEmail) {
+    this.confirmEmail = confirmEmail;
+  }
 
   @Override
   public String toString() {
