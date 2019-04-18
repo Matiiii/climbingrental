@@ -8,8 +8,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class PdfGeneratorUtil {
@@ -31,24 +30,37 @@ public class PdfGeneratorUtil {
       ctx.setVariable(pair.getKey().toString(), pair.getValue());
     }
 
+    List<String> listOfNames = new ArrayList<>();
+    File folder = new File("C://orders");
+    File[] listOfFiles = folder.listFiles();
+    for (File file : listOfFiles) {
+      if (file.isFile()) {
+        listOfNames.add(file.getName().substring(0, 10));
+      }
+    }
+
     String processedHtml = templateEngine.process(templateName, ctx);
     FileOutputStream os = null;
     String fileName = "orderNR" + orderId + "ID_";
 
-    try {
 
-      final File outputFile = File.createTempFile(fileName, ".pdf", directory);
-      os = new FileOutputStream(outputFile);
+    if (listOfNames.contains(fileName.substring(0, 10))) {
+      System.out.println("There is a file with that name!");
+    } else {
+      try {
 
-      ITextRenderer renderer = new ITextRenderer();
-      renderer.setDocumentFromString(processedHtml);
-      renderer.layout();
-      renderer.createPDF(os, false);
-      renderer.finishPDF();
+        final File outputFile = File.createTempFile(fileName, ".pdf", directory);
+        os = new FileOutputStream(outputFile);
 
-    } finally {
-      if (os != null) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(processedHtml);
+        renderer.layout();
+        renderer.createPDF(os, false);
+        renderer.finishPDF();
 
+      } finally {
+        if (os != null) {
+        }
       }
     }
   }

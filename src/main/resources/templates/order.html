@@ -48,11 +48,19 @@
         </p>
       </div>
     </div>
+    <div>
+      <form th:action="@{/printOrder/{id} (id=${productOrder.id})}" th:object="${productOrder}" method="post">
+        <button class="btn alert-success">Zapisz na dysku</button>
+      </form>
+    </div>
+    <div>
+      <form th:action="@{/download/{id} (id=${productOrder.id})}" th:object="${productOrder}">
+        <button class="btn alert-success">Pobierz</button>
+      </form>
+    </div>
+
   </div>
 
-  <form th:action="@{/printOrder/{id} (id=${productOrder.id})}" th:object="${productOrder}" method="post">
-    <button>Drukuj</button>
-  </form>
 
   <div class="col-xs col-sm">
     <div class=" table-head row col-xs-12 col-sm-12 col-md-12">

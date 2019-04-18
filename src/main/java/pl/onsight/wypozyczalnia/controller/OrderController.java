@@ -41,8 +41,6 @@ public class OrderController {
     if (userValidator.isUserHavePermissionToSeeThisOrder(sessionService.getCurrentUser().getId(), id)) {
       modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
       modelAndView.addObject("productsHashList", new HashSet<>(productOrderService.getOrderById(id).getProducts()));
-    } else {
-      modelAndView.addObject("info", new Info("Nie masz upranień by zobaczyć to zamówienie", false));
     }
     return modelAndView;
   }
@@ -76,11 +74,14 @@ public class OrderController {
     data.put("products", order.getProducts());
     data.put("days", order.getNumberOfDays());
     pdfGeneratorUtil.createPdf("orderSummary", data, id);
-
     orderSummary(order.getId(), modelAndView);
-    modelAndView.setViewName("redirect:/shop");
+    modelAndView.setViewName("order");
+    modelAndView.addObject("info", new Info("Zamówienie zapisane poprawnie! Możesz je teraz pobrać.", true));
 
     return modelAndView;
   }
 
 }
+
+
+

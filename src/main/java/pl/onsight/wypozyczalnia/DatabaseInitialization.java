@@ -179,7 +179,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     newsRepository.save(news);
     newsRepository.save(news2);
 
-    HashMap<Long, Double> oldPrices = new HashMap<>();
+    /*HashMap<Long, Double> oldPrices = new HashMap<>();
     oldPrices.put(1L, 15.0);
     oldPrices.put(2L, 12.0);
 
@@ -187,9 +187,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     order1.setCombinedPrice(25.0);
     order1.setCombinedDiscount(12.0);
     order1.setDeposit(2.0);
-   /* Date dateStart = new Date("2019/01/01 01:00:00");
+   *//* Date dateStart = new Date("2019/01/01 01:00:00");
     order1.setOrderStart(dateStart);
-    order1.setOrderEnd(dateStart);*/
+    order1.setOrderEnd(dateStart);*//*
     order1.setUser(userService.getUserById(1L));
     order1.setOrderStart(new Date());
     order1.setOrderEnd(new Date());
@@ -203,9 +203,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     order2.setCombinedPrice(25.0);
     order2.setCombinedDiscount(12.0);
     order2.setDeposit(2.0);
-   /* Date dateStart = new Date("2019/01/01 01:00:00");
+   *//* Date dateStart = new Date("2019/01/01 01:00:00");
     order2.setOrderStart(dateStart);
-    order2.setOrderEnd(dateStart);*/
+    order2.setOrderEnd(dateStart);*//*
     order2.setUser(userService.getUserById(1L));
     order2.setOrderStart(new Date());
     order2.setOrderEnd(new Date());
@@ -214,7 +214,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     order2.setOldPrices(oldPrices);
     order2.setPaid(true);
 
-    productOrderRepository.save(order2);
+    productOrderRepository.save(order2);*/
 
   }
 }
