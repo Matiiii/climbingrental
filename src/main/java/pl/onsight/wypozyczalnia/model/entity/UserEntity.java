@@ -24,7 +24,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
   private String phoneNumber;
   private String password;
   private String confirmPassword;
-  private String confirmEmail;
+  private boolean isEnabled;
 
   @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @JoinColumn(name = "role", nullable = false)
@@ -34,7 +34,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
   public UserEntity() {
   }
 
-  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, String confirmPassword, String confirmEmail, UserRoleEntity role) {
+  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, String confirmPassword, boolean isEnabled, UserRoleEntity role) {
     this.address = address;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -42,7 +42,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.confirmPassword = confirmPassword;
-    this.confirmEmail = confirmEmail;
+    this.isEnabled = isEnabled;
     this.role = role;
   }
 
@@ -118,12 +118,12 @@ public class UserEntity extends AbstractEntity implements Serializable {
     this.confirmPassword = confirmPassword;
   }
 
-  public String getConfirmEmail() {
-    return confirmEmail;
+  public boolean isEnabled() {
+    return isEnabled;
   }
 
-  public void setConfirmEmail(String confirmEmail) {
-    this.confirmEmail = confirmEmail;
+  public void setEnabled(boolean enabled) {
+    isEnabled = enabled;
   }
 
   @Override
