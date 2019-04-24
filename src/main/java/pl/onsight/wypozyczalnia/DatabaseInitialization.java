@@ -71,6 +71,8 @@ public class DatabaseInitialization implements CommandLineRunner {
     u1.setPassword("haslo");
     u1.setPhoneNumber("666 746 666");
     u1.setRole(adminRole);
+    u1.setEnabled(true);
+    u1.setConfirmPassword(u1.getPassword());
     mockUsers.add(u1);
 
     UserEntity u2 = new UserEntity();

@@ -36,12 +36,14 @@ public class UserServiceImpl implements UserService {
   @Override
   public void saveUser(UserEntity user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setConfirmPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
   }
 
   @Override
   public void saveUserByRegistration(UserEntity user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setConfirmPassword(passwordEncoder.encode(user.getPassword()));
     UserRoleEntity userRoleEntity = new UserRoleEntity();
     userRoleEntity.setDiscount(0);
     userRoleEntity.setRole("ROLE_USER");

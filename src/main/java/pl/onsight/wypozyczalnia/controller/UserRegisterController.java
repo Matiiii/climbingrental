@@ -55,7 +55,7 @@ public class UserRegisterController {
     } else {
       userService.saveUserByRegistration(user);
       ConfirmationToken confirmationToken = new ConfirmationToken(user);
-
+      confirmationTokenRepository.save(confirmationToken);
       SimpleMailMessage mailMessage = new SimpleMailMessage();
       mailMessage.setTo(user.getEmail());
       mailMessage.setSubject("Rejestracja zakończona!");
@@ -80,8 +80,8 @@ public class UserRegisterController {
     if (token != null) {
       UserEntity user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
       user.setEnabled(true);
-      userRepository.save(user);
-      modelAndView.setViewName("successfullRegistration");
+      userService.saveUserByRegistration(user);
+      modelAndView.setViewName("successRegistration");
     } else {
       modelAndView.addObject("message", "Link jest zepsuty bądź nieprawidłowy!");
       modelAndView.setViewName("error");

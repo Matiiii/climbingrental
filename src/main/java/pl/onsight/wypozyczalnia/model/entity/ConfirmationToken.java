@@ -10,7 +10,7 @@ public class ConfirmationToken {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "token_id")
-  private long tokenid;
+  private Long tokenid;
 
   @Column(name = "confirmation_token")
   private String confirmationToken;
@@ -22,17 +22,20 @@ public class ConfirmationToken {
   @JoinColumn(nullable = false, name = "user_id")
   private UserEntity user;
 
+  public ConfirmationToken() {
+  }
+
   public ConfirmationToken(UserEntity user) {
     this.user = user;
     createdDate = new Date();
     confirmationToken = UUID.randomUUID().toString();
   }
 
-  public long getTokenid() {
+  public Long getTokenid() {
     return tokenid;
   }
 
-  public void setTokenid(long tokenid) {
+  public void setTokenid(Long tokenid) {
     this.tokenid = tokenid;
   }
 

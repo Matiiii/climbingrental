@@ -1,9 +1,11 @@
 package pl.onsight.wypozyczalnia.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import pl.onsight.wypozyczalnia.model.entity.ConfirmationToken;
 
-public interface ConfirmationTokenRepository extends CrudRepository<ConfirmationToken, Long> {
+@Repository
+public interface ConfirmationTokenRepository extends CrudRepository<ConfirmationToken, String> {
 
   ConfirmationToken findByConfirmationToken(String confirmationToken);
 }
