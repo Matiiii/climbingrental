@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div class="accordion">
+  <p th:text="'Poznan, '+${date}" align="right"></p>
+  <div>
+    <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center "
+        th:text="'ZAMÓWIENIE NR '+${orderId}"></h3>
+    <h4 align="center">Zamówienie na sprzęt wspinaczkowy</h4>
+    <p>Klient zobowiazuje sie zwrocic sprzet w nienaruszonym stanie w terminie podanym na zamowieniu. W razie
+      uszkodzenia lub zagubienia sprzetu na Klienta zostanie nalozona kara pieniezna w kwocie rownowartosci nowego
+      sprzetu.</p>
+  </div>
+  <div class="alert alert-heading">
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Dane
+        wynajmujacego</h3>
+      <p th:text="'Imie: ' + ${firstName} "/>
+      <p th:text="'Nazwisko: ' + ${lastName} "/>
+      <p th:text="'Telefon: ' + ${phone} "/>
+      <p th:text="${adress}"/>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Okres
+        wynajmu</h3>
+      <p th:text="'Rozpoczecie wynajmu: ' + ${dateStart} "/>
+      <p th:text="'Data zwrotu: ' + ${dateEnd} "/>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Produkty</h3>
+      <tr>
+        <th>Nazwa produktu</th>
+        <th>Cena za dzien</th>
+      </tr>
+      <tr th:each="product: ${products}">
+        <td th:text="${product.productName}"/>
+        <td th:text="${product.price}+ 'zl'"/>
+      </tr>
+    </div>
+    <div>
+      <h3 align="center" style="background: gray; border: #1b1e21; padding: 10px; text-align: center ">Cena koncowa</h3>
+      <p th:text="'Do zaplaty: ' + ${price}+' zl za '+${days}+' dni.' "/>
+    </div>
+    <div>
+      <h4 align="left">............................................</h4>
+      <p align="left">podpis Klienta</p>
+      <h4 align="right">............................................</h4>
+      <p align="right">podpis Wynajmujacego</p>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+

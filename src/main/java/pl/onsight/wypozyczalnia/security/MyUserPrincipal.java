@@ -23,7 +23,6 @@ public class MyUserPrincipal implements UserDetails {
         List<GrantedAuthority> authorities = new LinkedList<>();
         UserRoleEntity userRole = user.getRole();
         authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
-
         return authorities;
     }
 

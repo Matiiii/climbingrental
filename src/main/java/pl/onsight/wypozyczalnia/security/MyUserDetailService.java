@@ -11,20 +11,20 @@ import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 @Service
 public class MyUserDetailService implements UserDetailsService {
 
-    private UserService userService;
+  private UserService userService;
 
-    @Autowired
-    public MyUserDetailService(UserService userService) {
-        this.userService = userService;
+  @Autowired
+  public MyUserDetailService(UserService userService) {
+    this.userService = userService;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserEntity user = userService.getUserByEmail(email);
+    if (user != null && user.isEnabled()) {
+      return new MyUserPrincipal(user);
     }
+    throw new UsernameNotFoundException(email);
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserEntity user = userService.getUserByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException(email);
-        }
-
-        return new MyUserPrincipal(user);
-    }
 }

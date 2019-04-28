@@ -3,15 +3,20 @@ package pl.onsight.wypozyczalnia.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import pl.onsight.wypozyczalnia.DateFilter;
 import pl.onsight.wypozyczalnia.model.Cart;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
+import pl.onsight.wypozyczalnia.model.enums.Status;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +25,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
   private ProductOrderRepository productOrderRepository;
   private ProductRepository productRepository;
-
 
   @Autowired
   public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository) {
@@ -91,5 +95,24 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     return order;
   }
 
+  private Date addHoursToCurrentOrderDate(Date date, int hours) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.HOUR_OF_DAY, hours);
+    return calendar.getTime();
+  }
+
+  @Override
+  public void changeStatusOfUnpaidOrder() {
+    List<ProductOrderEntity> allOrders = findAllProductOrders();
+    Date date = new Date();
+    for (ProductOrderEntity order : allOrders) {
+      Date dateToCheck = addHoursToCurrentOrderDate(order.getOrderStart(), 24);
+      if (!order.isPaid() && date.after(dateToCheck)) {
+        order.setStatusOfOrder(Status.CANCELED_DUE_TO_NON_PAYMENT);
+        productOrderRepository.save(order);
+      }
+    }
+  }
 
 }

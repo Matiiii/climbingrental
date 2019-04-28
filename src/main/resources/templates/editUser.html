@@ -10,26 +10,44 @@
 </div>
 <div class="container">
   <form action="#" th:action="@{/editUsers/{id}(id=${user.id})}" th:object="${user}" method="post">
-
-
     <div class="form-group">
       <label class="control-label col-sm-2" for="firstName">Imie:</label>
       <div class="col-sm-10">
-        <input type="text" th:field="*{firstName}" class="form-control" id="firstName" required="required"/>
+        <input type="text" th:field="*{firstName}" class="form-control" id="firstName" readonly="readonly"/>
       </div>
     </div>
 
     <div class="form-group">
       <label class="control-label col-sm-2" for="lastName">Nazwisko:</label>
       <div class="col-sm-10">
-        <input type="text" th:field="*{lastName}" class="form-control" id="lastName" required="required"/>
+        <input type="text" th:field="*{lastName}" class="form-control" id="lastName" readonly="readonly"/>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2" for="role">Rola:</label>
+      <label class="control-label col-sm-2" for="email">Email:</label>
       <div class="col-sm-10">
-        <input type="text" th:field="*{role.role}" class="form-control" id="role" required="required"/>
+        <input readonly="readonly" type="text" th:field="*{email}" class="form-control" id="email"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="phoneNumber">Telefon:</label>
+      <div class="col-sm-10">
+        <input readonly="readonly" type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2">Rola:</label>
+      <div class="col-sm-10">
+
+        <select th:field="*{role.role}">
+          <option type="text" th:value="ROLE_USER">USER</option>
+          <option type="text" th:value="ROLE_STAFF">STAFF</option>
+          <option type="text" th:value="ROLE_MEMBER">MEMBER</option>
+          <option class="alert-danger" type="text" th:value="ROLE_ADMIN">ADMIN (Are you sure?)</option>
+        </select>
+
       </div>
     </div>
 
@@ -42,6 +60,7 @@
 
   </form>
 </div>
+
 <div class="container">
   <footer>
     <div class="row" th:replace="fragments/footer :: footer">static footer</div>

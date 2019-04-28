@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.model.entity.*;
+import pl.onsight.wypozyczalnia.model.enums.Status;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
+import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class DatabaseInitialization implements CommandLineRunner {
@@ -20,18 +20,42 @@ public class DatabaseInitialization implements CommandLineRunner {
   private NewsRepository newsRepository;
   private ProductRepository productRepository;
   private ProductOrderRepository productOrderRepository;
+  private RoleService roleService;
 
   @Autowired
-  public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository) {
+  public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, RoleService roleService) {
     this.userService = userService;
     this.newsRepository = newsRepository;
     this.productRepository = productRepository;
     this.productOrderRepository = productOrderRepository;
+    this.roleService = roleService;
   }
 
   @Override
   public void run(String... strings) throws Exception {
     List<UserEntity> mockUsers = new ArrayList<>();
+    //Role for users
+    //adminRole
+    UserRoleEntity adminRole = new UserRoleEntity();
+    adminRole.setRole("ROLE_ADMIN");
+    adminRole.setDiscount(90);
+    roleService.saveRole(adminRole);
+    //staffRole
+    UserRoleEntity staffRole = new UserRoleEntity();
+    staffRole.setRole("ROLE_STAFF");
+    staffRole.setDiscount(30);
+    roleService.saveRole(staffRole);
+    //userRole
+    UserRoleEntity userRole = new UserRoleEntity();
+    userRole.setRole("ROLE_USER");
+    userRole.setDiscount(0);
+    roleService.saveRole(userRole);
+    //memberRole
+    UserRoleEntity memberRole = new UserRoleEntity();
+    memberRole.setRole("ROLE_MEMBER");
+    memberRole.setDiscount(20);
+    roleService.saveRole(memberRole);
+
 
     UserEntity u1 = new UserEntity();
     AddressEntity address1 = new AddressEntity();
@@ -46,12 +70,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     u1.setEmail("email");
     u1.setPassword("haslo");
     u1.setPhoneNumber("666 746 666");
-
-    UserRoleEntity adminRole = new UserRoleEntity();
-    adminRole.setRole("ROLE_ADMIN");
-    adminRole.setDiscount(90);
     u1.setRole(adminRole);
-
+    u1.setEnabled(true);
+    u1.setConfirmPassword(u1.getPassword());
     mockUsers.add(u1);
 
     UserEntity u2 = new UserEntity();
@@ -67,12 +88,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     u2.setEmail("nowak");
     u2.setPassword("nowak");
     u2.setPhoneNumber("123 456 789");
-
-    UserRoleEntity userRole = new UserRoleEntity();
-    userRole.setRole("ROLE_STAFF");
-    userRole.setDiscount(0);
-    u2.setRole(userRole);
-
+    u2.setRole(staffRole);
     mockUsers.add(u2);
 
     UserEntity u3 = new UserEntity();
@@ -88,13 +104,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     u3.setEmail("adam");
     u3.setPassword("adam");
     u3.setPhoneNumber("123 456 789");
-
-    UserRoleEntity userRole2 = new UserRoleEntity();
-    userRole2.setRole("ROLE_USER");
-    userRole2.setDiscount(0);
-    u3.setRole(userRole2);
-
+    u3.setRole(userRole);
     mockUsers.add(u3);
+
 
     UserEntity u4 = new UserEntity();
     AddressEntity address3 = new AddressEntity();
@@ -109,13 +121,10 @@ public class DatabaseInitialization implements CommandLineRunner {
     u4.setEmail("ewa");
     u4.setPassword("ewa");
     u4.setPhoneNumber("123 456 789");
-
-    UserRoleEntity memberRole = new UserRoleEntity();
-    memberRole.setRole("ROLE_MEMBER");
-    memberRole.setDiscount(0);
     u4.setRole(memberRole);
-
     mockUsers.add(u4);
+
+
     userService.saveUsers(mockUsers);
     productRepository.save(new ProductEntity("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask,asekuracja,wspinaczka", 4, 1D, false
       , false));
@@ -169,23 +178,45 @@ public class DatabaseInitialization implements CommandLineRunner {
     news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
     news2.setTag("2");
 
-
     newsRepository.save(news);
     newsRepository.save(news2);
 
+    /*HashMap<Long, Double> oldPrices = new HashMap<>();
+    oldPrices.put(1L, 15.0);
+    oldPrices.put(2L, 12.0);
 
     ProductOrderEntity order1 = new ProductOrderEntity();
+    order1.setCombinedPrice(25.0);
+    order1.setCombinedDiscount(12.0);
+    order1.setDeposit(2.0);
+   *//* Date dateStart = new Date("2019/01/01 01:00:00");
+    order1.setOrderStart(dateStart);
+    order1.setOrderEnd(dateStart);*//*
     order1.setUser(userService.getUserById(1L));
     order1.setOrderStart(new Date());
     order1.setOrderEnd(new Date());
-
+    order1.setStatusOfOrder(Status.ORDERED);
+    order1.setProducts(productRepository.findAll());
+    order1.setOldPrices(oldPrices);
+    order1.setPaid(false);
     productOrderRepository.save(order1);
 
     ProductOrderEntity order2 = new ProductOrderEntity();
-    order2.setUser(userService.getUserById(2L));
+    order2.setCombinedPrice(25.0);
+    order2.setCombinedDiscount(12.0);
+    order2.setDeposit(2.0);
+   *//* Date dateStart = new Date("2019/01/01 01:00:00");
+    order2.setOrderStart(dateStart);
+    order2.setOrderEnd(dateStart);*//*
+    order2.setUser(userService.getUserById(1L));
     order2.setOrderStart(new Date());
     order2.setOrderEnd(new Date());
+    order2.setStatusOfOrder(Status.ORDERED);
+    order2.setProducts(productRepository.findAll());
+    order2.setOldPrices(oldPrices);
+    order2.setPaid(true);
 
-    productOrderRepository.save(order2);
+    productOrderRepository.save(order2);*/
+
   }
 }

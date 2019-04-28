@@ -149,4 +149,11 @@ public class ProductEntity {
     return Objects.hash(id, productName, price, description, smallImage, bigImage, tags, quantity, deposit, isAvailable, isMember);
   }
 
+  @Override
+  public String toString() {
+    return "Nazwa produktu: " + productName + "\n" + "Cena jednostkowa: " + price + "\n";
+
+  }
+
+
 }
