@@ -17,22 +17,22 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @SpringBootTest(properties = "spring.profiles.active=hsql")
 public class UserTest {
 
-  @Autowired
-  UserService userService;
+    @Autowired
+    UserService userService;
 
-  @Test
-  @Transactional
-  public void shouldFindAllUsers(){
-    //given
-    //data from MySQL Database
-    //when
-    List<UserEntity> allUsersBefore=new ArrayList<>();
-    List<UserEntity> allUsers=userService.findAllUsers();
-    //then
-    assertThat(allUsers).isNotNull();
-    assertThat(allUsers).isNotEqualTo(allUsersBefore);
-    assertThat(allUsers.size()>0);
-  }
+    @Test
+    @Transactional
+    public void shouldFindAllUsers() {
+        //given
+        //data from MySQL Database
+        //when
+        List<UserEntity> allUsersBefore = new ArrayList<>();
+        List<UserEntity> allUsers = userService.findAllUsers();
+        //then
+        assertThat(allUsers).isNotNull();
+        assertThat(allUsers).isNotEqualTo(allUsersBefore);
+        assertThat(allUsers.size() > 0);
+    }
 
 /* @Test
   @Transactional

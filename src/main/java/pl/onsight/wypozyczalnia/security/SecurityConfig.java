@@ -14,52 +14,52 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private MyUserDetailService myUserDetailService;
-  private MyPasswordEncoder passwordEncoder;
+    private MyUserDetailService myUserDetailService;
+    private MyPasswordEncoder passwordEncoder;
 
-  @Autowired
-  public SecurityConfig(MyUserDetailService myUserDetailService, MyPasswordEncoder passwordEncoder) {
-    this.myUserDetailService = myUserDetailService;
-    this.passwordEncoder = passwordEncoder;
-  }
+    @Autowired
+    public SecurityConfig(MyUserDetailService myUserDetailService, MyPasswordEncoder passwordEncoder) {
+        this.myUserDetailService = myUserDetailService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-      .csrf().disable()
-      .authorizeRequests()
-      .antMatchers("/resources/**", "/static/**").permitAll()
-      .antMatchers("/user", "/createOrder").authenticated()
-      .antMatchers("/admin-page").hasRole("ADMIN")
-      .antMatchers("/staff").hasRole("STAFF")
-      .antMatchers("/shop", "/shop/**", "/newsPage/**", "/", "/register", "/news/**", "/cart", "/cart/**",
-        "/contact", "/product/**", "/login*", "/signin/**", "/signup/**", "/changeDate", "/regulations", "/confirm-account").permitAll()
-      .anyRequest().authenticated()
-      .and()
-      .formLogin().loginPage("/login")
-      .and()
-      .logout()
-      .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/resources/**", "/static/**").permitAll()
+                .antMatchers("/user", "/createOrder").authenticated()
+                .antMatchers("/admin-page").hasRole("ADMIN")
+                .antMatchers("/staff").hasRole("STAFF")
+                .antMatchers("/shop", "/shop/**", "/newsPage/**", "/", "/register", "/news/**", "/cart", "/cart/**",
+                        "/contact", "/product/**", "/login*", "/signin/**", "/signup/**", "/changeDate", "/regulations", "/confirm-account").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+    }
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) {
-    auth.authenticationProvider(daoAuthenticationProvider());
-  }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
 
-  @Bean
-  public DaoAuthenticationProvider daoAuthenticationProvider() {
-    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-    daoAuthenticationProvider.setUserDetailsService(myUserDetailService);
-    daoAuthenticationProvider.setPasswordEncoder(passwordEncoder.passwordEncoder());
-    return daoAuthenticationProvider;
-  }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(myUserDetailService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder.passwordEncoder());
+        return daoAuthenticationProvider;
+    }
 
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web
-      .ignoring()
-      .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**");
-  }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**");
+    }
 
 }

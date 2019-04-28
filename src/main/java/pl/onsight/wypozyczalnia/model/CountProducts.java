@@ -24,7 +24,8 @@ public class CountProducts {
         this.product = product;
         this.count = count;
     }
-    public CountProducts(ProductEntity product, Integer count, Integer countAvailable ) {
+
+    public CountProducts(ProductEntity product, Integer count, Integer countAvailable) {
         this.product = product;
         this.count = count;
         this.countAvailable = countAvailable;

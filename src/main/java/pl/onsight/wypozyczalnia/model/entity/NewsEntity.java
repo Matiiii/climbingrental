@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "news")
-@EntityListeners({ UpdateListener.class, InsertListener.class })
+@EntityListeners({UpdateListener.class, InsertListener.class})
 public class NewsEntity extends AbstractEntity implements Serializable {
 
     @Id
