@@ -10,16 +10,16 @@ import pl.onsight.wypozyczalnia.service.EmailSenderService;
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService {
 
-  private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
-  @Autowired
-  public EmailSenderServiceImpl(JavaMailSender javaMailSender) {
-    this.javaMailSender = javaMailSender;
-  }
+    @Autowired
+    public EmailSenderServiceImpl(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
-  @Async
-  @Override
-  public void sendEmail(SimpleMailMessage email) {
-    javaMailSender.send(email);
-  }
+    @Async
+    @Override
+    public void sendEmail(SimpleMailMessage email) {
+        javaMailSender.send(email);
+    }
 }

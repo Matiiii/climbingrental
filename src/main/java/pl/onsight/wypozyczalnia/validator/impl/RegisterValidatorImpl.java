@@ -7,8 +7,6 @@ import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.validator.RegisterValidator;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component

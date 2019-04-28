@@ -10,18 +10,18 @@ import java.util.Date;
 @Component
 public class ScheduledTask {
 
-  private ProductOrderService productOrderService;
+    private ProductOrderService productOrderService;
 
-  @Autowired
-  public ScheduledTask(ProductOrderService productOrderService) {
-    this.productOrderService = productOrderService;
-  }
+    @Autowired
+    public ScheduledTask(ProductOrderService productOrderService) {
+        this.productOrderService = productOrderService;
+    }
 
-  @Scheduled(fixedRate = 60 * 60 * 1000)
-  public void excecuteTask() {
-    Date date=new Date();
-    System.out.println("Done at: "+date);
-    productOrderService.changeStatusOfUnpaidOrder();
-  }
+    @Scheduled(fixedRate = 60 * 60 * 1000)
+    public void excecuteTask() {
+        Date date = new Date();
+        System.out.println("Done at: " + date);
+        productOrderService.changeStatusOfUnpaidOrder();
+    }
 
 }

@@ -25,7 +25,7 @@ public class OrderValidatorImpl implements OrderValidator {
         return hasOrderProductsInCart(order) && isOrderAvailableToSave(order);
     }
 
-    private boolean isOrderAvailableToSave(ProductOrderEntity order){
+    private boolean isOrderAvailableToSave(ProductOrderEntity order) {
         List<ProductEntity> products = order.getProducts();
         List<CountProducts> countProducts = productService.changeProductEntityListToCountProductsList(products);
 
@@ -40,6 +40,6 @@ public class OrderValidatorImpl implements OrderValidator {
     }
 
     private boolean hasOrderProductsInCart(ProductOrderEntity order) {
-        return order.getProducts().size()>0;
+        return order.getProducts().size() > 0;
     }
 }

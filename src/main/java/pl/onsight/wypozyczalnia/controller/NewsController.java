@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.model.entity.NewsEntity;
+import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.service.SessionService;
 
 @Controller
@@ -16,9 +16,9 @@ public class NewsController {
     private SessionService sessionService;
 
     @Autowired
-    public NewsController(NewsService newsService,SessionService sessionService ) {
+    public NewsController(NewsService newsService, SessionService sessionService) {
         this.newsService = newsService;
-        this.sessionService=sessionService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping(value = "/")

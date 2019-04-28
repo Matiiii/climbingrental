@@ -21,72 +21,72 @@ import javax.validation.Valid;
 @Controller
 public class UserRegisterController {
 
-  private UserService userService;
-  private RegisterValidator registerValidator;
-  private ConfirmationTokenRepository confirmationTokenRepository;
-  private EmailSenderService emailSenderService;
-  private UserRepository userRepository;
+    private UserService userService;
+    private RegisterValidator registerValidator;
+    private ConfirmationTokenRepository confirmationTokenRepository;
+    private EmailSenderService emailSenderService;
+    private UserRepository userRepository;
 
-  @Autowired
-  public UserRegisterController(UserService userService, RegisterValidator registerValidator, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, UserRepository userRepository) {
-    this.userService = userService;
-    this.registerValidator = registerValidator;
-    this.confirmationTokenRepository = confirmationTokenRepository;
-    this.emailSenderService = emailSenderService;
-    this.userRepository = userRepository;
-  }
-
-
-  @GetMapping("/register")
-  public ModelAndView registrationPage(ModelAndView modelAndView) {
-    modelAndView.setViewName("register");
-    modelAndView.addObject("user", new UserEntity());
-    return modelAndView;
-  }
-
-  @PostMapping("/register")
-  public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
-                              BindingResult bindResult, ModelAndView modelAndView) {
-    if (bindResult.hasErrors()) {
-      modelAndView.setViewName("register");
-    } else if (registerValidator.isEmailTaken(user)) {
-      modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
-      return registrationPage(modelAndView);
-    } else {
-      userService.saveUserByRegistration(user);
-      ConfirmationToken confirmationToken = new ConfirmationToken(user);
-      confirmationTokenRepository.save(confirmationToken);
-      SimpleMailMessage mailMessage = new SimpleMailMessage();
-      mailMessage.setTo(user.getEmail());
-      mailMessage.setSubject("Rejestracja zakończona!");
-      mailMessage.setFrom("climbingrental@gmail.com");
-      mailMessage.setText("Żeby potwierdzić nowo utworzone konto, proszę kliknąc w poniższy link : "
-        + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
-
-      emailSenderService.sendEmail(mailMessage);
-
-
-      modelAndView.addObject("emailToConfirm", user.getEmail());
-      modelAndView.setViewName("succesfullRegistration");
+    @Autowired
+    public UserRegisterController(UserService userService, RegisterValidator registerValidator, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, UserRepository userRepository) {
+        this.userService = userService;
+        this.registerValidator = registerValidator;
+        this.confirmationTokenRepository = confirmationTokenRepository;
+        this.emailSenderService = emailSenderService;
+        this.userRepository = userRepository;
     }
 
-    return modelAndView;
-  }
 
-  @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-  public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
-    ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
-    if (token != null) {
-      UserEntity user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-      user.setEnabled(true);
-      userService.saveUserByRegistration(user);
-      modelAndView.setViewName("successRegistration");
-    } else {
-      modelAndView.addObject("message", "Link jest zepsuty bądź nieprawidłowy!");
-      modelAndView.setViewName("error");
+    @GetMapping("/register")
+    public ModelAndView registrationPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("register");
+        modelAndView.addObject("user", new UserEntity());
+        return modelAndView;
     }
 
-    return modelAndView;
-  }
+    @PostMapping("/register")
+    public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
+                                BindingResult bindResult, ModelAndView modelAndView) {
+        if (bindResult.hasErrors()) {
+            modelAndView.setViewName("register");
+        } else if (registerValidator.isEmailTaken(user)) {
+            modelAndView.addObject("info", new Info("Użytkownik o podanym mailu " + user.getEmail() + " już istnieje! ", false));
+            return registrationPage(modelAndView);
+        } else {
+            userService.saveUserByRegistration(user);
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+            confirmationTokenRepository.save(confirmationToken);
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Rejestracja zakończona!");
+            mailMessage.setFrom("climbingrental@gmail.com");
+            mailMessage.setText("Żeby potwierdzić nowo utworzone konto, proszę kliknąc w poniższy link : "
+                    + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+
+            emailSenderService.sendEmail(mailMessage);
+
+
+            modelAndView.addObject("emailToConfirm", user.getEmail());
+            modelAndView.setViewName("succesfullRegistration");
+        }
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+        if (token != null) {
+            UserEntity user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+            user.setEnabled(true);
+            userService.saveUserByRegistration(user);
+            modelAndView.setViewName("successRegistration");
+        } else {
+            modelAndView.addObject("message", "Link jest zepsuty bądź nieprawidłowy!");
+            modelAndView.setViewName("error");
+        }
+
+        return modelAndView;
+    }
 }

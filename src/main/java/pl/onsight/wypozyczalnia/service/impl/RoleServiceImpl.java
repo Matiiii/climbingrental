@@ -10,16 +10,16 @@ import pl.onsight.wypozyczalnia.service.RoleService;
 public class RoleServiceImpl implements RoleService {
 
 
-  private UserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepository;
 
-  @Autowired
-  public RoleServiceImpl(UserRoleRepository userRoleRepository) {
-    this.userRoleRepository = userRoleRepository;
-  }
+    @Autowired
+    public RoleServiceImpl(UserRoleRepository userRoleRepository) {
+        this.userRoleRepository = userRoleRepository;
+    }
 
 
-  @Override
-  public void saveRole(UserRoleEntity role) {
-    userRoleRepository.save(role);
-  }
+    @Override
+    public void saveRole(UserRoleEntity role) {
+        userRoleRepository.save(role);
+    }
 }

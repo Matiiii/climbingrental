@@ -4,182 +4,182 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.model.entity.*;
-import pl.onsight.wypozyczalnia.model.enums.Status;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DatabaseInitialization implements CommandLineRunner {
 
-  private UserService userService;
-  private NewsRepository newsRepository;
-  private ProductRepository productRepository;
-  private ProductOrderRepository productOrderRepository;
-  private RoleService roleService;
+    private UserService userService;
+    private NewsRepository newsRepository;
+    private ProductRepository productRepository;
+    private ProductOrderRepository productOrderRepository;
+    private RoleService roleService;
 
-  @Autowired
-  public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, RoleService roleService) {
-    this.userService = userService;
-    this.newsRepository = newsRepository;
-    this.productRepository = productRepository;
-    this.productOrderRepository = productOrderRepository;
-    this.roleService = roleService;
-  }
+    @Autowired
+    public DatabaseInitialization(UserService userService, NewsRepository newsRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, RoleService roleService) {
+        this.userService = userService;
+        this.newsRepository = newsRepository;
+        this.productRepository = productRepository;
+        this.productOrderRepository = productOrderRepository;
+        this.roleService = roleService;
+    }
 
-  @Override
-  public void run(String... strings) throws Exception {
-    List<UserEntity> mockUsers = new ArrayList<>();
-    //Role for users
-    //adminRole
-    UserRoleEntity adminRole = new UserRoleEntity();
-    adminRole.setRole("ROLE_ADMIN");
-    adminRole.setDiscount(90);
-    roleService.saveRole(adminRole);
-    //staffRole
-    UserRoleEntity staffRole = new UserRoleEntity();
-    staffRole.setRole("ROLE_STAFF");
-    staffRole.setDiscount(30);
-    roleService.saveRole(staffRole);
-    //userRole
-    UserRoleEntity userRole = new UserRoleEntity();
-    userRole.setRole("ROLE_USER");
-    userRole.setDiscount(0);
-    roleService.saveRole(userRole);
-    //memberRole
-    UserRoleEntity memberRole = new UserRoleEntity();
-    memberRole.setRole("ROLE_MEMBER");
-    memberRole.setDiscount(20);
-    roleService.saveRole(memberRole);
-
-
-    UserEntity u1 = new UserEntity();
-    AddressEntity address1 = new AddressEntity();
-    address1.setCity("Poznan");
-    address1.setZipcode("61-142");
-    address1.setFlatNumber("15");
-    address1.setStreet("Maltanska");
-    u1.setAddress(address1);
-
-    u1.setFirstName("Andrzej");
-    u1.setLastName("Kowalski");
-    u1.setEmail("email");
-    u1.setPassword("haslo");
-    u1.setPhoneNumber("666 746 666");
-    u1.setRole(adminRole);
-    u1.setEnabled(true);
-    u1.setConfirmPassword(u1.getPassword());
-    mockUsers.add(u1);
-
-    UserEntity u2 = new UserEntity();
-    AddressEntity address = new AddressEntity();
-    address.setCity("Poznan");
-    address.setZipcode("60-100");
-    address.setFlatNumber("8");
-    address.setStreet("Baraniaka");
-    u2.setAddress(address);
-
-    u2.setFirstName("Janina");
-    u2.setLastName("Nowak");
-    u2.setEmail("nowak");
-    u2.setPassword("nowak");
-    u2.setPhoneNumber("123 456 789");
-    u2.setRole(staffRole);
-    mockUsers.add(u2);
-
-    UserEntity u3 = new UserEntity();
-    AddressEntity address2 = new AddressEntity();
-    address2.setCity("Warszawa");
-    address2.setZipcode("60-12");
-    address2.setFlatNumber("55");
-    address2.setStreet("Krucza");
-    u3.setAddress(address2);
-
-    u3.setFirstName("Adam");
-    u3.setLastName("Malysz");
-    u3.setEmail("adam");
-    u3.setPassword("adam");
-    u3.setPhoneNumber("123 456 789");
-    u3.setRole(userRole);
-    mockUsers.add(u3);
+    @Override
+    public void run(String... strings) throws Exception {
+        List<UserEntity> mockUsers = new ArrayList<>();
+        //Role for users
+        //adminRole
+        UserRoleEntity adminRole = new UserRoleEntity();
+        adminRole.setRole("ROLE_ADMIN");
+        adminRole.setDiscount(90);
+        roleService.saveRole(adminRole);
+        //staffRole
+        UserRoleEntity staffRole = new UserRoleEntity();
+        staffRole.setRole("ROLE_STAFF");
+        staffRole.setDiscount(30);
+        roleService.saveRole(staffRole);
+        //userRole
+        UserRoleEntity userRole = new UserRoleEntity();
+        userRole.setRole("ROLE_USER");
+        userRole.setDiscount(0);
+        roleService.saveRole(userRole);
+        //memberRole
+        UserRoleEntity memberRole = new UserRoleEntity();
+        memberRole.setRole("ROLE_MEMBER");
+        memberRole.setDiscount(20);
+        roleService.saveRole(memberRole);
 
 
-    UserEntity u4 = new UserEntity();
-    AddressEntity address3 = new AddressEntity();
-    address2.setCity("Warssdzawa");
-    address2.setZipcode("60-112");
-    address2.setFlatNumber("525");
-    address2.setStreet("Krucza11");
-    u4.setAddress(address3);
+        UserEntity u1 = new UserEntity();
+        AddressEntity address1 = new AddressEntity();
+        address1.setCity("Poznan");
+        address1.setZipcode("61-142");
+        address1.setFlatNumber("15");
+        address1.setStreet("Maltanska");
+        u1.setAddress(address1);
 
-    u4.setFirstName("Ewa");
-    u4.setLastName("Malysz");
-    u4.setEmail("ewa");
-    u4.setPassword("ewa");
-    u4.setPhoneNumber("123 456 789");
-    u4.setRole(memberRole);
-    mockUsers.add(u4);
+        u1.setFirstName("Andrzej");
+        u1.setLastName("Kowalski");
+        u1.setEmail("email");
+        u1.setPassword("haslo");
+        u1.setPhoneNumber("666 746 666");
+        u1.setRole(adminRole);
+        u1.setEnabled(true);
+        u1.setConfirmPassword(u1.getPassword());
+        mockUsers.add(u1);
 
+        UserEntity u2 = new UserEntity();
+        AddressEntity address = new AddressEntity();
+        address.setCity("Poznan");
+        address.setZipcode("60-100");
+        address.setFlatNumber("8");
+        address.setStreet("Baraniaka");
+        u2.setAddress(address);
 
-    userService.saveUsers(mockUsers);
-    productRepository.save(new ProductEntity("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask,asekuracja,wspinaczka", 4, 1D, false
-      , false));
-    productRepository.save(new ProductEntity("Climbing Technology Karabinek", 2.50, "Karabinek CT niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "https://taternik-sklep.pl/media/products/883e23cc429f86ea6cf57425a23583a0/images/thumbnail/large_karabinek-climbing-technology-concept-hms.jpg?lm=1541590418", "https://taternik-sklep.pl/media/products/883e23cc429f86ea6cf57425a23583a0/images/thumbnail/large_karabinek-climbing-technology-concept-hms.jpg?lm=1541590418", "karabinek,asekuracja,wspinaczka", 1, 2D, true, true));
-    productRepository.save(new ProductEntity("GRIVEL Karabinek HMS", 2.50, "Karabinek HMS niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "karabinek,asekuracja,wspinaczka", 2, 2D, true, true));
-    productRepository.save(new ProductEntity("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek,asekuracja,wspinaczka", 11, 2D, true, true));
-    productRepository.save(new ProductEntity("EKSPRES LIME DYNEEMA 12CM ", 2.00, "Lime Dyneema to lekki, doskonale wykonany ekspres wspinaczkowy Climbing Technology, który spełni wymagania nawet najbardziej doświadczonych poskramiaczy pionu. Ultralekka i wytrzymała tasiemka łączy dwa bezząbkowe, kute na gorąco karabinki Lime. Bez względu więc na to czy decydujesz się na szybkie, sportowe wejścia czy walkę z ogromną ścianą zapewnisz sobie pożądany komfort manipulacji sprzętowej. Ergonomiczny kształt karabinków Lime sprawia, że znakomicie leżą w dłoni. Ponadto dolny karabinek z giętym zamkiem wzbogacony jest o gumowy string stabilizujący jego pozycję podczas wpinania liny.", "https://f.allegroimg.com/s512/03727e/f4be41b84c76a243580c0b8ae9af", "https://f.allegroimg.com/s512/03727e/f4be41b84c76a243580c0b8ae9af", "karabinek,express,wspinaczka", 19, 2D, true, true));
+        u2.setFirstName("Janina");
+        u2.setLastName("Nowak");
+        u2.setEmail("nowak");
+        u2.setPassword("nowak");
+        u2.setPhoneNumber("123 456 789");
+        u2.setRole(staffRole);
+        mockUsers.add(u2);
 
-    productRepository.save(new ProductEntity("PETZL ASCENSION P B17WRA", 3.00, "Ergonomiczny przyrząd zaciskowy do wychodzenia po linie. Parametry ASCENSION zostały zmodyfikowane - zwiększając  komfort, skuteczność i łatwość użytkowania.\n" +
-      "\n" +
-      "Ergonomiczna i szeroka rączka pokryta elastomerem zapewnia jednocześnie wygodny i mocny uchwyt. Powierzchnia uchwytu rozszerza się na dole by zmniejszyć ucisk na mały palec przy obciążaniu przyrządu. Ulepszono ergonomię na wysokości kciuka by ułatwić przesuwanie ASCENSION po linie.\n" +
-      "\n" +
-      "Język z zębami o większym niż dotychczas nachyleniu zapewnia działanie przyrządu w złych warunkach, zmniejszając tarcie w czasie przesuwania. Geometria uchwytu, zrobionego z jednego kawałka aluminium, eliminuje zjawisko niechcianej i utrudniającej przesuwanie dźwigni.", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "malpa,petzl,asekuracja,wspinaczka", 3, 3D, true, true));
+        UserEntity u3 = new UserEntity();
+        AddressEntity address2 = new AddressEntity();
+        address2.setCity("Warszawa");
+        address2.setZipcode("60-12");
+        address2.setFlatNumber("55");
+        address2.setStreet("Krucza");
+        u3.setAddress(address2);
 
-
-    productRepository.save(new ProductEntity("PETZL GRIGRI II", 5.00, "rzyrząd asekuracyjny ze wspomaganym hamowaniem GRIGRI 2 został opracowany by ułatwiać asekurację.\n" +
-      "\n" +
-      "Przyrząd Grigri 2 jest przeznaczony do asekuracji dolnej, górnej i na wędkę. Może być używany ze wszystkimi pojedynczymi linami dynamicznymi dostępnymi na rynku, o średnicy 8,9 do 11 mm  (zoptymalizowany dla lin o średnicy 9,4 mm do 10,3 mm).\n" +
-      "\n" +
-      "Grigri 2 ma nowy design umożliwiający doskonałą kontrolę zjazdu. Jedna ręka trzyma linę druga odblokowuję krzywkę, przy pomocy uchwytu. Uchwyt, o opatentowanej konstrukcjiumożliwia stopniowe odblokowanie. W połączeniu z mocnym tarciem krzywki daje duże poczucie bezpieczeństwa podczas zjazdu czy opuszczania.\n" +
-      "\n" +
-      "Bardzo lekki i zwarty, Grigri 2 będzie z wami we wszystkich skałkach na świecie.\n" +
-      "\n" +
-      "obsługa identyczna jak w klasycznym systemie asekuracyjnym: obydwie ręce na linie\n" +
-      "\n" +
-      "odpadnięcie jest zatrzymywane przez zaciśnięcie ręki na wolnym końcu liny\n" +
-      "\n" +
-      "wspomagane hamowanie: podczas zatrzymywania odpadnięcia, asekurujący trzyma wolny koniec linykrzywka obraca się zaciskając linę, zwiększając hamowanie aż do całkowitego zatrzymania liny\n" +
-      "\n" +
-      "Grigri 2 jest bardzo zwarte i lekkie (25% mniejsze i 20 % lżejsze od GRIGRI)\n" +
-      "\n" +
-      "używany na linach pojedynczych o średnicy 8,9- 11 mm (zoptymalizowany dla lin o średnicy 9,4 mm do 10,3 mm)\n" +
-      "\n" +
-      "na okładce wygrawerowany schemat użycia", "https://www.polarsport.pl/media/catalog/product/d/1/d14bg-grigri-focus-2_lowres.jpeg", "https://www.polarsport.pl/media/catalog/product/d/1/d14bg-grigri-gris_lowres.jpeg", "gri gri,asekuracja,wspinaczka", 2, 2D, true, true));
+        u3.setFirstName("Adam");
+        u3.setLastName("Malysz");
+        u3.setEmail("adam");
+        u3.setPassword("adam");
+        u3.setPhoneNumber("123 456 789");
+        u3.setRole(userRole);
+        mockUsers.add(u3);
 
 
-    productRepository.save(new ProductEntity("Lina 80m Tendon 9,8 (ż/cz)", 20.00, "Lina sportowa o klasycznej konstrukcji dla wszystkich, którzy chcą być lepsi. Mimo swej małej średnicy lina zaskakuje długą żywotnością i odpornością na otarcia. Niska waga, wyższa ilość odpadnięć i znakomita manipulacja to parametry, dzięki którym zaczniesz przekraczać swoje limity.", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true, true));
-    productRepository.save(new ProductEntity("Lina 60m Tendon 10,0 (cze/nie)", 20.00, "Klasyk w nowej odsłonie: Prezentowany na zdjęciu oplot jest nowym wzorem oplotu zastrzeżonym na terenie Polski. Od 2014 roku tylko liny z tym wzorem oplotu będą objęte gwarancją polskiego importera.\n" +
-      "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true, true));
+        UserEntity u4 = new UserEntity();
+        AddressEntity address3 = new AddressEntity();
+        address2.setCity("Warssdzawa");
+        address2.setZipcode("60-112");
+        address2.setFlatNumber("525");
+        address2.setStreet("Krucza11");
+        u4.setAddress(address3);
+
+        u4.setFirstName("Ewa");
+        u4.setLastName("Malysz");
+        u4.setEmail("ewa");
+        u4.setPassword("ewa");
+        u4.setPhoneNumber("123 456 789");
+        u4.setRole(memberRole);
+        mockUsers.add(u4);
 
 
-    NewsEntity news = new NewsEntity();
-    news.setTitle("1");
-    news.setDescription("Pierwsza proba pozdrawiam serdecznie");
-    news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-    news.setTag("1");
+        userService.saveUsers(mockUsers);
+        productRepository.save(new ProductEntity("Kask Venus", 5.50, "Kask Venus jest idealnym wyborem dla osób ceniących siłę, wytrzymałość i długotrwałe użytkowanie. Venus zapewni najwyższy możliwy stopień bezpieczeństwa Tobie oraz Twoim podopiecznym przy bezkonkurencyjnej cenie. Łatwo i szybko się go zakłada, jest możliwość wyprania wewnętrznych gąbek, a dzięki specjalnemu systemowi regulacji, pasuje na każdą głowę. Wszystko to sprawia, że Venus jest doskonałym wyborem dla szkół wspinaczkowych i parków linowych.", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "https://8a.pl/product_picture/fit_in_900x1224/kask-climbing-technology-venus-plus-white.jpg", "kask,asekuracja,wspinaczka", 4, 1D, false
+                , false));
+        productRepository.save(new ProductEntity("Climbing Technology Karabinek", 2.50, "Karabinek CT niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "https://taternik-sklep.pl/media/products/883e23cc429f86ea6cf57425a23583a0/images/thumbnail/large_karabinek-climbing-technology-concept-hms.jpg?lm=1541590418", "https://taternik-sklep.pl/media/products/883e23cc429f86ea6cf57425a23583a0/images/thumbnail/large_karabinek-climbing-technology-concept-hms.jpg?lm=1541590418", "karabinek,asekuracja,wspinaczka", 1, 2D, true, true));
+        productRepository.save(new ProductEntity("GRIVEL Karabinek HMS", 2.50, "Karabinek HMS niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "http://www.climbshop.pl/product_picture/fit_in_480x400/a0f95789f46fed371115408c157f7782.jpg", "karabinek,asekuracja,wspinaczka", 2, 2D, true, true));
+        productRepository.save(new ProductEntity("GRIVEL Karabinek K5N", 2.50, "Karabinek K5N niezastąpiony przy asekuracji i niezbędny przy mocowaniu sprzętów. Wykonany z lekkiego stopu, wytrzymały zarówno przy zamkniętym jak i otwartym zamku. Karabinek K5N marki Grivel zaopatrzony został w zamek typu Key Lock, który nie haczy. Karabinek jest zakręcany. Typ HMS- charakteryzuje się niską wagą, bardzo dużą wytrzymałością oraz zwiększonym prześwitem zamka.", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "http://www.outdoorzy.pl/21814-84232/grivel-czekan-tech-machine.jpg", "karabinek,asekuracja,wspinaczka", 11, 2D, true, true));
+        productRepository.save(new ProductEntity("EKSPRES LIME DYNEEMA 12CM ", 2.00, "Lime Dyneema to lekki, doskonale wykonany ekspres wspinaczkowy Climbing Technology, który spełni wymagania nawet najbardziej doświadczonych poskramiaczy pionu. Ultralekka i wytrzymała tasiemka łączy dwa bezząbkowe, kute na gorąco karabinki Lime. Bez względu więc na to czy decydujesz się na szybkie, sportowe wejścia czy walkę z ogromną ścianą zapewnisz sobie pożądany komfort manipulacji sprzętowej. Ergonomiczny kształt karabinków Lime sprawia, że znakomicie leżą w dłoni. Ponadto dolny karabinek z giętym zamkiem wzbogacony jest o gumowy string stabilizujący jego pozycję podczas wpinania liny.", "https://f.allegroimg.com/s512/03727e/f4be41b84c76a243580c0b8ae9af", "https://f.allegroimg.com/s512/03727e/f4be41b84c76a243580c0b8ae9af", "karabinek,express,wspinaczka", 19, 2D, true, true));
 
-    NewsEntity news2 = new NewsEntity();
-    news2.setTitle("2");
-    news2.setDescription("Druga próba pozdrawiam serdecznie");
-    news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
-    news2.setTag("2");
+        productRepository.save(new ProductEntity("PETZL ASCENSION P B17WRA", 3.00, "Ergonomiczny przyrząd zaciskowy do wychodzenia po linie. Parametry ASCENSION zostały zmodyfikowane - zwiększając  komfort, skuteczność i łatwość użytkowania.\n" +
+                "\n" +
+                "Ergonomiczna i szeroka rączka pokryta elastomerem zapewnia jednocześnie wygodny i mocny uchwyt. Powierzchnia uchwytu rozszerza się na dole by zmniejszyć ucisk na mały palec przy obciążaniu przyrządu. Ulepszono ergonomię na wysokości kciuka by ułatwić przesuwanie ASCENSION po linie.\n" +
+                "\n" +
+                "Język z zębami o większym niż dotychczas nachyleniu zapewnia działanie przyrządu w złych warunkach, zmniejszając tarcie w czasie przesuwania. Geometria uchwytu, zrobionego z jednego kawałka aluminium, eliminuje zjawisko niechcianej i utrudniającej przesuwanie dźwigni.", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "https://www.polarsport.pl/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/p/r/prod_large_29_8_2013_975_1_.jpg", "malpa,petzl,asekuracja,wspinaczka", 3, 3D, true, true));
 
-    newsRepository.save(news);
-    newsRepository.save(news2);
+
+        productRepository.save(new ProductEntity("PETZL GRIGRI II", 5.00, "rzyrząd asekuracyjny ze wspomaganym hamowaniem GRIGRI 2 został opracowany by ułatwiać asekurację.\n" +
+                "\n" +
+                "Przyrząd Grigri 2 jest przeznaczony do asekuracji dolnej, górnej i na wędkę. Może być używany ze wszystkimi pojedynczymi linami dynamicznymi dostępnymi na rynku, o średnicy 8,9 do 11 mm  (zoptymalizowany dla lin o średnicy 9,4 mm do 10,3 mm).\n" +
+                "\n" +
+                "Grigri 2 ma nowy design umożliwiający doskonałą kontrolę zjazdu. Jedna ręka trzyma linę druga odblokowuję krzywkę, przy pomocy uchwytu. Uchwyt, o opatentowanej konstrukcjiumożliwia stopniowe odblokowanie. W połączeniu z mocnym tarciem krzywki daje duże poczucie bezpieczeństwa podczas zjazdu czy opuszczania.\n" +
+                "\n" +
+                "Bardzo lekki i zwarty, Grigri 2 będzie z wami we wszystkich skałkach na świecie.\n" +
+                "\n" +
+                "obsługa identyczna jak w klasycznym systemie asekuracyjnym: obydwie ręce na linie\n" +
+                "\n" +
+                "odpadnięcie jest zatrzymywane przez zaciśnięcie ręki na wolnym końcu liny\n" +
+                "\n" +
+                "wspomagane hamowanie: podczas zatrzymywania odpadnięcia, asekurujący trzyma wolny koniec linykrzywka obraca się zaciskając linę, zwiększając hamowanie aż do całkowitego zatrzymania liny\n" +
+                "\n" +
+                "Grigri 2 jest bardzo zwarte i lekkie (25% mniejsze i 20 % lżejsze od GRIGRI)\n" +
+                "\n" +
+                "używany na linach pojedynczych o średnicy 8,9- 11 mm (zoptymalizowany dla lin o średnicy 9,4 mm do 10,3 mm)\n" +
+                "\n" +
+                "na okładce wygrawerowany schemat użycia", "https://www.polarsport.pl/media/catalog/product/d/1/d14bg-grigri-focus-2_lowres.jpeg", "https://www.polarsport.pl/media/catalog/product/d/1/d14bg-grigri-gris_lowres.jpeg", "gri gri,asekuracja,wspinaczka", 2, 2D, true, true));
+
+
+        productRepository.save(new ProductEntity("Lina 80m Tendon 9,8 (ż/cz)", 20.00, "Lina sportowa o klasycznej konstrukcji dla wszystkich, którzy chcą być lepsi. Mimo swej małej średnicy lina zaskakuje długą żywotnością i odpornością na otarcia. Niska waga, wyższa ilość odpadnięć i znakomita manipulacja to parametry, dzięki którym zaczniesz przekraczać swoje limity.", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "http://crossline.pl/2784-large_default/ambition-85-bicolour-complete-shield-60-m.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true, true));
+        productRepository.save(new ProductEntity("Lina 60m Tendon 10,0 (cze/nie)", 20.00, "Klasyk w nowej odsłonie: Prezentowany na zdjęciu oplot jest nowym wzorem oplotu zastrzeżonym na terenie Polski. Od 2014 roku tylko liny z tym wzorem oplotu będą objęte gwarancją polskiego importera.\n" +
+                "Lina statyczna tendon speleo, produkowana z myślą o ekstremalnych warunkach pracy podczas eksploracji jaskiń. Dzięki swoim parametrom i budowie oplotu z dużym powodzeniem znajduje zastosowanie w pracach wysokościowych. Oznacza się niską rozciągliwością, wysoką trwałością statyczną i ponadstandardową wytrzymałością na otarcia. Jej atrakcyjna cena jest dodatkowym atutem. Lina spełna wymogi normy EN 1891 w klasie A .", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "http://ratwork.pl/media/BEAL/Liny/BEAL_Lina_Dynamiczna_Zenith_9,5mm_50m_.jpg", "lina,asekuracja,wspinaczka", 1, 3D, true, true));
+
+
+        NewsEntity news = new NewsEntity();
+        news.setTitle("1");
+        news.setDescription("Pierwsza proba pozdrawiam serdecznie");
+        news.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news.setTag("1");
+
+        NewsEntity news2 = new NewsEntity();
+        news2.setTitle("2");
+        news2.setDescription("Druga próba pozdrawiam serdecznie");
+        news2.setLink("https://forums.penny-arcade.com/discussion/209346/i-dont-know-what-im-doing-chat");
+        news2.setTag("2");
+
+        newsRepository.save(news);
+        newsRepository.save(news2);
 
     /*HashMap<Long, Double> oldPrices = new HashMap<>();
     oldPrices.put(1L, 15.0);
@@ -218,5 +218,5 @@ public class DatabaseInitialization implements CommandLineRunner {
 
     productOrderRepository.save(order2);*/
 
-  }
+    }
 }

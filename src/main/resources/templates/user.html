@@ -52,7 +52,8 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="order : ${orders}">
-                                            <td><a th:href="@{'/order/' + ${order.id}}"><b th:text="${order.id}"></b></a></td>
+                                            <td><a th:href="@{'/order/' + ${order.id}}"><b
+                                                    th:text="${order.id}"></b></a></td>
                                             <td th:text="${order.orderStart.toString().split(' ')[0]}"></td>
                                             <td th:text="${order.orderEnd.toString().split(' ')[0]}"></td>
                                             <td th:text="${order.combinedPrice}"></td>

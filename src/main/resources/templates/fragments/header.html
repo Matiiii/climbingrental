@@ -3,27 +3,27 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="head">
 
-  <title>Sklep wspinaczkowy</title>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content=""/>
-  <meta name="author" content=""/>
+    <title>Sklep wspinaczkowy</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
-  <!-- bootstrap css -->
-  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
+    <!-- bootstrap css -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
 
-  <!-- Custom css -->
-  <link th:href="@{/css/header.css}" href="../../static/css/header.css" rel="stylesheet"/>
+    <!-- Custom css -->
+    <link th:href="@{/css/header.css}" href="../../static/css/header.css" rel="stylesheet"/>
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-  <link th:href="@{/css/label.css}" href="../../static/css/label.css" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/label.css}" href="../../static/css/label.css" rel="stylesheet" media="screen"/>
 
 </head>
 <body>
@@ -37,63 +37,63 @@
     <b sec:authorize="hasRole('USER')">klient</b>
   <b sec:authorize="hasRole('KLUBOWICZ')">klubowicz</b>
             		</span>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">On-Sight</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">On-Sight</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-      <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
-        <li class="nav-item">
-          <a class="nav-link" href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=" #" th:href="@{/}" th:text="Informacje">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=" #" th:href="@{/regulations}" th:text="Regulamin">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}"
-             th:text="Admin">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="hasRole('ROLE_STAFF')" href=" #" th:href="@{/staff}"
-             th:text="Obsługa">About</a>
-        </li>
-      </ul>
+            <ul class="navbar-nav mr-auto mt-2 mt-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/shop}" th:text="Wypozyczalnia">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/}" th:text="Informacje">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/contact}" th:text="Kontakt">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/regulations}" th:text="Regulamin">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href=" #" th:href="@{/admin-page}"
+                       th:text="Admin">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasRole('ROLE_STAFF')" href=" #" th:href="@{/staff}"
+                       th:text="Obsługa">About</a>
+                </li>
+            </ul>
 
-      <ul class="navbar-nav ml-auto my-sm-0">
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}"
-             th:text="Rejestracja">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}"
-             th:text="Zaloguj">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
-        </li>
-        <li class="nav-item">
-          <form class="form-inline " th:action="@{/logout}" method="post" id="logout"></form>
-          <a class="nav-link" sec:authorize="isAuthenticated()" href="#"
-             onclick="document.getElementById('logout').submit()"><span
-            class="glyphicon glyphicon-log-out"></span> Log out</a>
-        </li>
-        <li>
-        </li>
-      </ul>
-    </div>
-  </nav>
+            <ul class="navbar-nav ml-auto my-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/register}"
+                       th:text="Rejestracja">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=" #" th:href="@{/cart}" th:text="Koszyk">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" href=" #" th:href="@{/login}"
+                       th:text="Zaloguj">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAuthenticated()" href=" #" th:href="@{/user}" th:text="Profil">About</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline " th:action="@{/logout}" method="post" id="logout"></form>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" href="#"
+                       onclick="document.getElementById('logout').submit()"><span
+                            class="glyphicon glyphicon-log-out"></span> Log out</a>
+                </li>
+                <li>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
 </body>

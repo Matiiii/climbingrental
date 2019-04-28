@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<link th:include="fragments/header :: head" th:remove="tag" />
-<link th:href="@{/css/linkForm.css}" href="../static/css/linkForm.css" rel="stylesheet" media="screen"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/linkForm.css}" href="../static/css/linkForm.css" rel="stylesheet" media="screen"/>
 
 </head>
 
@@ -17,10 +17,11 @@
     <h4 class="bg-success">Link Form</h4>
 
     <form action="#" th:action="@{/admin-page}" th:object="${navbarLink}" method="post" class="form-inline"
-          id="link-form" >
+          id="link-form">
         <div class="form-group">
             <label for="exampleInputName2">Link name:</label>
-            <input type="text" th:field="*{name}" class="form-control" id="exampleInputName1" placeholder="link name" value="fsd"/>
+            <input type="text" th:field="*{name}" class="form-control" id="exampleInputName1" placeholder="link name"
+                   value="fsd"/>
         </div>
         <div class="form-group">
             <label for="exampleInputName2">Link url:</label>
@@ -31,9 +32,9 @@
             <input type="hidden" th:field="*{id}" class="form-control" id="exampleInputName3" placeholder="link id"/>
         </div>
         <div class="form-group">
-        <label for="exampleInputName2">Active:</label>
-        <input type="checkbox" th:field="*{active}" class="form-control" id="exampleInputName4"/>
-    </div>
+            <label for="exampleInputName2">Active:</label>
+            <input type="checkbox" th:field="*{active}" class="form-control" id="exampleInputName4"/>
+        </div>
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 
@@ -90,7 +91,9 @@
 <!--<script type="text/javascript" src="../static/js/admin.js" th:src="@{/js/admin.js}" ></script>-->
 
 <!-- Bootstrap Core JavaScript -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 <script type="text/javascript">
     jQuery(document).ready(function () {
         $("#edit-btn").on('click', function () {

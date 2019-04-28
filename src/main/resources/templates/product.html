@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <link th:include="fragments/header :: head" th:remove="tag"/>
-  <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
-  <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
-  <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -17,96 +17,96 @@
 
 <!-- Page Content -->
 <div class="container">
-  <div class="flexRow">
-    <div class="d-none d-md-block col-md-3">
-      <p class="lead">Powiązane produkty:</p>
-      <div class="list-group">
-        <a th:each="tag : ${tags}" th:text="${tag.name}"
-           th:href="${tag.link}" class="list-group-item">Category</a>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-9">
-      <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
-        status produktu
-      </div>
-      <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
-        status produktu
-      </div>
-
-      <div class="thumbnail">
-        <br class="caption-full">
-        <div class="col">
-          <h4>
-            <div align="pull-right"><a href="#" th:text="${product.productName}">LINY</a></div>
-          </h4>
+    <div class="flexRow">
+        <div class="d-none d-md-block col-md-3">
+            <p class="lead">Powiązane produkty:</p>
+            <div class="list-group">
+                <a th:each="tag : ${tags}" th:text="${tag.name}"
+                   th:href="${tag.link}" class="list-group-item">Category</a>
+            </div>
         </div>
-        <div class="col">
-          <h4 class="pull-right" th:text="|${product.price} zł / dzień|">2</h4></div>
-        </br>
+        <div class="col-sm-12 col-md-9">
+            <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
+                status produktu
+            </div>
+            <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+                status produktu
+            </div>
 
-        <div class="row">
-          <div class="col-sm-6 col-md-6 col-lg-4"><br/>
-            <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
-                 th:alt="${product.bigImage}"/>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-7">
-            <br/><br/>
-            <div align="justify"><p th:text="${product.description}">Lorem ipsum dolor sit amet, mei augue
-              molestie
-              disputationi no, pro praesent mnesarchum te. Etiam reprehendunt nam eu. Pri causae omnium
-              in,
-              quidam
-              assueverit ex his. Te dicit elaboraret dissentiunt mea, ut vivendo consequuntur vim, vis
-              brute
-              docendi pertinacia te. Ei zril blandit cum. Et sed prima libris, eu sint delicata
-              delicatissimi
-              nam,
-              eu est tibique nominati mediocritatem.</p></div>
-            <br/><br/><br/>
-            <div align="center"><p th:text="| tagi produktu: ${product.tags}|">tagi, tagi, tagi</p></div>
-          </div>
-        </div>
-        <hr/>
+            <div class="thumbnail">
+                <br class="caption-full">
+                <div class="col">
+                    <h4>
+                        <div align="pull-right"><a href="#" th:text="${product.productName}">LINY</a></div>
+                    </h4>
+                </div>
+                <div class="col">
+                    <h4 class="pull-right" th:text="|${product.price} zł / dzień|">2</h4></div>
+                </br>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-4"><br/>
+                        <img class="img-responsive" th:src="${product.bigImage}" src="http://placehold.it/800x300"
+                             th:alt="${product.bigImage}"/>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-7">
+                        <br/><br/>
+                        <div align="justify"><p th:text="${product.description}">Lorem ipsum dolor sit amet, mei augue
+                            molestie
+                            disputationi no, pro praesent mnesarchum te. Etiam reprehendunt nam eu. Pri causae omnium
+                            in,
+                            quidam
+                            assueverit ex his. Te dicit elaboraret dissentiunt mea, ut vivendo consequuntur vim, vis
+                            brute
+                            docendi pertinacia te. Ei zril blandit cum. Et sed prima libris, eu sint delicata
+                            delicatissimi
+                            nam,
+                            eu est tibique nominati mediocritatem.</p></div>
+                        <br/><br/><br/>
+                        <div align="center"><p th:text="| tagi produktu: ${product.tags}|">tagi, tagi, tagi</p></div>
+                    </div>
+                </div>
+                <hr/>
 
 
-        <div align="center">
-          <form id="addToCart" method="post" th:action="@{'/product/' + ${product.id}}">
+                <div align="center">
+                    <form id="addToCart" method="post" th:action="@{'/product/' + ${product.id}}">
 
-            <div class="productInfo">
-              <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
-                th:text="'W koszyku: '+${cart.getCountOfProductsInCart(product)}"></b>
-              </div>
-              <div class="flexAround">
+                        <div class="productInfo">
+                            <div class="countCart" th:if="${cart.getProducts().contains(product)}"><b
+                                    th:text="'W koszyku: '+${cart.getCountOfProductsInCart(product)}"></b>
+                            </div>
+                            <div class="flexAround">
                                 <span class="price left">
                                 Cena: <b th:text="${product.price}">cena</b> zł</span>
-                <span class="count right">Dostępnych:  <b
-                  th:text="${countAvailableProducts.get(0).count}">count</b></span>
-              </div>
+                                <span class="count right">Dostępnych:  <b
+                                        th:text="${countAvailableProducts.get(0).count}">count</b></span>
+                            </div>
+                        </div>
+                        <label for="productCount">Wybierz ilość: </label>
+                        <input id="productCount" name="productCount" type="number" min="1" th:default="1"
+                               th:min="1"
+                               th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}"/>
+                        <input id="productName" name="productName" type="hidden" class="form-control"
+                               th:value="${product.productName}"/>
+                        <div class="form-group">
+                            <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <label for="productCount">Wybierz ilość: </label>
-            <input id="productCount" name="productCount" type="number" min="1" th:default="1"
-                   th:min="1"
-                   th:max="${countAvailableProducts.get(0).count - (cart.getCountOfProductsInCart(product))}"/>
-            <input id="productName" name="productName" type="hidden" class="form-control"
-                   th:value="${product.productName}"/>
-            <div class="form-group">
-              <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 
 <!-- /.container -->
 
 <div class="container">
-  <!-- Footer -->
-  <footer>
-    <div class="flexRow" th:replace="fragments/footer :: footer">static footer</div>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="flexRow" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
 </div>
 <!-- /.container -->
 

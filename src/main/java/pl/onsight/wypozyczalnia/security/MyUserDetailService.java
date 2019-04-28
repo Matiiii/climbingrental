@@ -5,26 +5,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.onsight.wypozyczalnia.service.UserService;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
+import pl.onsight.wypozyczalnia.service.UserService;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
 
-  private UserService userService;
+    private UserService userService;
 
-  @Autowired
-  public MyUserDetailService(UserService userService) {
-    this.userService = userService;
-  }
-
-  @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    UserEntity user = userService.getUserByEmail(email);
-    if (user != null && user.isEnabled()) {
-      return new MyUserPrincipal(user);
+    @Autowired
+    public MyUserDetailService(UserService userService) {
+        this.userService = userService;
     }
-    throw new UsernameNotFoundException(email);
-  }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = userService.getUserByEmail(email);
+        if (user != null && user.isEnabled()) {
+            return new MyUserPrincipal(user);
+        }
+        throw new UsernameNotFoundException(email);
+    }
 
 }

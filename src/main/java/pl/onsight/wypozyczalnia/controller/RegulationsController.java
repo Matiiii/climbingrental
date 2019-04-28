@@ -6,10 +6,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegulationsController {
-  @GetMapping("/regulations")
-  public ModelAndView regulationsPage(ModelAndView modelAndView) {
-    modelAndView.setViewName("regulations");
-    return modelAndView;
-  }
+    @GetMapping("/regulations")
+    public ModelAndView regulationsPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("regulations");
+        return modelAndView;
+    }
 
 }
