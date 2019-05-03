@@ -18,7 +18,7 @@ import java.util.List;
 public class FileDownloadController {
 
 
-    @GetMapping("download/{id}")
+    @GetMapping("/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Long id) throws IOException {
 
         List<String> listOfNames = new ArrayList<>();

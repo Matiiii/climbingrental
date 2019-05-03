@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.onsight.wypozyczalnia.model.entity.ProductOrderEntity;
 import pl.onsight.wypozyczalnia.model.entity.UserEntity;
 import pl.onsight.wypozyczalnia.service.ProductOrderService;
 import pl.onsight.wypozyczalnia.service.SessionService;
-
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -27,9 +24,8 @@ public class UserController {
     public ModelAndView userPage(ModelAndView modelAndView) {
         modelAndView.setViewName("user");
         UserEntity currentUser = sessionService.getCurrentUser();
-        List<ProductOrderEntity> userOrders = productOrdersService.findUserOrders(currentUser.getId());
         modelAndView.addObject("user", currentUser);
-        modelAndView.addObject("orders", userOrders);
+        modelAndView.addObject("orders", productOrdersService.findUserOrders(currentUser.getId()));
         return modelAndView;
     }
 }
