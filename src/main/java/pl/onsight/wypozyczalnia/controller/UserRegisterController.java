@@ -55,6 +55,7 @@ public class UserRegisterController {
             return registrationPage(modelAndView);
         } else {
             userService.saveUserByRegistration(user);
+            //this should be done in service
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
             confirmationTokenRepository.save(confirmationToken);
             SimpleMailMessage mailMessage = new SimpleMailMessage();

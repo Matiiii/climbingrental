@@ -46,7 +46,6 @@ public class ProductController {
         return modelAndView;
     }
 
-    //TODO
     @PostMapping("/product/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,

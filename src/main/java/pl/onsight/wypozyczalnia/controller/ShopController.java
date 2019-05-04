@@ -33,7 +33,6 @@ public class ShopController {
         this.inputValidator = inputValidator;
     }
 
-    //TODO
     @GetMapping(value = "/shop")
     public ModelAndView foundProducts(@RequestParam(value = "productName", defaultValue = "") String prodName,
                                       @RequestParam(value = "datefilter", defaultValue = "") String dateFilter,
@@ -84,7 +83,6 @@ public class ShopController {
         return modelAndView;
     }
 
-    //TODO
     @PostMapping("/shop/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @RequestParam(value = "productCount") Integer productCount,

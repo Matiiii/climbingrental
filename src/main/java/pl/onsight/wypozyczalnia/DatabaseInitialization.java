@@ -181,6 +181,8 @@ public class DatabaseInitialization implements CommandLineRunner {
         newsRepository.save(news);
         newsRepository.save(news2);
 
+
+        //TODO if not needed then remove it
     /*HashMap<Long, Double> oldPrices = new HashMap<>();
     oldPrices.put(1L, 15.0);
     oldPrices.put(2L, 12.0);

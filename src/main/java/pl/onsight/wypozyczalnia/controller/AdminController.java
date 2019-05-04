@@ -54,7 +54,6 @@ public class AdminController {
         productOrderService.removeProductOrder(id);
     }
 
-
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
                                    BindingResult bindingResult, ModelAndView modelAndView) {
@@ -114,7 +113,6 @@ public class AdminController {
         modelAndView.addObject("news", newsService.findNewsById(id));
         return modelAndView;
     }
-
 
     @GetMapping("/addNews")
     public ModelAndView newsPage(ModelAndView modelAndView) {

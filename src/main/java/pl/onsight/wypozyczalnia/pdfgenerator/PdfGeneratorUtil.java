@@ -16,9 +16,11 @@ import java.util.Map;
 @Component
 public class PdfGeneratorUtil {
 
+    //TODO need to be autowired??, if yes then better autowired in constructor
     @Autowired
     private TemplateEngine templateEngine;
 
+    //TODO it need to be finished
     public void createPdf(String templateName, Map<String, Object> map, Long orderId) throws Exception {
         File directory = new File("C://orders");
 
@@ -45,7 +47,6 @@ public class PdfGeneratorUtil {
         String processedHtml = templateEngine.process(templateName, ctx);
         FileOutputStream os = null;
         String fileName = "orderNR" + orderId + "ID_";
-
 
         if (listOfNames.contains(fileName.substring(0, 10))) {
             System.out.println("There is a file with that name!");
