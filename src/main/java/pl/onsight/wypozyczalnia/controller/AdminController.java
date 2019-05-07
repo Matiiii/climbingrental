@@ -50,16 +50,15 @@ public class AdminController {
 
     @DeleteMapping(path = "/product-order/{id}")
     @ResponseBody
-    public void removeProductOrder(@PathVariable Long id) {
+    public void removeProductOrder(@PathVariable("id") Long id) {
         productOrderService.removeProductOrder(id);
     }
-
 
     @PostMapping("/admin-page")
     public ModelAndView addProduct(@ModelAttribute @Valid ProductEntity product,
                                    BindingResult bindingResult, ModelAndView modelAndView) {
-        List<ProductEntity> allProducts = productService.findAllProducts();
-        List<String> allNamesOfProducts = allProducts.stream().map(name -> name.getProductName()).collect(Collectors.toList());
+
+        List<String> allNamesOfProducts = productService.findAllProducts().stream().map(ProductEntity::getProductName).collect(Collectors.toList());
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin");
         } else if (allNamesOfProducts.contains(product.getProductName())) {
@@ -75,8 +74,7 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public ModelAndView showEditFormForProduct(@PathVariable("id") Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("editProduct");
-        ProductEntity product = productService.findProductById(id);
-        modelAndView.addObject("product", product);
+        modelAndView.addObject("product", productService.findProductById(id));
         return modelAndView;
     }
 
@@ -97,8 +95,7 @@ public class AdminController {
     @GetMapping("/editUsers/{id}")
     public ModelAndView showEditFormForUser(@PathVariable("id") Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("editUser");
-        UserEntity user = userService.getUserById(id);
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userService.getUserById(id));
         return modelAndView;
     }
 
@@ -106,7 +103,6 @@ public class AdminController {
     public ModelAndView editUser(@Valid UserEntity user,
                                  ModelAndView modelAndView) {
         userService.editUser(user);
-        adminPage(modelAndView);
         modelAndView.setViewName("redirect:/shop");
         return modelAndView;
     }
@@ -114,11 +110,9 @@ public class AdminController {
     @GetMapping("/editNews/{id}")
     public ModelAndView showEditFormForNews(@PathVariable("id") Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("newsForm");
-        NewsEntity news = newsService.findNewsById(id);
-        modelAndView.addObject("news", news);
+        modelAndView.addObject("news", newsService.findNewsById(id));
         return modelAndView;
     }
-
 
     @GetMapping("/addNews")
     public ModelAndView newsPage(ModelAndView modelAndView) {

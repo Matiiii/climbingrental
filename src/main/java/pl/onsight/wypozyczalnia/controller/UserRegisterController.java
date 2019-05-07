@@ -44,6 +44,7 @@ public class UserRegisterController {
         return modelAndView;
     }
 
+    //TODO
     @PostMapping("/register")
     public ModelAndView addUser(@ModelAttribute @Valid UserEntity user,
                                 BindingResult bindResult, ModelAndView modelAndView) {
@@ -54,6 +55,7 @@ public class UserRegisterController {
             return registrationPage(modelAndView);
         } else {
             userService.saveUserByRegistration(user);
+            //this should be done in service
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
             confirmationTokenRepository.save(confirmationToken);
             SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -64,7 +66,6 @@ public class UserRegisterController {
                     + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
             emailSenderService.sendEmail(mailMessage);
-
 
             modelAndView.addObject("emailToConfirm", user.getEmail());
             modelAndView.setViewName("succesfullRegistration");

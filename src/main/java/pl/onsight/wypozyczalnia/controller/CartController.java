@@ -39,7 +39,7 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) throws ParseException {
+    public ModelAndView cartPage(@ModelAttribute("cart") Cart cart, ModelAndView modelAndView) {
         modelAndView.setViewName("cart");
         modelAndView.addObject("products", cartService.getCountedProductsInCartWithAvailable(cart));
         modelAndView.addObject("order", new ProductOrderEntity());
@@ -88,7 +88,7 @@ public class CartController {
     @PostMapping("/cart/deleteProduct/{id}")
     public ModelAndView deleteProductFromCart(@PathVariable Long id,
                                               @ModelAttribute("cart") Cart cart,
-                                              ModelAndView modelAndView) throws ParseException {
+                                              ModelAndView modelAndView) {
 
         modelAndView.addObject("info", new Info("Produkt usunięty poprawnie!", true));
         cartService.removeProductFromCart(cart, productService.findProductById(id));
@@ -98,7 +98,7 @@ public class CartController {
     @PostMapping("/cart/deleteAllProductsOfOneType/{id}")
     public ModelAndView deleteProductsOneTypeFromCart(@PathVariable Long id,
                                                       @ModelAttribute("cart") Cart cart,
-                                                      ModelAndView modelAndView) throws ParseException {
+                                                      ModelAndView modelAndView) {
         modelAndView.addObject("info", new Info("Produkty usunięte poprawnie!", true));
         cartService.removeProductsOneTypeFromCart(cart, productService.findProductById(id));
         return cartPage(cart, modelAndView);
@@ -107,7 +107,7 @@ public class CartController {
     @PostMapping("/cart/addProduct/{id}")
     public ModelAndView addProductToCart(@PathVariable Long id,
                                          @ModelAttribute("cart") Cart cart,
-                                         ModelAndView modelAndView) throws ParseException {
+                                         ModelAndView modelAndView) {
 
         modelAndView.addObject("info", new Info("Produkt dodany poprawnie!", true));
         cartService.addProductToCart(cart, productService.findProductById(id), 1);

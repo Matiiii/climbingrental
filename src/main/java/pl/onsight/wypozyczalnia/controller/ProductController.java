@@ -35,6 +35,7 @@ public class ProductController {
         modelAndView.addObject("tags", productService.findRelatedProducts(productService.findProductById(id)));
         String dateFilter = "";
 
+        //dateFilter jest zawsze pusty, tu nie powinno byc inaczej czasami?
         if (productService.findProductById(id).getAvailable() && dateFilter.isEmpty()) {
             modelAndView.addObject("countAvailableProducts", productService.countAllProductsByNameFiltered(productService.findProductById(id).getProductName()));
         } else if (!dateFilter.isEmpty()) {

@@ -31,7 +31,6 @@ public class CartServiceImpl implements CartService {
         for (int i = 0; i < quantity; i++) {
             products.add(product);
         }
-
     }
 
     @Override

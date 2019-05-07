@@ -18,17 +18,19 @@ import java.util.List;
 public class FileDownloadController {
 
 
-    @GetMapping("download/{id}")
+    @GetMapping("/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Long id) throws IOException {
 
         List<String> listOfNames = new ArrayList<>();
         File folder = new File("C://orders");
         File[] listOfFiles = folder.listFiles();
+
         for (File fileWithName : listOfFiles) {
             if (fileWithName.isFile()) {
                 listOfNames.add(fileWithName.getName());
             }
         }
+
         String path = "C://orders/" + listOfNames.get(id.intValue() - 1);
         File file = new File(path);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
