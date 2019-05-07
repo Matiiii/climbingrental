@@ -21,10 +21,11 @@ public class MyUserDetailService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     UserEntity user = userService.getUserByEmail(email);
-    if (user != null && user.isEnabled()) {
+   if (user != null && user.isActivated()) {
       return new MyUserPrincipal(user);
     }
-    throw new UsernameNotFoundException(email);
+
+    return new MyUserPrincipal(user);
   }
 
 }

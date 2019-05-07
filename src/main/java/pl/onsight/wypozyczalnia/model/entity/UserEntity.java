@@ -25,7 +25,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
   private String phoneNumber;
   private String password;
   private String confirmPassword;
-  private boolean isEnabled;
+  private boolean isActivated;
 
   @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @JoinColumn(name = "role", nullable = false)
@@ -35,7 +35,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
   public UserEntity() {
   }
 
-  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, String confirmPassword, boolean isEnabled, UserRoleEntity role) {
+  public UserEntity(AddressEntity address, String firstName, String lastName, String email, String phoneNumber, String password, String confirmPassword, boolean isActivated, UserRoleEntity role) {
     this.address = address;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -43,7 +43,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.confirmPassword = confirmPassword;
-    this.isEnabled = isEnabled;
+    this.isActivated = isActivated;
     this.role = role;
   }
 
@@ -119,12 +119,12 @@ public class UserEntity extends AbstractEntity implements Serializable {
     this.confirmPassword = confirmPassword;
   }
 
-  public boolean isEnabled() {
-    return isEnabled;
+  public boolean isActivated() {
+    return isActivated;
   }
 
-  public void setEnabled(boolean enabled) {
-    isEnabled = enabled;
+  public void setActivated(boolean activated) {
+    isActivated = activated;
   }
 
   @Override

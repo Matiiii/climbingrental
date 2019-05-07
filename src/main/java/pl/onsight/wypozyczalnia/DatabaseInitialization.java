@@ -71,8 +71,9 @@ public class DatabaseInitialization implements CommandLineRunner {
     u1.setPassword("haslo");
     u1.setPhoneNumber("666 746 666");
     u1.setRole(adminRole);
-    u1.setEnabled(true);
+    u1.setActivated(true);
     u1.setConfirmPassword(u1.getPassword());
+    u1.setUpdateTime(new Date());
     mockUsers.add(u1);
 
     UserEntity u2 = new UserEntity();
@@ -89,6 +90,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     u2.setPassword("nowak");
     u2.setPhoneNumber("123 456 789");
     u2.setRole(staffRole);
+    u2.setActivated(true);
     mockUsers.add(u2);
 
     UserEntity u3 = new UserEntity();

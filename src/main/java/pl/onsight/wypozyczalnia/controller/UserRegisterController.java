@@ -64,8 +64,6 @@ public class UserRegisterController {
         + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
       emailSenderService.sendEmail(mailMessage);
-
-
       modelAndView.addObject("emailToConfirm", user.getEmail());
       modelAndView.setViewName("succesfullRegistration");
     }
@@ -79,7 +77,7 @@ public class UserRegisterController {
 
     if (token != null) {
       UserEntity user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-      user.setEnabled(true);
+      user.setActivated(true);
       userService.saveUserByRegistration(user);
       modelAndView.setViewName("successRegistration");
     } else {
