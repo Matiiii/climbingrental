@@ -67,9 +67,9 @@ public class UserRegisterController {
       modelAndView.addObject("emailToConfirm", user.getEmail());
       modelAndView.setViewName("succesfullRegistration");
     }
-
     return modelAndView;
   }
+
 
   @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
   public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {

@@ -18,51 +18,51 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @SpringBootTest(properties = "spring.profiles.active=hsql")
 public class SessionTest {
 
-  @Autowired
-  private SessionService sessionService;
+    @Autowired
+    private SessionService sessionService;
 
-  @Test
-  @Transactional
-  public void shouldReturnAdmin() {
+    @Test
+    @Transactional
+    public void shouldReturnAdmin() {
 
-    //given
-    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("email", "admin"));
-    //when
-    UserEntity currentUser = sessionService.getCurrentUser();
-    //then
-    assertThat(currentUser).isNotNull();
-    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_ADMIN");
+        //given
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("email", "admin"));
+        //when
+        UserEntity currentUser = sessionService.getCurrentUser();
+        //then
+        assertThat(currentUser).isNotNull();
+        assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_ADMIN");
 
-  }
+    }
 
-  @Test
-  @Transactional
-  public void shouldReturnStaff() {
+    @Test
+    @Transactional
+    public void shouldReturnStaff() {
 
-    //given
-    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("nowak", "nowak"));
-    //when
+        //given
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("nowak", "nowak"));
+        //when
 
-    UserEntity currentUser = sessionService.getCurrentUser();
-    //then
-    assertThat(currentUser).isNotNull();
-    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_STAFF");
+        UserEntity currentUser = sessionService.getCurrentUser();
+        //then
+        assertThat(currentUser).isNotNull();
+        assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_STAFF");
 
-  }
+    }
 
-  @Test
-  @Transactional
-  public void shouldReturnOrdinaryUser() {
+    @Test
+    @Transactional
+    public void shouldReturnOrdinaryUser() {
 
-    //given
-    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("adam", "adam"));
-    //when
-    UserEntity currentUser = sessionService.getCurrentUser();
-    //then
-    assertThat(currentUser).isNotNull();
-    assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_USER");
+        //given
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("adam", "adam"));
+        //when
+        UserEntity currentUser = sessionService.getCurrentUser();
+        //then
+        assertThat(currentUser).isNotNull();
+        assertThat(currentUser.getRole().getRole()).isEqualTo("ROLE_USER");
 
-  }
+    }
 
 
 }

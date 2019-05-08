@@ -4,110 +4,110 @@
 
 <head>
 
-  <link th:include="fragments/header :: head" th:remove="tag"/>
-  <link th:href="@{/css/register.css}" href="../static/css/register.css" rel="stylesheet" media="screen"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/register.css}" href="../static/css/register.css" rel="stylesheet" media="screen"/>
 </head>
 <body>
 <div th:replace="fragments/header :: navbar">
 </div>
 <div class="container">
-  <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
-    status zamówienia
-  </div>
-  <form class="form-horizontal" method="post" th:action="@{/register}" th:object="${user}">
-    <div class="form-group">
-      <h3 align="center">Załóż konto</h3>
-      <div>
-        <p class="col-sm-1 text-center">Dane:</p>
-      </div>
+    <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+        status zamówienia
     </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="name">Imię:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{firstName}" class="form-control" id="name" placeholder="Wprowadź imię:"
-               required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="surname">Nazwisko:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{lastName}" class="form-control" id="surname"
-               placeholder="Wprowadź nazwisko:"
-               required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="phoneNumber">Telefon:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber"
-               placeholder="Wprowadź numer telefonu:" required="required"/>
-      </div>
-    </div>
+    <form class="form-horizontal" method="post" th:action="@{/register}" th:object="${user}">
+        <div class="form-group">
+            <h3 align="center">Załóż konto</h3>
+            <div>
+                <p class="col-sm-1 text-center">Dane:</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name">Imię:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{firstName}" class="form-control" id="name" placeholder="Wprowadź imię:"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="surname">Nazwisko:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{lastName}" class="form-control" id="surname"
+                       placeholder="Wprowadź nazwisko:"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="phoneNumber">Telefon:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber"
+                       placeholder="Wprowadź numer telefonu:" required="required"/>
+            </div>
+        </div>
 
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Email">Email:</label>
-      <div class="col-sm-10">
-        <input type="email" th:field="*{email}" class="form-control" id="email"
-               placeholder="Wprowadź adres email:"
-               required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="password">Hasło:</label>
-      <div class="col-sm-10">
-        <fieldset>
-          <p th:errors="*{password}"></p>
-          <input type="password" th:field="*{password}" class="form-control" id="password"
-                 placeholder="Wprowadź hasło:" required="required"/>
-          <input type="password" th:field="*{confirmPassword}" class="form-control" id="confirm_password"
-                 placeholder="Powtórz hasło:" required="required"/>
-        </fieldset>
-      </div>
-    </div>
-    <div class="form-group">
-      <div>
-        <p class="col-sm-1 text-center">Adres:</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Address">Miasto:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{address.city}" class="form-control" id="Address"
-               placeholder="Wprowadź miasto:" required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Address1">Ulica:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{address.street}" class="form-control" id="Address1"
-               placeholder="Wprowadź ulicę:" required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Address2">Numer domu:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{address.flatNumber}" class="form-control" id="Address2"
-               placeholder="Wprowadź numer domu:" required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Address3">Kod pocztowy:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{address.zipcode}" class="form-control" id="Address3"
-               placeholder="Wprowadź kod pocztowy:" required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10" align="center">
-        <button type="submit" class="btn btn-success ">REJESTRUJ</button>
-      </div>
-    </div>
-  </form>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Email">Email:</label>
+            <div class="col-sm-10">
+                <input type="email" th:field="*{email}" class="form-control" id="email"
+                       placeholder="Wprowadź adres email:"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="password">Hasło:</label>
+            <div class="col-sm-10">
+                <fieldset>
+                    <p th:errors="*{password}"></p>
+                    <input type="password" th:field="*{password}" class="form-control" id="password"
+                           placeholder="Wprowadź hasło:" required="required"/>
+                    <input type="password" th:field="*{confirmPassword}" class="form-control" id="confirm_password"
+                           placeholder="Powtórz hasło:" required="required"/>
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <p class="col-sm-1 text-center">Adres:</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Address">Miasto:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{address.city}" class="form-control" id="Address"
+                       placeholder="Wprowadź miasto:" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Address1">Ulica:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{address.street}" class="form-control" id="Address1"
+                       placeholder="Wprowadź ulicę:" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Address2">Numer domu:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{address.flatNumber}" class="form-control" id="Address2"
+                       placeholder="Wprowadź numer domu:" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Address3">Kod pocztowy:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{address.zipcode}" class="form-control" id="Address3"
+                       placeholder="Wprowadź kod pocztowy:" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10" align="center">
+                <button type="submit" class="btn btn-success ">REJESTRUJ</button>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="container">
-  <footer>
-    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-  </footer>
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
 </div>
 <div th:include="fragments/footer :: javascript" th:remove="tag"></div>
 <script th:src="@{/js/fieldsValidation.js}"></script>

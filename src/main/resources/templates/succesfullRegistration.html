@@ -3,9 +3,24 @@
 <head>
   <title>Registration Success</title>
 </head>
-<body>
-<center>
-  <span th:text="'Link aktywacyjny został wysłany na : ' + ${emailToConfirm}"></span>
-</center>
+<body class="text-center">
+<div align="center" class="cover-container d-flex h-100 p-3 mx-auto flex-column ">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">Rejestracja udana!</h3>
+    </div>
+  </header>
+  <main role="main" class="inner cover">
+    <div class="alert alert-success">
+      <span th:text="'Link aktywacyjny został wysłany na : ' + ${emailToConfirm}"></span>
+      <h5>Potwierdź maila</h5>
+    </div>
+    <button class="btn-success">
+      <a href=" #" th:href="@{/shop}"
+         th:text="Główna">About</a>
+    </button>
+  </main>
+</div>
+
 </body>
 </html>

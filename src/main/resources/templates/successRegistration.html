@@ -4,8 +4,20 @@
   <title>Congratulations!</title>
 </head>
 <body>
-<center>
-  <span th:text="'Konto zostało aktywaowane! Możesz się teraz zalogować!'"></span>
-</center>
+<div class="btn-success">
+  <center>
+    <span th:text="'Konto zostało aktywaowane! Możesz się teraz zalogować!'"></span>
+  </center>
+  <div class="d-inline-block align-content-center">
+    <button class="btn btn-success">
+      <a class="btn-success" href=" #" th:href="@{/login}"
+         th:text="Zaloguj">About</a>
+    </button>
+    <button class="btn btn-success">
+      <a href=" #" th:href="@{/shop}"
+         th:text="Główna">About</a>
+    </button>
+  </div>
+</div>
 </body>
 </html>

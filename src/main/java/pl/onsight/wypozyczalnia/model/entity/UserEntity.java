@@ -13,7 +13,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name="user_id")
+  @Column(name = "user_id")
   private Long id;
 
   @OneToOne(cascade = CascadeType.PERSIST)

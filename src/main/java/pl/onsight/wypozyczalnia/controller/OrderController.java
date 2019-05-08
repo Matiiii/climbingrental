@@ -21,65 +21,65 @@ import java.util.Map;
 
 @Controller
 public class OrderController {
-  private ProductOrderService productOrderService;
-  private UserValidator userValidator;
-  private SessionService sessionService;
-  private PdfGeneratorUtil pdfGeneratorUtil;
+    private ProductOrderService productOrderService;
+    private UserValidator userValidator;
+    private SessionService sessionService;
+    private PdfGeneratorUtil pdfGeneratorUtil;
 
-  @Autowired
-  public OrderController(ProductOrderService productOrderService, UserValidator userValidator, SessionService sessionService, PdfGeneratorUtil pdfGeneratorUtil) {
-    this.productOrderService = productOrderService;
-    this.userValidator = userValidator;
-    this.sessionService = sessionService;
-    this.pdfGeneratorUtil = pdfGeneratorUtil;
-  }
-
-  @GetMapping("/order/{id}")
-  public ModelAndView getOrder(@PathVariable("id") Long id, ModelAndView modelAndView) {
-    modelAndView.setViewName("order");
-    modelAndView.addObject("user", sessionService.getCurrentUser());
-    if (userValidator.isUserHavePermissionToSeeThisOrder(sessionService.getCurrentUser().getId(), id)) {
-      modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
-      modelAndView.addObject("productsHashList", new HashSet<>(productOrderService.getOrderById(id).getProducts()));
+    @Autowired
+    public OrderController(ProductOrderService productOrderService, UserValidator userValidator, SessionService sessionService, PdfGeneratorUtil pdfGeneratorUtil) {
+        this.productOrderService = productOrderService;
+        this.userValidator = userValidator;
+        this.sessionService = sessionService;
+        this.pdfGeneratorUtil = pdfGeneratorUtil;
     }
-    return modelAndView;
-  }
+
+    @GetMapping("/order/{id}")
+    public ModelAndView getOrder(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("order");
+        modelAndView.addObject("user", sessionService.getCurrentUser());
+        if (userValidator.isUserHavePermissionToSeeThisOrder(sessionService.getCurrentUser().getId(), id)) {
+            modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
+            modelAndView.addObject("productsHashList", new HashSet<>(productOrderService.getOrderById(id).getProducts()));
+        }
+        return modelAndView;
+    }
 
 
-  @GetMapping("/printOrder/{id}")
-  public ModelAndView orderSummary(@PathVariable("id") Long id, ModelAndView modelAndView) {
-    modelAndView.setViewName("orderSummary");
-    modelAndView.addObject("user", sessionService.getCurrentUser());
-    modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
-    modelAndView.addObject("products", productOrderService.getOrderById(id).getProducts());
-    modelAndView.addObject("productsHashList", new HashSet<>(productOrderService.getOrderById(id).getProducts()));
-    return modelAndView;
-  }
+    @GetMapping("/printOrder/{id}")
+    public ModelAndView orderSummary(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("orderSummary");
+        modelAndView.addObject("user", sessionService.getCurrentUser());
+        modelAndView.addObject("productOrder", productOrderService.getOrderById(id));
+        modelAndView.addObject("products", productOrderService.getOrderById(id).getProducts());
+        modelAndView.addObject("productsHashList", new HashSet<>(productOrderService.getOrderById(id).getProducts()));
+        return modelAndView;
+    }
 
-  @PostMapping("/printOrder/{id}")
-  public ModelAndView convertOrderToPdf(@PathVariable Long id, ModelAndView modelAndView) throws Exception {
-    ProductOrderEntity order = productOrderService.getOrderById(id);
+    @PostMapping("/printOrder/{id}")
+    public ModelAndView convertOrderToPdf(@PathVariable Long id, ModelAndView modelAndView) throws Exception {
+        ProductOrderEntity order = productOrderService.getOrderById(id);
 
-    Map<String, Object> data = new HashMap<>();
-    data.put("orderId", id);
-    data.put("date", new Date().toString());
-    data.put("dateStart", order.getOrderStart());
-    data.put("dateEnd", order.getOrderEnd());
-    data.put("firstName", order.getUser().getFirstName());
-    data.put("lastName", order.getUser().getLastName());
-    data.put("email", order.getUser().getEmail());
-    data.put("phone", order.getUser().getPhoneNumber());
-    data.put("adress", order.getUser().getAddress());
-    data.put("price", order.getCombinedPrice());
-    data.put("products", order.getProducts());
-    data.put("days", order.getNumberOfDays());
-    pdfGeneratorUtil.createPdf("orderSummary", data, id);
-    orderSummary(order.getId(), modelAndView);
-    modelAndView.setViewName("order");
-    modelAndView.addObject("info", new Info("Zamówienie zapisane poprawnie! Możesz je teraz pobrać.", true));
+        Map<String, Object> data = new HashMap<>();
+        data.put("orderId", id);
+        data.put("date", new Date().toString());
+        data.put("dateStart", order.getOrderStart());
+        data.put("dateEnd", order.getOrderEnd());
+        data.put("firstName", order.getUser().getFirstName());
+        data.put("lastName", order.getUser().getLastName());
+        data.put("email", order.getUser().getEmail());
+        data.put("phone", order.getUser().getPhoneNumber());
+        data.put("adress", order.getUser().getAddress());
+        data.put("price", order.getCombinedPrice());
+        data.put("products", order.getProducts());
+        data.put("days", order.getNumberOfDays());
+        pdfGeneratorUtil.createPdf("orderSummary", data, id);
+        orderSummary(order.getId(), modelAndView);
+        modelAndView.setViewName("order");
+        modelAndView.addObject("info", new Info("Zamówienie zapisane poprawnie! Możesz je teraz pobrać.", true));
 
-    return modelAndView;
-  }
+        return modelAndView;
+    }
 
 }
 

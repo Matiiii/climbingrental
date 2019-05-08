@@ -3,82 +3,84 @@ package pl.onsight.wypozyczalnia.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import pl.onsight.wypozyczalnia.service.NewsService;
 import pl.onsight.wypozyczalnia.model.Link;
 import pl.onsight.wypozyczalnia.model.Pagination;
 import pl.onsight.wypozyczalnia.model.entity.NewsEntity;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
+import pl.onsight.wypozyczalnia.service.NewsService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.*;
+import static java.util.Collections.reverse;
 
 
 @Service
 public class NewsServiceImpl implements NewsService {
 
-  private NewsRepository newsRepository;
+    private NewsRepository newsRepository;
 
-  @Autowired
-  public NewsServiceImpl(NewsRepository newsRepository) {
-    this.newsRepository = newsRepository;
-  }
+    @Autowired
+    public NewsServiceImpl(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
+    }
 
-  @Override
-  public List<NewsEntity> findAllNews() {
-    List<NewsEntity> newsList = new ArrayList<>();
-    newsRepository.findAll().forEach(newsList::add);
-    reverse(newsList);
-    return newsList;
-  }
+    @Override
+    public List<NewsEntity> findAllNews() {
+        List<NewsEntity> newsList = new ArrayList<>();
+        newsRepository.findAll().forEach(newsList::add);
+        reverse(newsList);
+        return newsList;
+    }
 
-  @Override
-  public NewsEntity findNewsById(Long id) {
-    return newsRepository.findOne(id);
-  }
+    @Override
+    public NewsEntity findNewsById(Long id) {
+        return newsRepository.findOne(id);
+    }
 
-  @Override
-  public List<NewsEntity> findFiveNews(Integer page) {
-    List<NewsEntity> newsList = new ArrayList<>();
-    newsRepository.findByNews(page).forEach(newsList::add);
-    reverse(newsList);
-    return newsList;
+    @Override
+    public List<NewsEntity> findFiveNews(Integer page) {
+        List<NewsEntity> newsList = new ArrayList<>();
+        newsRepository.findByNews(page).forEach(newsList::add);
+        reverse(newsList);
+        return newsList;
 
-  }
+    }
 
-  @Override
-  public Pagination getPaginationForPage(Integer page) {
-    long pages = ((newsRepository.count() - 1) / 5) + 1;
-    Pagination pagination = new Pagination();
-    pagination.setNextPage(page < pages);
-    pagination.setPreviousPage(page != 1);
-    pagination.setPage(page);
-    return pagination;
-  }
+    @Override
+    public Pagination getPaginationForPage(Integer page) {
+        long pages = ((newsRepository.count() - 1) / 5) + 1;
+        Pagination pagination = new Pagination();
+        pagination.setNextPage(page < pages);
+        pagination.setPreviousPage(page != 1);
+        pagination.setPage(page);
+        return pagination;
+    }
 
-  @Override
-  public Set<Link> findAllTag() {
-    List<NewsEntity> news = findAllNews();
+    @Override
+    public Set<Link> findAllTag() {
+        List<NewsEntity> news = findAllNews();
 
-    return news.stream()
-      .map(NewsEntity::getTag)
-      .map(n -> new Link(StringUtils.capitalize(n), "/?tag=" + n))
-      .collect(Collectors.toSet());
-  }
+        return news.stream()
+                .map(NewsEntity::getTag)
+                .map(n -> new Link(StringUtils.capitalize(n), "/?tag=" + n))
+                .collect(Collectors.toSet());
+    }
 
-  @Override
-  public List<NewsEntity> findNewsByTag(String tag) {
-    return newsRepository.findNewsByTag(tag);
-  }
+    @Override
+    public List<NewsEntity> findNewsByTag(String tag) {
+        return newsRepository.findNewsByTag(tag);
+    }
 
-  @Override
-  public void addNews(NewsEntity news) {
-    newsRepository.save(news);
-  }
+    @Override
+    public void addNews(NewsEntity news) {
+        newsRepository.save(news);
+    }
 
-  @Override
-  public void removeNews(Long id) {
-    newsRepository.delete(id);
-  }
+    @Override
+    public void removeNews(Long id) {
+        newsRepository.delete(id);
+    }
 }

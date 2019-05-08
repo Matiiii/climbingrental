@@ -34,23 +34,23 @@ public class Cart {
         this.date = date;
     }
 
-    public int getNumberOfDays(){
+    public int getNumberOfDays() {
         Date[] dates = null;
-        if(date != null){
+        if (date != null) {
             dates = DateFilter.changeStringToDate(date);
         }
 
         return (date != null) ? Days.daysBetween(new DateTime(dates[0]), new DateTime(dates[1])).getDays() + 1 : 0;
     }
 
-    public double getCombinedPrice(){
+    public double getCombinedPrice() {
         double[] combinedPrice = {0};
         products.forEach(product -> combinedPrice[0] += product.getPrice());
 
         return combinedPrice[0] * getNumberOfDays();
     }
 
-    public double getCombinedDeposit(){
+    public double getCombinedDeposit() {
         double[] combinedDeposit = {0};
         products.forEach(product -> combinedDeposit[0] += product.getDeposit());
 
@@ -61,8 +61,8 @@ public class Cart {
         return Collections.frequency(products, product);
     }
 
-    public double getPriceWithDiscount(UserEntity user){
-        double discount = 1.0 - user.getRole().getDiscount()/100;
+    public double getPriceWithDiscount(UserEntity user) {
+        double discount = 1.0 - user.getRole().getDiscount() / 100;
         double finalPrice = getCombinedPrice() * discount;
         finalPrice *= 100;
         finalPrice = Math.round(finalPrice);

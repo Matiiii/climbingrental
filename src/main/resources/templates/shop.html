@@ -3,9 +3,9 @@
 
 <head>
 
-  <link th:include="fragments/header :: head" th:remove="tag"/>
-  <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
-  <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:href="@{/css/products.css}" href="../static/css/products.css" rel="stylesheet"/>
+    <link th:href="@{/css/daterangepicker.css}" href="../static/css/daterangepicker.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -17,98 +17,98 @@
 <!-- Page Content -->
 <div class="container content">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-xs-12 col-ms-12 col-md-3 form">
+        <div class="col-xs-12 col-ms-12 col-md-3 form">
 
-      <form id="orderForm" method="get" th:action="@{/shop}">
-        <table>
-          <tr>
-            <td class="flexCenter"><label for="productName">Wpisz nazwę produktu:</label></td>
-          </tr>
-          <tr>
-            <td class="flexCenter"><input type="text" pattern="[a-z]{1,30}" name="productName"
-                                          id="productName"/></td>
-          </tr>
-          <tr>
+            <form id="orderForm" method="get" th:action="@{/shop}">
+                <table>
+                    <tr>
+                        <td class="flexCenter"><label for="productName">Wpisz nazwę produktu:</label></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter"><input type="text" pattern="[a-z]{1,30}" name="productName"
+                                                      id="productName"/></td>
+                    </tr>
+                    <tr>
 
-            <td class="flexCenter"><label for="dateFilter">Wybierz termin: </label></td>
-          </tr>
-          <tr>
-            <td class="flexCenter"><input id="dateFilter"
-                                          pattern="^(0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}[ ][-][ ](0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}$"
-                                          type="text" name="datefilter" autocomplete="off" value=""/></td>
-          </tr>
-          <tr>
-            <td class="flexCenter">
-              <button type="submit" class="btn btn-success">Sprawdź dostępność</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
+                        <td class="flexCenter"><label for="dateFilter">Wybierz termin: </label></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter"><input id="dateFilter"
+                                                      pattern="^(0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}[ ][-][ ](0?[1-9]|[12]\d|3[01])[\/](0?[1-9]|1[0-2])[\/](20)\d{2}$"
+                                                      type="text" name="datefilter" autocomplete="off" value=""/></td>
+                    </tr>
+                    <tr>
+                        <td class="flexCenter">
+                            <button type="submit" class="btn btn-success">Sprawdź dostępność</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
 
-    <div class="col-xs col-sm col-md-9">
+        <div class="col-xs col-sm col-md-9">
 
-      <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
-        status produktu
-      </div>
-      <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
-        status produktu
-      </div>
-
-      <div class="row">
-
-        <div th:each="countProduct: ${countProducts}" class="col-xs col-sm col-lg-4 col-md-6 product">
-          <div class="thumbnail" th:classappend="${cart.getProducts().contains(countProduct.product)}? green"
-               th:class="${countProduct.count.compareTo(cart.getCountOfProductsInCart(countProduct.product))==-1}? red : thumbnail">
-            <div class="productImg">
-              <img th:src="${countProduct.product.smallImage}"/>
+            <div th:if="${info != null and info.status == true}" th:utext="${info.message}" class="alert alert-success">
+                status produktu
+            </div>
+            <div th:if="${info != null and info.status == false}" th:utext="${info.message}" class="alert alert-danger">
+                status produktu
             </div>
 
-            <div class="caption">
-              <div class="productName">
-                <a href="info.html" th:href="@{'/product/'+${countProduct.product.id}}">
-                  <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
-              </div>
-              <div class="productInfo">
-                <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
-                  th:text="'W koszyku: '+${cart.getCountOfProductsInCart(countProduct.product)}"></b>
-                </div>
-                <div class="flexAround">
+            <div class="row">
+
+                <div th:each="countProduct: ${countProducts}" class="col-xs col-sm col-lg-4 col-md-6 product">
+                    <div class="thumbnail" th:classappend="${cart.getProducts().contains(countProduct.product)}? green"
+                         th:class="${countProduct.count.compareTo(cart.getCountOfProductsInCart(countProduct.product))==-1}? red : thumbnail">
+                        <div class="productImg">
+                            <img th:src="${countProduct.product.smallImage}"/>
+                        </div>
+
+                        <div class="caption">
+                            <div class="productName">
+                                <a href="info.html" th:href="@{'/product/'+${countProduct.product.id}}">
+                                    <h4 class="pull-right" th:text="${countProduct.product.productName}">Name</h4></a>
+                            </div>
+                            <div class="productInfo">
+                                <div class="countCart" th:if="${cart.getProducts().contains(countProduct.product)}"><b
+                                        th:text="'W koszyku: '+${cart.getCountOfProductsInCart(countProduct.product)}"></b>
+                                </div>
+                                <div class="flexAround">
                                 <span class="price left">
                                 Cena: <b th:text="${countProduct.product.price}">cena</b> zł</span>
-                  <span class="count right">Dostępnych:  <b th:text="${countProduct.count}">count</b></span>
-                </div>
+                                    <span class="count right">Dostępnych:  <b th:text="${countProduct.count}">count</b></span>
+                                </div>
 
-              </div>
-              <div class="addToCart">
-                <form id="addToCart" method="post" th:action="@{'/shop/' + ${countProduct.product.id}}">
-                  <div>
-                    <label for="productCount">Wybierz ilość: </label>
-                    <input id="productCount" name="productCount" type="number" th:default="1"
-                           th:min="1"
-                           th:max="${countProduct.count - (cart.getCountOfProductsInCart(countProduct.product))}"/>
-                  </div>
-                  <div class="form-group">
-                    <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
-                  </div>
-                </form>
-              </div>
+                            </div>
+                            <div class="addToCart">
+                                <form id="addToCart" method="post" th:action="@{'/shop/' + ${countProduct.product.id}}">
+                                    <div>
+                                        <label for="productCount">Wybierz ilość: </label>
+                                        <input id="productCount" name="productCount" type="number" th:default="1"
+                                               th:min="1"
+                                               th:max="${countProduct.count - (cart.getCountOfProductsInCart(countProduct.product))}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button align="center" type="submit" class="btn btn-success">Do koszyka</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <!-- /.container -->
 
 <div class="container">
-  <!-- Footer -->
-  <footer>
-    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
 </div>
 <!-- /.container -->
 

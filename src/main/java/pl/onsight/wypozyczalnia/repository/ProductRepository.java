@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.onsight.wypozyczalnia.model.entity.ProductEntity;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface ProductRepository extends CrudRepository<ProductEntity, Long> {

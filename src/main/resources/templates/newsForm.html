@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <link th:include="fragments/header :: head" th:remove="tag"/>
+    <link th:include="fragments/header :: head" th:remove="tag"/>
 </head>
 
 <body>
@@ -14,61 +14,62 @@
 <!-- Page Content -->
 <div class="container">
 
-  <form class="form-horizontal" action="/newsForm" method="post" th:action="@{/newsForm}" th:object="${news}">
+    <form class="form-horizontal" action="/newsForm" method="post" th:action="@{/newsForm}" th:object="${news}">
 
 
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Title">Title:</label>
-      <div class="col-sm-10">
-        <p th:errors="*{title}"></p>
-        <input class="form-control" type="text" th:field="*{title}" id="Title" placeholder="Enter title:"
-               required="required"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Description">Description:</label>
-      <div class="col-sm-10">
-        <p th:errors="*{description}"></p>
-        <textarea class="form-control" id="Description" placeholder="Enter description:" th:field="*{description}"
-                  required="required"></textarea>
-      </div>
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Title">Title:</label>
+            <div class="col-sm-10">
+                <p th:errors="*{title}"></p>
+                <input class="form-control" type="text" th:field="*{title}" id="Title" placeholder="Enter title:"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Description">Description:</label>
+            <div class="col-sm-10">
+                <p th:errors="*{description}"></p>
+                <textarea class="form-control" id="Description" placeholder="Enter description:"
+                          th:field="*{description}"
+                          required="required"></textarea>
+            </div>
+        </div>
 
 
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="link">Link:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{link}" class="form-control" id="link" placeholder="Enter link:"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="Tag">Tag:</label>
-      <div class="col-sm-10">
-        <input type="text" th:field="*{tag}" class="form-control" id="Tag" placeholder="Enter tag:"
-               required="required"/>
-      </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="link">Link:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{link}" class="form-control" id="link" placeholder="Enter link:"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Tag">Tag:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{tag}" class="form-control" id="Tag" placeholder="Enter tag:"
+                       required="required"/>
+            </div>
 
-    </div>
+        </div>
 
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
 
-        <input type="submit" class="btn btn-success" value="ADD NEWS"/>
-      </div>
-    </div>
+                <input type="submit" class="btn btn-success" value="ADD NEWS"/>
+            </div>
+        </div>
 
-  </form>
+    </form>
 </div>
 
 
 <!-- /.container -->
 
 <div class="container">
-  <!-- Footer -->
-  <footer>
-    <div class="row" th:replace="fragments/footer :: footer">static footer</div>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="row" th:replace="fragments/footer :: footer">static footer</div>
+    </footer>
 </div>
 
 <!-- /.container -->

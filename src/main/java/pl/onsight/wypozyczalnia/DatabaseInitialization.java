@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.onsight.wypozyczalnia.model.entity.*;
-import pl.onsight.wypozyczalnia.model.enums.Status;
 import pl.onsight.wypozyczalnia.repository.NewsRepository;
 import pl.onsight.wypozyczalnia.repository.ProductOrderRepository;
 import pl.onsight.wypozyczalnia.repository.ProductRepository;
 import pl.onsight.wypozyczalnia.service.RoleService;
 import pl.onsight.wypozyczalnia.service.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class DatabaseInitialization implements CommandLineRunner {
@@ -33,6 +34,7 @@ public class DatabaseInitialization implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
+
     List<UserEntity> mockUsers = new ArrayList<>();
     //Role for users
     //adminRole
@@ -183,42 +185,7 @@ public class DatabaseInitialization implements CommandLineRunner {
     newsRepository.save(news);
     newsRepository.save(news2);
 
-    /*HashMap<Long, Double> oldPrices = new HashMap<>();
-    oldPrices.put(1L, 15.0);
-    oldPrices.put(2L, 12.0);
-
-    ProductOrderEntity order1 = new ProductOrderEntity();
-    order1.setCombinedPrice(25.0);
-    order1.setCombinedDiscount(12.0);
-    order1.setDeposit(2.0);
-   *//* Date dateStart = new Date("2019/01/01 01:00:00");
-    order1.setOrderStart(dateStart);
-    order1.setOrderEnd(dateStart);*//*
-    order1.setUser(userService.getUserById(1L));
-    order1.setOrderStart(new Date());
-    order1.setOrderEnd(new Date());
-    order1.setStatusOfOrder(Status.ORDERED);
-    order1.setProducts(productRepository.findAll());
-    order1.setOldPrices(oldPrices);
-    order1.setPaid(false);
-    productOrderRepository.save(order1);
-
-    ProductOrderEntity order2 = new ProductOrderEntity();
-    order2.setCombinedPrice(25.0);
-    order2.setCombinedDiscount(12.0);
-    order2.setDeposit(2.0);
-   *//* Date dateStart = new Date("2019/01/01 01:00:00");
-    order2.setOrderStart(dateStart);
-    order2.setOrderEnd(dateStart);*//*
-    order2.setUser(userService.getUserById(1L));
-    order2.setOrderStart(new Date());
-    order2.setOrderEnd(new Date());
-    order2.setStatusOfOrder(Status.ORDERED);
-    order2.setProducts(productRepository.findAll());
-    order2.setOldPrices(oldPrices);
-    order2.setPaid(true);
-
-    productOrderRepository.save(order2);*/
 
   }
+
 }
